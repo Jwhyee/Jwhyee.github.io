@@ -28,10 +28,10 @@ jobs:
       - name: npm install fs-extra
         run : npm install fs-extra
 
-      - name: Build
-        run: yarn build --prefix-paths
+     - name: gatsby build
         env:
-          NODE_ENV: production
+          GH_API_KEY: ${{ secrets.EEYHWJ }}
+        run: yarn build
 
       - name: deploy
         uses: maxheld83/ghpages@v0.2.1
