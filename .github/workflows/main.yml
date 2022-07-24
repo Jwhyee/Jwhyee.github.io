@@ -25,6 +25,9 @@ jobs:
       - name: Install dependencies
         run: yarn install --prod --pure-lockfile
 
+      - name: npm install fs-extra
+        run : npm install fs-extra
+
       - name: Build
         run: yarn build
         env:
