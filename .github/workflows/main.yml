@@ -10,13 +10,25 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
-      - name: npm install
-        run: npm install
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+      - name: Cache node_modules
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{runner.OS}}-build-${{hashFiles('**/yarn.lock')}}
+          restore-keys: |
+            ${{ runner.OS }}-build-${{ runner.OS }}-
 
-      - name: gatsby build
+      - name: Install dependencies
+        run: yarn install --prod --pure-lockfile
+        
+      - name: Build
+        run: yarn build --prefix-paths
         env:
-          GH_API_KEY: ${{ secrets.EEYHWJ }}
-        run: npm run build
+          NODE_ENV: production
 
       - name: deploy
         uses: maxheld83/ghpages@v0.2.1
