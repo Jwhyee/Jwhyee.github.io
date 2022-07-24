@@ -10,17 +10,17 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
-      - name: yarn install
-        run: yarn install
+      - name: npm install
+        run: npm install
 
       - name: gatsby build
         env:
-          GH_API_KEY: ${{ secrets.GITHUB }}
-        run: yarn build
+          GH_API_KEY: ${{ secrets.EEYHWJ }}
+        run: npm run build
 
       - name: deploy
         uses: maxheld83/ghpages@v0.2.1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GH_PAT: ${{ secrets.GITHUB }}
+          GITHUB_TOKEN: ${{ secrets.gatsby-blog }}
+          GH_PAT: ${{ secrets.EEYHWJ }}
           BUILD_DIR: 'public/'
