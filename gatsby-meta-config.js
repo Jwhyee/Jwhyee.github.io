@@ -1,12 +1,12 @@
 module.exports = {
-  title: `Bee starter`,
-  description: `Jwhy Repository`,
+  title: `Jwhy Blogitory`,
+  description: `Jwhy Blog Repository`,
   author: `[Jwhy]`,
   introduction: `hello world`,
   siteUrl: `https://jwhyee.github.io/`, // Your blog site url
   social: {
     twitter: ``, // Your Twitter account
-    github: ``, // Your GitHub account
+    github: `https://github.com/Jwhyee`, // Your GitHub account
     medium: ``, // Your Medium account
     facebook: ``, // Your Facebook account
     linkedin: ``, // Your LinkedIn account
