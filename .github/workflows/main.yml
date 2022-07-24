@@ -24,11 +24,11 @@ jobs:
 
       - name: Install dependencies
         run: yarn install --prod --pure-lockfile
-        
+
       - name: Build
-        run: yarn build --prefix-paths
+        run: yarn build
         env:
-          NODE_ENV: production
+          GH_API_KEY: ${{ secrets.EEYHWJ }}
 
       - name: deploy
         uses: maxheld83/ghpages@v0.2.1
