@@ -30,13 +30,13 @@ gatsby new my-blog-starter https://github.com/JaeYeopHan/gatsby-starter-bee
 ```sh
 node -v
 ```
-현재 `gatsby-starter-bee` 는 **`Node 14`** 버전까지 지원하기 때문에 버전을 낮춰준 뒤 다시 시도한다. **노드 버전 변경**은 해당 [블로그](https://velog.io/@zlemzlem5656/node-version-변경하기)를 참고하자!
+현재 `gatsby-starter-bee` 는 `Node 14` 버전까지 지원하기 때문에 버전을 낮춰준 뒤 다시 시도한다. **노드 버전 변경**은 해당 [블로그](https://velog.io/@zlemzlem5656/node-version-변경하기)를 참고하자!
 
 
 ### 🚀　**Visual Studio Code 연결**
-1. **VS Code**를 열어서 **`command + shift + N`** 을 눌러 새로운 창을 킨다.
+1. **VS Code**를 열어서 `command + shift + N` 을 눌러 새로운 창을 킨다.
 2. **Open**을 눌러서 프로젝트 폴더를 열어준다.
-3. 아래 스크린샷과 같이 **`New Terminal`**을 클릭해서 새로운 터미널 창을 열어준다.<br>
+3. 아래 스크린샷과 같이 `New Terminal`을 클릭해서 새로운 터미널 창을 열어준다.<br>
 (앞으로 모든 터미널 명령어는 `VS Code` 터미널에서 입력해준다.)
 <br>
 
@@ -51,8 +51,8 @@ node -v
 ### 🚀　**Git 연결**
 아까 생성한 **my-blog-starter**로 이동해서 **git**을 연결해준다.<br>
 **(아래 `${value}` 부분은  `${}` 를 제거하고 입력해야한다.)**<br>
-> **⛔️　주의 : 본인의 `main` 브랜치가 `master` 인지 `main` 인지 잘 확인하고 진행하자!**<br>
-> 만약 본인의 `main` 브랜치가 `master` 이면 그대로 진행하고,<br> `main` 이라면 `master` 대신에 `main` 으로 입력해서 진행해준다.
+> **⛔️　주의 : 본인의 `main` 브랜치가 `master` 인지 `main` 인지 잘 확인하고 진행하자!**
+
 ```sh{5}
 cd my-blog-starter
 rm -rf .git

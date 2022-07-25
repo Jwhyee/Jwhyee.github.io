@@ -27,7 +27,6 @@ npm install -D gatsby-post-gen
 ### 🚀　**Add Deploy**
 `package.json` 파일에 `deploy` 에 대한 내용을 추가해준다.
 > **⛔️　주의 : 본인의 `main` 브랜치가 `master` 인지 `main` 인지 잘 확인하고 진행하자!**<br>
-> 만약 본인의 `main` 브랜치가 `master` 이면 그대로 진행하고,<br> `main` 이라면 `master` 대신에 `main` 으로 변경해서 진행해준다.
 
 ```
 "scripts": {
@@ -63,7 +62,7 @@ npm run deploy
 ![](./images/github-generate-token.png)
 
 Note에는 알아보기 쉽게 **GATSBY-BLOG-TOKEN**으로 작성해주었다.(이름은 자유)<br>
-**`Select scopes`** 에는 모두 체크를 해준다.<br>
+`Select scopes` 에는 모두 체크를 해준다.<br>
 `Token` 이 생성되면 초록색 부분에 `key` 가 나올 것이다. 이를 복사해두자!
 
 ### 🚀　**Import Token**
