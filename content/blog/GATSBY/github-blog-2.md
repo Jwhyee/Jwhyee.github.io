@@ -95,7 +95,7 @@ name: build gatsby
 jobs:
   build_gatsby:
     name: build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v1
 
