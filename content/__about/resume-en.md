@@ -16,6 +16,9 @@ kawnsdud@gmail.com
 🐱  **Github** : 
 [https://github.com/Jwhyee](https://github.com/Jwhyee)
 
+📝  **Blog** : 
+[https://jwhyee.github.io/](https://jwhyee.github.io/)
+
 </div>
 
 ## `Tech Stacks ⚒️`
