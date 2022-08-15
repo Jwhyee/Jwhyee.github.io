@@ -54,9 +54,9 @@ draft: false
 ```
 
 ### 3. 회원 정보가 필요 시 VO 활용
-> 보통 회원 정보가 필요할 경우 해당 Entity를 Model에 담아 보내주었다.
-> 하지만 이런 방식으로 View에 잘 보내주지 않는 다는 것을 알게 되었다. 
-> 때문에 VO를 사용하여 최소한의 필요한 정보만 담아 View에 보내주는 것으로 리팩터링 하였다.
+> 보통 회원 정보가 필요할 경우 해당 Entity를 Model에 담아 View에 보내주었다.
+> 하지만 Entity 자체를 View에 보낼경우 필요하지 않은 정보도 볼 수 있기 때문에
+> VO를 사용하여 최소한의 필요한 정보만 담아 View에 보내주는 것으로 **리팩터링**하였다.
 
 ```java
 @GetMapping("/profile/setting")
@@ -72,12 +72,13 @@ public String showProfilePage(Principal principal, Model model) {
 
 ## 2. 협업 방식 관련 이슈
 앞서 말했던 졸업작품을 개발할 당시에 `git branch` 전략을 사용하지 않고, 각자 이름으로 된 브랜치를 만들어 기능 개발을 완성하면 `master`에 `PullRequest`를 올리는 방식으로 진행했다. 이 때의 문제점은 그래프가 지저분해지며, `git log`를 분석하기도 어려웠다. 그리고 가장 큰 단점은 이 협업 방식의 흐름이다.
-> 개발 -> master로 PR 보내기 -> 코드리뷰 기다리기 -> 승인 후 master에 올라감 -> 다른 팀원이 개발한 내용 내 브랜
+> 개발 -> commit -> push -> 내 브랜치 to master Pull Request -> Code Review -> Approbe -> Merge Pull Request -> branch-up-to-date Pull Reqeust-> 개발
 
 ![](./images/github-branch.png)
 
 이를 해결하기 위해 `git-flow` 전략을 채택하였고, 이를 도입하기 위해 테스트 `Repository`를 만들어 팀원과 테스트를 진행해보았다.<br>
 우선 develop 브랜치를 생성해 5개의 파일을 만들었다. 그 다음 모든 팀원이 develop에서 개발을 진행을 해보니 서로 겹치지 않는 이상 문제가 없을 것 같아 이 방법을 채택했다.<br>
 이 방식을 통해 프로젝트 최신화를 기다리지 않아도 되고, 작업한 내용을 바로바로 받아 사용할 수 있게 되었다.
+> 개발 -> commit -> push -> fetch -> pull -> 개발
 
 [참고 블로그](https://wildeveloperetrain.tistory.com/136)
