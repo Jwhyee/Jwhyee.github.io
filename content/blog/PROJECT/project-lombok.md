@@ -59,12 +59,9 @@ public Main{
 > 앞서 말했던 내용과 같이 `@Getter`, `@Setter`만 작성해주면 항상 귀찮게 작성했던 `getField()` , `setField()` 메소드들을 자동으로 생성해주면서 코드 다이어트가 가능해진다. 
 
 ### @ArgsConstructor 3형제
-> `@AllArgsConstructor` <br>
-> → 모든 필드를 인자로 받는 생성자를 만듦 <br> 
-> `@NoArgsConstructor `<br>
-> → 아무 인자가 없는 기본 생성자를 만듦 <br>
-> `@RequiredArgsConstructor` <br>
-> → `final` 혹은 `@NonNull`이 붙은 필드만 인자로 받는 생성자를 만듦
+`@AllArgsConstructor` → 모든 필드를 인자로 받는 생성자를 만듦 <br> 
+`@NoArgsConstructor ` → 아무 인자가 없는 기본 생성자를 만듦 <br>
+`@RequiredArgsConstructor` → `final` 혹은 `@NonNull`이 붙은 필드만 인자로 받는 생성자를 만듦
 
 ```java
 /* -- 작성한 코드 -- */
@@ -129,7 +126,7 @@ public class Person(){
 
 ### @Setter 사용 자제
 
-> `@Setter` 대신 의미있는 메소드를 사용하자!
+`@Setter` 대신 수정 가능한 필드를 대상으로 의미있는 메소드를 사용하자!
 ```java
 @Entity @Getter
 public class Account {
@@ -157,7 +154,7 @@ public class Account {
 > 위 코드와 같이 `Setter` 대신 **수정 가능**한 **부분**에 대한 **의미있는 메소드**를 생성하여 사용!<br>
 
 ### @AllArgsConstructor 사용 제한 지정
-> @AllArgsConstructor의 access를 지정하자!
+다른 패키지 및 클래스에서 사용을 제한하도록 `access`를 지정하자!
 ```java
 /* -- 작성한 코드 -- */
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -223,12 +220,12 @@ Account createAccount = accountRepository.save(Account.builder()
         .email(...)
         .build());
 ```
-> 위에서 설명한대로 진행하면 앞으로는 객체 생성을 할 때 `Builder` 이용해서만 객체를 생성할 수 있을 것이다.
+> 위에서 설명한대로 진행하면 앞으로는 객체 생성을 할 때 `Builder`를 이용해서만 객체를 생성할 수 있을 것이다.
 > 이와 같은 패턴으로 작성하면 해당 객체를 새로 생성한 사람이 어떤 의도로 생성했는지 분명히 파악할 수 있다.
 
 ## 마무리
 
-1. 객체를 새로 생성할 때는 `@AllArgsConstructor`를 다른 곳에서 사용하지 못하도록 `AccessLevel.PRIVATE`로 지정해주고, 객체를 새로 생성할 때는 `Builder`를 이용해 만들어준다.
+1. `@AllArgsConstructor`는 오직 `@Builder`를 위해 사용하도록 하며, 다른 곳에서 사용하지 못하도록 `AccessLevel.PRIVATE`로 지정해주고, 객체를 새로 생성할 때는 `@Builder`를 이용해 만들어준다.
 2. 객체를 수정할 때는 **수정 가능**한 **필드**들만 속해있으며, **의미있는 메소드**를 만들어 계속 재사용한다.
 
 
