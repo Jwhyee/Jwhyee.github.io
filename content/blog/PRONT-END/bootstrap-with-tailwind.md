@@ -1,7 +1,7 @@
 ---
-title: bootstrap-with-tailwind
+title: bootstrap과 tailwind 함께 사용하기
 date: 2022-08-25 18:08:04
-category: project
+category: PRONT-END
 thumbnail: { thumbnailSrc }
 draft: false
 ---
