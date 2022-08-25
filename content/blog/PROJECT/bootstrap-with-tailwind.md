@@ -1,6 +1,6 @@
 ---
-title: bootstrap, tailwind 함께 사용하기
-date: 2022-08-25 15:08:17
+title: bootstrap-with-tailwind
+date: 2022-08-25 18:08:04
 category: project
 thumbnail: { thumbnailSrc }
 draft: false
