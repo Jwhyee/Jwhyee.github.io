@@ -89,41 +89,38 @@ on:
   push:
     branches:
       - gh-pages
-name: build gatsby
+
 jobs:
-  build_gatsby:
-    name: build
+  deploy:
     runs-on: ubuntu-18.04
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
 
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
-          node-version: '14.x'
-      - name: Cache node_modules
+          node-version: '10.x'
+
+      - name: Cache dependencies
         uses: actions/cache@v1
         with:
-          path: node_modules
-          key: ${{runner.OS}}-build-${{hashFiles('**/yarn.lock')}}
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.OS }}-build-${{ runner.OS }}-
-      - name: Install dependencies
-        run: yarn install --prod --pure-lockfile
+            ${{ runner.os }}-node-
+      - run: npm ci
+      - run: npm run format
+      - run: npm run test
+      - run: npm run build
 
-      - name: npm install fs-extra
-        run : npm install fs-extra
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          # github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+          publish_branch: master  # deploying branch
 
-      - name: Build
-        run: yarn build --prefix-paths
-        env:
-          NODE_ENV: production
-
-      - uses: peaceiris/actions-gh-pages@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.EEYHWJ }}
-          PUBLISH_BRANCH: master
-          PUBLISH_DIR: 'public/'
 ```
 
 ## 📝　**New Post**
