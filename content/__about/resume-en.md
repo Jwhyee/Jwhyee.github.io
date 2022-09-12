@@ -10,6 +10,12 @@ lang: 'en'
 
 <div align="center">
 
+<!-- <div align="right">
+
+<img src="/img/profile2.jpeg" width="20"/>
+
+</div> -->
+
 📧  **Email** : 
 kawnsdud@gmail.com
 
