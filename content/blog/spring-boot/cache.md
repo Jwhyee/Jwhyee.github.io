@@ -26,7 +26,7 @@ public class JwtExamApplication {
 }
 ```
 
-### 📝 캐시 생성 예제
+### ✅ 캐시 생성 예제
 ```java
 // CacheService
 @Cacheable("key1")
@@ -53,7 +53,7 @@ void t1() {
 > 위와 같이 `@Cachable("keyName")`을 사용하면 처음 호출이 될 때 `keyName`에 `return` 값을 저장하고,<br>
 > 다음 호출이 될 때부터는 함수를 다시 실행하는 것이 아닌 저장된 `keyName`의 `value`를 불러오게 된다.
 
-### 📝 캐시 삭제 예제
+### ❎ 캐시 삭제 예제
 ```java
 @CacheEvict("key1")
 public void deleteCachedInt() {
@@ -86,7 +86,7 @@ void t2() {
 > `@CacheEvict("keyName")`을 사용하면 `keyName`으로 된 `Cache`를 삭제한다.<br>
 > Evict : 퇴거
 
-### 📝 캐시 수정 예제
+### ↩️ 캐시 수정 예제
 ```java
 @CachePut("key1")
 public int updateCachedInt() {
