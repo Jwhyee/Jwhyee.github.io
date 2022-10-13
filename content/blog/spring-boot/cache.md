@@ -1,7 +1,7 @@
 ---
 title: Spring Boot에서 Cache 사용
 date: 2022-10-13 14:10:42
-category: spring-boot
+category: SPRING-BOOT
 thumbnail: { thumbnailSrc }
 draft: false
 ---

@@ -1,7 +1,7 @@
 ---
 title: Lombok을 활용한 이상적인 패턴
 date: 2022-08-19 21:08:02
-category: PROJECT
+category: SPRING-BOOT
 thumbnail: { thumbnailSrc }
 draft: false
 ---

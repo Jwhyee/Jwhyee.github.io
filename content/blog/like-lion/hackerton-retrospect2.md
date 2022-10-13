@@ -1,7 +1,7 @@
 ---
 title: 해커톤 프로젝트 회고(2회차)
 date: 2022-09-06 22:09:18
-category: project
+category: LIKE-LION
 thumbnail: { thumbnailSrc }
 draft: false
 ---
