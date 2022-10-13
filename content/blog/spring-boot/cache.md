@@ -1,5 +1,5 @@
 ---
-title: cache
+title: Spring Boot에서 캐시 사용
 date: 2022-10-13 14:10:42
 category: spring-boot
 thumbnail: { thumbnailSrc }
@@ -10,8 +10,13 @@ draft: false
 > `Spring Boot`는 외부 캐시를 지정하지 않으면 `Map`과 같은 내부 메모리 캐시를 사용한다.
 
 ### ⚙️ Setting
+
 > `SpringBoot`에서 캐시를 사용하기 위해서는 `Application`에서 `@EnableCaching` 어노테이션을 사용한다.
 
+```java
+// build.gradle
+implementation 'org.springframework.boot:spring-boot-starter-web'
+```
 ```java
 // ${PackageName}Application.java
 @...
