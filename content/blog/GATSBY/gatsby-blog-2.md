@@ -1,7 +1,7 @@
 ---
 title: 개츠비 블로그 만들기 - 2
 date: 2022-07-24 23:07:79
-category: gatsby
+category: GATSBY
 thumbnail: { thumbnailSrc }
 draft: false
 ---
