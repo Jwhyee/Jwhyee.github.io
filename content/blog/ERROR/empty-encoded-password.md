@@ -69,4 +69,5 @@ public class MemberService {
 }
 ```
 
-> [참고 블로그1](https://java8.tistory.com/m/509), [참고 블로그2](https://javachoi.tistory.com/421)
+> [참고 블로그1](https://java8.tistory.com/m/509)<br>
+> [참고 블로그2](https://javachoi.tistory.com/421)
