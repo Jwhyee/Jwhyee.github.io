@@ -17,7 +17,7 @@ lang: 'en'
 </div> -->
 
 📧  **Email** : 
-kawnsdud@gmail.com
+kawnsdud@naver.com
 
 🐱  **Github** : 
 [https://github.com/Jwhyee](https://github.com/Jwhyee)
