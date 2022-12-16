@@ -1,7 +1,7 @@
 ---
 title: "[PRG] - 푸드 파이트 대회(JAVA)"
 date: 2022-11-18 16:11:32
-category: ps
+category: PS
 thumbnail: { thumbnailSrc }
 draft: false
 ---
