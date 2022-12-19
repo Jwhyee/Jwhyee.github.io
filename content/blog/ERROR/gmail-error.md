@@ -1,7 +1,7 @@
 ---
 title: "[Spring][ERROR] - SimpleMailMessage 에러"
 date: 2022-10-26 09:10:13
-category: error
+category: ERROR
 thumbnail: { thumbnailSrc }
 draft: false
 ---
