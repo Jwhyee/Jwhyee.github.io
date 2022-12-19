@@ -1,6 +1,6 @@
 ---
 title: "[Spring] - ModelMapper"
-date: 2022-10-13 14:10:42
+date: 2022-12-19 16:10:42
 category: SPRING-BOOT
 thumbnail: { thumbnailSrc }
 draft: false
