@@ -1,5 +1,5 @@
 ---
-title: Spring Boot에서 Cache 사용
+title: "[Spring] - Cache"
 date: 2022-10-13 14:10:42
 category: SPRING-BOOT
 thumbnail: { thumbnailSrc }
