@@ -1,5 +1,5 @@
 ---
-title: empty-encoded-password
+title: "[Spring][ERROR] - PasswordEncoder 에러"
 date: 2022-10-26 09:10:70
 category: error
 thumbnail: { thumbnailSrc }

@@ -1,5 +1,5 @@
 ---
-title: gmail-error
+title: "[Spring][ERROR] - SimpleMailMessage 에러"
 date: 2022-10-26 09:10:13
 category: error
 thumbnail: { thumbnailSrc }

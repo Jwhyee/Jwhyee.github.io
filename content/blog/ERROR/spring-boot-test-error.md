@@ -1,5 +1,5 @@
 ---
-title: 스프링부트 테스트 에러
+title: "[Spring][ERROR] - @SpringBootTest 에러"
 date: 2022-08-19 21:08:37
 category: ERROR
 thumbnail: { thumbnailSrc }
