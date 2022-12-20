@@ -19,12 +19,12 @@ draft: false
 만약 Web에 대한 기술이 바뀌더라도 `Service` 는 건재해야하기 때문에 기존 서비스 로직을 옮길 것이다.
 
 ### 로그인 유저 관리
-기존에는 `Security`를 사용할 줄 몰라 모든 `Controller`의 메소드에서 `Member` 객체를 전달해서 사용했다.<br>
-즉, `Thymeleaf`에서도 `sec:authorize="isAuthenticated()"`를 사용할 수 없는 상태였다.<br>
-이를 보완하기 위해 `UserDetailsService`를 다시 구현해보고자 한다.
+기존에는 `Security`를 사용할 줄 몰라 모든 `Controller`의 메소드에서 `Member` 객체를 전달해서 사용했다. 
+때문에 `Thymeleaf`에서도 `sec:authorize="isAuthenticated()"`를 사용할 수 없는 상태였다.<br>
+즉, 이러한 문제를 보완하기 위해 `UserDetailsService`를 다시 구현해보고자 한다.
 
 ### Thymeleaf Layout
-당시에는 `layout`에 대한 존재조차 몰라 무엇이든 Fragment 하나에 다 때려넣고 사용했다.<br>
+당시에는 `layout`에 대한 존재조차 몰라 무엇이든 Fragment 하나에 다 때려넣고 사용했다. 
 덕분에 `fragments.html`에는 **3,000줄**이 넘는 코드가 들어가게 되었다.<br>
 이를 `layout`을 통해 필요한 부분만 렌더링하고, `fragments`도 세분화하는 작업을 진행하려고 한다.
 
