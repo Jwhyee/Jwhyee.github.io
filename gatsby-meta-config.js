@@ -2,7 +2,7 @@ module.exports = {
   title: `Jwhy Blogitory`,
   description: `Jwhy Blog Repository`,
   author: `[Jwhy]`,
-  introduction: `멋쟁이 사자처럼 백엔드 스쿨 1기 교육생`,
+  introduction: `끊임없이 고민하는 개발자`,
   siteUrl: `https://jwhyee.github.io/`, // Your blog site url
   social: {
     twitter: ``, // Your Twitter account
