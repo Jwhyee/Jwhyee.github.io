@@ -3,9 +3,13 @@ title: "[PRG] - 기사단원의 무기(Java)"
 last_modified_at: 2022-11-17T21:11:37-21:30
 categories: ERROR
 tags:
-- Spring Boot
-- Error
-- SpringBootTest
+  - Spring Boot
+  - Error
+  - SpringBootTest
+toc: true
+toc_sticky: true
+toc_label: "Programmers"
+toc_icon: "file"
 ---
 ## 프로그래머스
 
