@@ -1,11 +1,12 @@
 ---
 title: "[PRG] - 기사단원의 무기(JAVA)"
 last_modified_at: 2022-11-17T21:11:62-21:30
-categories: ERROR
+categories:
+  - ERROR
 tags:
-- Programmers
-- Java
-- 기사단원의 무기
+  - Programmers
+  - Java
+  - 기사단원의 무기
 ---
 
 ## 프로그래머스
