@@ -18,12 +18,12 @@ toc_icon: "file"
 java.lang.IllegalStateException: Failed to load ApplicationContext
 ```
 
-![](spring-boot-test-error/test-error.png)
+![test-error](https://user-images.githubusercontent.com/82663161/209671183-ab2344be-71fb-41c9-8585-2e3583fc7fd9.png)
 
 ## 문제 분석
 테스트로 작성한 코드는 아래와 같다.<br>
 컴파일 시점으로 봐도 문제될게 없는 코드였고, Application도 정상적으로 작동했다.
-![](spring-boot-test-error/test-code-example.png)
+![test-code-example](https://user-images.githubusercontent.com/82663161/209671155-96323e72-06bd-439b-8253-d564f2488cdc.png)
 
 에러 구문을 분석해보니 아래와 같은 내용도 포함되어 있었다.
 
@@ -81,5 +81,3 @@ dependencies {
 
 ### 참고 블로그
 https://blog.csdn.net/weixin_43549350/article/details/115050847
-
-( `#Spring Boot Test Error` ,  `#Junit Test Error` )
