@@ -15,12 +15,12 @@ tags:
 java.lang.IllegalStateException: Failed to load ApplicationContext
 ```
 
-![](./spring-boot-test-error/test-error.png)
+![](assets/images/posts/spring-boot-test-error/test-error.png)
 
 ## 문제 분석
 테스트로 작성한 코드는 아래와 같다.<br>
 컴파일 시점으로 봐도 문제될게 없는 코드였고, Application도 정상적으로 작동했다.
-![](./spring-boot-test-error/test-code-example.png)
+![](assets/images/posts/spring-boot-test-error/test-code-example.png)
 
 에러 구문을 분석해보니 아래와 같은 내용도 포함되어 있었다.
 
