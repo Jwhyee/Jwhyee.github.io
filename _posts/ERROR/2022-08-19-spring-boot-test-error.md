@@ -1,5 +1,5 @@
 ---
-title: "[Spring][ERROR] - @SpringBootTest 에러"
+title: "[Spring] - @SpringBootTest 에러"
 last_modified_at: 2022-08-19T21:08:37-21:30
 categories: ERROR
 tags:
