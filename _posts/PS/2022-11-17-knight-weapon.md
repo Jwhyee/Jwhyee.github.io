@@ -1,11 +1,11 @@
 ---
 title: "[PRG] - 기사단원의 무기(Java)"
 last_modified_at: 2022-11-17T21:11:37-21:30
-categories: ERROR
+categories: PS
 tags:
-  - Spring Boot
-  - Error
-  - SpringBootTest
+  - Programmers
+  - Java
+  - LV1
 toc: true
 toc_sticky: true
 toc_label: "Programmers"
