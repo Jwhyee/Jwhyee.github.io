@@ -3,9 +3,13 @@ title: "[Spring] - @SpringBootTest 에러"
 last_modified_at: 2022-08-19T21:08:37-21:30
 categories: ERROR
 tags:
-- Spring Boot
-- Error
-- SpringBootTest
+  - Spring Boot
+  - Error
+  - SpringBootTest
+toc: true
+toc_sticky: true
+toc_label: "SpringBootTest Error"
+toc_icon: "file"
 ---
 ## 문제 발단
 기본적인 코드를 작성한 뒤 Test를 해야할 일이 생겨 간단한 코드를 작성 후 돌려봤는데 아래와 같은 에러를 마주치게 되었다.<br>
