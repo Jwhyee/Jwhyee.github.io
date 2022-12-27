@@ -5,7 +5,7 @@ categories: ERROR
 tags:
 - Spring Boot
 - Error
-- @SpringBootTest
+- SpringBootTest
 ---
 
 ## 문제 발단
