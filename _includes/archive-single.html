@@ -17,8 +17,8 @@
         <img src="{{ teaser | relative_url }}" alt="">
       </div>
     {% endif %}
-    {% include page__meta.html type=include.type %}
     <h2 class="archive__item-title no_toc" itemprop="headline">
+      {% include page__meta.html type=include.type %}
       {% if post.link %}
         <a href="{{ post.link }}">{{ title }}</a> <a href="{{ post.url | relative_url }}" rel="permalink"><i class="fas fa-link" aria-hidden="true" title="permalink"></i><span class="sr-only">Permalink</span></a>
       {% else %}
