@@ -338,6 +338,18 @@ body {
   }
 }
 
+.page__taxonomy > .taxonomy__keywords {
+  font-size: $type-size-6;
+
+  a{
+    background-color:#4b5057;
+    color: #eb6060;
+    font-family: Monaco;
+    border-radius: 4px;
+    padding: 0 0.2rem 0;
+  }
+}
+
 .page__taxonomy-item {
   display: inline-block;
   margin-right: 5px;
