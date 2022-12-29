@@ -26,7 +26,7 @@
                     {% for hash in tag_hashes %}
                         {% assign keyValue = hash | split: '|' %}
                         {% capture tag_word %}{{ keyValue[1] | strip_newlines }}{% endcapture %}
-                        <a style="background-color:#4b5057; color: #eb6060; font-family: Monaco; border-radius: 4px; padding: 0 0.2rem 0;" href="{{ tag_word | slugify | prepend: path_type | prepend: site.tag_archive.path | relative_url }}" class="page__taxonomy-item-tag" rel="tag">{{ tag_word }}</a>{% unless forloop.last %}<span class="sep"> </span>{% endunless %}
+                        <a style="font-size:1rem; background-color:#4b5057; color: #eb6060; font-family: Monaco; border-radius: 4px; padding: 0 0.2rem 0;" href="{{ tag_word | slugify | prepend: path_type | prepend: site.tag_archive.path | relative_url }}" class="page__taxonomy-item-tag" rel="tag">{{ tag_word }}</a>{% unless forloop.last %}<span class="sep"> </span>{% endunless %}
                     {% endfor %}
                 </span>
         </span>
