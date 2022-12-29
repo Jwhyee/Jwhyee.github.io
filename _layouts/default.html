@@ -20,6 +20,16 @@
 -->
 <html lang="{{ site.locale | slice: 0,2 | default: "en" }}" class="no-js">
   <head>
+    <style>
+      ::-webkit-scrollbar{width: 16px;}
+      ::-webkit-scrollbar-track {background-color:#4b4f52; border-radius: 16px;}
+      ::-webkit-scrollbar-thumb {background-color:#5e6265; border-radius: 16px;}
+      ::-webkit-scrollbar-thumb:hover {background: #ffd24c;}
+      ::-webkit-scrollbar-button:start:decrement,::-webkit-scrollbar-button:end:increment
+      {
+        width:12px;height:12px;background:transparent;}
+      }
+    </style>
     {% include head.html %}
     {% include head/custom.html %}
   </head>
@@ -38,13 +48,6 @@
         {% include_cached search/search_form.html %}
       </div>
     {% endif %}
-
-    <!-- Back To Top -->
-    <aside class="sidebar__back_to_top">
-      <a href="#site-nav">
-        <img id="back-to-top-img" style="width: 55px;" src="/assets/images/back-to-top.png"/>
-      </a>
-    </aside>
 
     <div id="footer" class="page__footer">
       <footer>
