@@ -3,7 +3,7 @@ title: "2022년 회고"
 last_modified_at: 2022-12-31T22:10:37-23:30
 categories: RETROSPECT
 tags:
-  - 연말 회고
+  - Retrospect
 toc: true
 toc_sticky: true
 toc_label: "Retrospect"
