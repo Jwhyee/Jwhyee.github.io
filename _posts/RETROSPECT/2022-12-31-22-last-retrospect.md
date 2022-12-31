@@ -11,7 +11,7 @@ toc_icon: "file"
 ---
 ## 🤔 연말 회고
 
-![image](https://user-images.githubusercontent.com/82663161/210140187-273ffea4-6d36-4c13-a938-3942411e8a69.png){: width="500" height="200"){: .center}
+<center><img src="https://user-images.githubusercontent.com/82663161/210140187-273ffea4-6d36-4c13-a938-3942411e8a69.png" width="300" height="300"></center>
 
 지금 돌이켜보면 2022년은 여러 의미로 정말 나에게 **가장 힘든 해**였다고 생각한다.<br>
 지금까지 어떤 일들을 했는지 모두 서술할 수는 없지만, 하나하나 정리해보면서 돌아보고자 한다!
@@ -26,7 +26,7 @@ toc_icon: "file"
 
 ### ⌨️ 대학교 웹 프로젝트 경험
 
-![image](https://user-images.githubusercontent.com/82663161/210139829-dc4a8673-86b8-4b1d-b09b-0213934657f8.png){: width="500" height="200"){: .center}
+<center><img src="https://user-images.githubusercontent.com/82663161/210139829-dc4a8673-86b8-4b1d-b09b-0213934657f8.png" width="300" height="200"></center>
 
 대학교 졸업 작품을 진행하기 위해 나를 포함한 총 3명(백엔드 2명, 프론트 1명)을 모집했다.<br>
 하지만 프론트를 담당하는 팀원이 휴학을 해버리면서 백엔드 2명이서 프로젝트를 시작했다.<br>
@@ -43,7 +43,7 @@ toc_icon: "file"
 1차로 자기소개서를 제출했고, 2차는 간단한 코딩테스트와 녹화 면접을 진행했다.<br>
 코딩 테스트의 목표는 'Java 기초를 어느정도 활용할 수 있는가'가 중점인 것 같은 문제들이었다.
 
-![image](https://user-images.githubusercontent.com/82663161/210032062-8e18fdda-e353-41c0-90f4-791d14ef9a1a.png){: width="500" height="200"){: .center}
+<center><img src="https://user-images.githubusercontent.com/82663161/210032062-8e18fdda-e353-41c0-90f4-791d14ef9a1a.png" width="400" height="200"></center>
 
 다행히 최종 합격을 받을 수 있었고, 교육 기간은 6월 중순 ~ 11월 중순이었다.<br>
 아직 대학교에 재학 중이었기 때문에, 대학교 교무처에 국비 서류를 제출하면 출석 인정을 해주는 시스템이 존재해 교육을 수강했다.
@@ -52,7 +52,7 @@ toc_icon: "file"
 
 ### 😵 계속된 불합격
 
-![image](https://user-images.githubusercontent.com/82663161/210140096-1af89a6e-376c-4447-b855-fb4a41ba1b4a.png){: width="500" height="200"){: .center}
+<center><img src="https://user-images.githubusercontent.com/82663161/210140096-1af89a6e-376c-4447-b855-fb4a41ba1b4a.png" width="400" height="200"></center>
 
 교육을 시작하기 전보다 Java에 대한 기초 지식이나, Spring에 대해 더 많은 지식을 얻을 수 있었다.<br>
 지금 이 시기를 놓치기 싫어서 바로 취업을 하기 위해 신입 공고가 뜨는 기업은 모두 지원을 했다.<br>
@@ -62,7 +62,7 @@ toc_icon: "file"
 
 ### 👨‍🏫 과외
 
-![image](https://user-images.githubusercontent.com/82663161/210140618-91dc130e-acc2-43b7-b597-e23f7ca67143.png){: width="500" height="200"){: .center}
+<center><img src="https://user-images.githubusercontent.com/82663161/210140618-91dc130e-acc2-43b7-b597-e23f7ca67143.png" width="400" height="200"></center>
 
 취업을 하기 전까지 알바를 하는 것보다 나의 지식을 다시 점검할 겸 `Java` 과외를 시작했다.<br>
 나도 많이 부족하지만, 나의 지식을 알려주면서 내가 부족한 부분을 다시 점검할 수 있는 기회였다.<br>
@@ -71,20 +71,28 @@ toc_icon: "file"
 
 ### 👨‍🎓 졸업 예정
 
-![image](https://user-images.githubusercontent.com/82663161/210140559-63f1af2d-db30-474e-b570-9ee7185135e5.png){: width="500" height="200"){: .center}
+<center><img src="https://user-images.githubusercontent.com/82663161/210140559-63f1af2d-db30-474e-b570-9ee7185135e5.png" width="400" height="200"></center>
 
 군대를 포함한 총 6년간의 교육을 마치고 드디어 졸업을 한다.<br>
-1학년을 제외한 3년 동안 전액 장학금으로 학교를 다닌 것이 가장 자랑스러운 일이라고 생각한다.<br>
+1학년을 제외한 3년 동안 `전액 장학금`으로 학교를 다닌 것이 가장 자랑스러운 일이라고 생각한다.<br>
 매년 `학생회`하면서 많은 사람들을 알게 되었고, 학과 `부학생회장`이라는 직책을 맡으며, **리더십**도 기를 수 있었다.<br>
 개발에 대한 흥미를 돋을 수 있게 해준 소중한 친구도 만날 수 있어 좋은 경험이었다고 생각한다.
 
-그래도 학교에 대한 정은 이제 없어서 졸업하고 다시 돌아갈 일은 없을 것 같다. ^___^
+그래도 졸업하고 다시 돌아갈 일은 없을 것 같다. ^___^
 
-## 마무리
+## 👻 마무리
 
-![image](https://user-images.githubusercontent.com/82663161/210140750-c56a940d-4c84-47ba-a821-b33289d76160.png){: width="500" height="200"){: .center}
+<center><img src="https://user-images.githubusercontent.com/82663161/210140750-c56a940d-4c84-47ba-a821-b33289d76160.png"></center>
 
-모든 내용을 다 작성하진 않았지만, 정리하면서 느낀 것은 다음 해에는 더 열심히 살아야겠다는 생각이 들었다.<br>
-아직도 모르는게 너무 많고, 읽으려고 산 책들도 다 읽지 못한 상태기 때문이다.<br>
-너무 게으른 삶을 보낸 것 같아 많이 후회스럽기도 하지만 내년에는 더 열심히 살아야겠다는 계기가 되어 다행이긴하다.<br>
-2023년에는 꼭 내가 원하는 기업에 취업하는 것을 목표로 해야겠다!
+개발에 대한 흥미를 느끼고, 나의 진로를 확실하게 정할 수 있는 해였다.<br>
+2번의 작은 프로젝트를 진행하면서 내가 부족한 부분에 대해 확실히 알고, 새로운 것도 많이 배울 수 있었다.<br>
+이제 대학을 졸업하고, 취업을 시작한다는 의미로 열심히 살아야겠다는 생각이 들었다.
+
+~~그래도 호랑이띠라서 운세가 좀 따라서 취업 가능할 줄 알았는데,,~~
+
+2023년에는 조금 더 부지런한 삶을 살고, 내가 성장할 수 있는 시간을 더 많이 가져야겠다.
+
+### ⚽️ 올해의 목표
+
+- 작년에 사놓고 읽지도 못한 책들은 꼭 다 읽기!
+- 상반기 안에 내가 목표로 하는 기업에 들어가기!
