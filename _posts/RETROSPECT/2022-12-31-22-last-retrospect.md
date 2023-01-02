@@ -30,10 +30,10 @@ toc_icon: "file"
 
 ### ⌨️ 대학교 웹 프로젝트 경험
 
+<center><img src="https://user-images.githubusercontent.com/82663161/210139829-dc4a8673-86b8-4b1d-b09b-0213934657f8.png" width="300" height="200"></center>
+
 대학교에서 졸업을 하기 위해서는 `졸업 작품`을 만들고, 이에 대한 `논문`을 작성해야 했다.<br>
 이를 위해서 팀원을 모집하였고, 나를 포함한 `3명(백엔드 2명, 프론트 1명)`이서 프로젝트를 진행하기 시작했다.
-
-<center><img src="https://user-images.githubusercontent.com/82663161/210139829-dc4a8673-86b8-4b1d-b09b-0213934657f8.png" width="300" height="200"></center>
 
 하지만 프론트를 담당하던 `팀원`이 `휴학`을 해버리면서 백엔드 2명만이 남게 되었다.<br>
 기존에 사용하려 했던 `React`를 과감히 포기하고, `Thymeleaf`로 화면을 구성하는 방향으로 변경했다.
@@ -54,6 +54,8 @@ toc_icon: "file"
 
 ### 🦁 멋쟁이 사자처럼 백엔드 스쿨
 
+<center><img src="https://user-images.githubusercontent.com/82663161/210032062-8e18fdda-e353-41c0-90f4-791d14ef9a1a.png" width="400" height="200"></center>
+
 졸업 작품이 마무리 되고, `Spring`에 대해 더 공부할 기회가 있을까 스터디를 찾아보고 있었다.<br>
 그러던 중 멋사 백엔드 스쿨에 대한 모집 글을 볼 수 있었고, 커리큘럼을 확인해보니 내가 필요한 부분이 모두 들어있었다.
 
@@ -67,8 +69,6 @@ toc_icon: "file"
 2차 : `Java`를 이용한 간단한 코딩테스트 + 녹화 면접
 
 코딩 테스트의 목표는 `Java 기초를 어느정도 활용할 수 있는가`가 중점인 것 같은 문제들이었다.
-
-<center><img src="https://user-images.githubusercontent.com/82663161/210032062-8e18fdda-e353-41c0-90f4-791d14ef9a1a.png" width="400" height="200"></center>
 
 다행히 `최종 합격`을 받을 수 있었고, 현재는 `수료`까지 잘 마친 상태이다!<br>
 `백엔드 스쿨`을 수강하면서 정말 다양하고 깊은 지식을 배울 수 있었고, 앞으로 공부를 어떻게 해야할지 알 수 있는 기회였다.
