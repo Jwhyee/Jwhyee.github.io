@@ -1,7 +1,7 @@
 ---
 title: "[Spring] - Optional의 사용"
 last_modified_at: 2022-12-20T21:00:37-21:30
-categories: Spring-Boot
+categories: SPRING-BOOT
 tags:
   - SpringBoot
   - Optional

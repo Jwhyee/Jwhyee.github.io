@@ -1,7 +1,7 @@
 ---
 title: "[CSS] - bootstrap과 tailwind 함께 사용하기"
 last_modified_at: 2022-08-25T21:00:37-21:30
-categories: Front-Dev
+categories: FRONT-DEV
 tags:
   - SpringBoot
   - Bootstrap
