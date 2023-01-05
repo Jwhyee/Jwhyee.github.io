@@ -1,7 +1,7 @@
 ---
 title: "[Spring] - Lombok을 활용한 이상적인 패턴"
 last_modified_at: 2022-08-19T21:00:37-21:30
-categories: CS
+categories: Spring-Boot
 tags:
   - SpringBoot
   - Lombok
