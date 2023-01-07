@@ -60,9 +60,10 @@ public class Solution{
         // 각 배열을 돌면서 문자열 합치는 과정
         for (String str : sArr) {
             // 문자열에 공백이 포함되어 있을 경우 모두 제거한 뒤 빈 문자열인지 확인
-            if(!str.replaceAll(" ", "").equals("")) 
+            if(!str.replaceAll(" ", "").equals("")) {
                 // 첫 글자를 대문자로 만든 뒤 붙이고, 나머지 글자는 그대로 붙이기 + 단어 구분을 위한 공백 추가
                 sb.append(str.substring(0, 1).toUpperCase()).append(str.substring(1)).append(" ");
+            }
         }
         return sb.toString().trim();
     }
@@ -90,11 +91,17 @@ public class Solution{
         // 문자열을 돌면서 추가
         for (int i = 1; i < s.length(); i++) {
             // 문자열의 i번째 요소가 공백이면 그대로 추가
-            if (s.charAt(i) == ' ') sb.append(" ");
+            if (s.charAt(i) == ' ') {
+                sb.append(" ");
+            }
             // 현재 문자 앞에 공백이 있다면 단어 시작이므로 대문자로 만든 뒤 추가
-            else if (s.charAt(i - 1) == ' ') sb.append(Character.toUpperCase(s.charAt(i)));
+            else if (s.charAt(i - 1) == ' '){
+                sb.append(Character.toUpperCase(s.charAt(i)));
+            }
             // 이 외에는 모두 소문자로 추가
-            else sb.append(s.charAt(i));
+            else{
+                sb.append(s.charAt(i));
+            }
         }
         
         return sb.toString();

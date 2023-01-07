@@ -61,8 +61,11 @@ class Solution {
                     else cnt+=2;
                 }
             }
-            if (cnt > limit) answer+=power;
-            else answer+=cnt;
+            if (cnt > limit) {
+                answer += power;
+            } else {
+                answer += cnt;
+            }
         }
         return answer;
     }

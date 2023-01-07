@@ -47,7 +47,9 @@ class Solution {
         String answer = "";
         StringBuilder temp = new StringBuilder();
         for (int i = 0; i < food.length; i++) {
-            if(i == 0) continue;
+            if(i == 0) {
+                continue;
+            }
             for (int j = 0; j < food[i] / 2; j++) {
                 answer += i;
                 temp.append(i);

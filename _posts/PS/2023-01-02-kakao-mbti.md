@@ -101,9 +101,13 @@ class Solution {
       int typeTwoScore = scoreMap.getOrDefault(typeTwo, 0);
 
       // 각 지표에 대한 점수를 비교해서 성격 유형 지정
-      if(typeOneScore > typeTwoScore) sb.append(typeOne);
-      else if(typeOneScore < typeTwoScore) sb.append(typeTwo);
-      else sb.append(typeOne);
+      if(typeOneScore > typeTwoScore){
+          sb.append(typeOne);
+      } else if(typeOneScore < typeTwoScore){
+          sb.append(typeTwo);
+      } else{
+          sb.append(typeOne);
+      }
     }
 
     // 최종적으로 만들어진 성격 유형 결과 반환
@@ -121,7 +125,9 @@ class Solution {
     int i = 0;
 
     // for-each를 통해 scoreMap에 각 유형에 대한 점수를 저장
-    for (String s : survey) putScoreMap(s.toCharArray(), choices[i++]);
+    for (String s : survey) {
+        putScoreMap(s.toCharArray(), choices[i++]);
+    }
 
     // 최종적으로 만들어진 성격 유형 반환
     return getMbti();
