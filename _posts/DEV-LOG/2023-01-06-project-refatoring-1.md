@@ -29,9 +29,8 @@ toc_icon: "file"
 
 ## 🛠 문제 해결
 
-우선 오늘 해결할 문제는 `Security`를 다시 구현하는 것이다!<br>
-`deprecated`된 `WebSecurityConfigurerAdapter`대신 `SecurityFilterChain`을 적용하고,
-`Thymeleaf`에서도 `Security`를 정상적으로 사용가능하도록 변경해보자!
+우선 오늘 해결할 문제는 `Security`와 관련된 내용들이다!<br>
+리팩터링을 진행한 순서대로 차근차근 다시 정리해보자!
 
 ### 1️⃣ AccountService의 관심사 분리
 
@@ -94,9 +93,6 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 ```java
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
-    private final AccountService accountService;
-    private final DataSource dataSource;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -176,46 +172,55 @@ public class SecurityConfig {
 
 바로 위에서 설명했듯이 모든 페이지에 로그인을 필요하는 방식을 적용해서 아래와 같이 구현이 되어있다.
 
+```html
+<div th:each="reply : ${reply}">
+    <button th:if="${reply.getWriter().id==account.id}">수정하기</button>
+</div>
+```
+
 ```java
-public class AccountController{
-    @GetMapping("/profile/{username}")
-    public String showProfilePage(@CurrentUser Account account) {
+public class BoardController{
+    @GetMapping("/board/{id}")
+    public String showPostDetail(@PathVariable long id, @CurrentUser Account account) {
         ...
-        return "account/profile";
+        return "board/detail";
     }
 }
 ```
 
-여기서 `@CurrentUser`는 `Custom Annotation`으로 현재 로그인한 `Account`를 의미한다.<br>
-비회원도 접근이 가능하게 하기 위해서는 위 어노테이션 대신 아래와 같은 코드로 바꿀 필요가 있었다.
-
-```java
-public class AccountController{
-    @PreAuthorize("isAuthenticated()")
-    @GetMapping("/profile/{username}")
-    public String showProfilePage(@AuthenticationPrincipal SecurityUser securityUser) {
-        ...
-        return "account/profile";
-    }
-}
-```
-
-위와 같이 해당 API 요청에는 권한이 필요하도록 `@PreAuthorize`를 사용해주고,<br>
-기존 `@CurrentUser`대신 `Security`에서 제공하는 `@AuthenticationPrincipal`을 사용하는 것으로 변경했다.
-
-이런 방식으로 변경한다면 `Thymeleaf`에서도 추가적인 권한을 지정할 필요가 없다.<br>
-단, 회원, 비회원이 모두 접근이 가능한 곳에는 아래와 같이 `Thymeleaf` 문법을 추가해주었다.
+대부분의 `html`에는 위와 같이 현재 로그인한 계정과 비교하는 로직이 구성되어 있다.<br>
+때문에 `@CurrentUser`라는 `Custom Annotation`을 통해 현재 로그인한 `Account` 객체를 가져와 사용했다.<br>
+앞으로는 비회원도 `Read`의 기능은 할 수 있도록 아래와 같은 코드로 바꿀 필요가 있었다.
 
 ```html
 <div sec:authorize="isAnonymous()">
     <p>로그인이 필요한 서비스입니다.</p>
 </div>
-<div sec:authorize="isAuthenticated()">
+<th:block sec:authorize="isAuthenticated()">
     <div th:each="reply : ${reply}">
-        ...
+        <button th:if="${reply.getWriter().id==account.id}">수정하기</button>
     </div>
-</div>
+</th:block>
 ```
+
+```java
+public class BoardController{
+    @GetMapping("/board/{id}")
+    public String showPostDetail(@PathVariable long id,
+                                 @AuthenticationPrincipal SecurityUser securityUser) {
+      if (securityUser != null) {
+          Account account = securityUser.getAccount();
+          model.addAttribute(account);
+      }
+      ...
+      return "board/detail";    
+    }
+}
+```
+
+이처럼 `Thymeleaf Security`에서 제공하는 `authorize`기능을 사용해 비회원은 동작하지 않도록한다.<br>
+우선 위와 같은 형태로 로직을 구성해 놓았고, 추후에 `Optional` 타입으로 반환할 수 있도록 수정할 예정이다!<br>
+그럼 로그인이 필요한 페이지에 대해서는 비회원을 `Exception Handler`로 잡을 수 있기 때문이다!
 
 ## 🤔 1일차 회고
 
