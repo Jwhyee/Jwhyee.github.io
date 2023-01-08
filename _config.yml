@@ -227,6 +227,7 @@ plugins:
   - jekyll-include-cache
   # for create auto categories
   - jekyll-archives
+  - jemoji
 
 # mimic GitHub Pages with --safe
 whitelist:
