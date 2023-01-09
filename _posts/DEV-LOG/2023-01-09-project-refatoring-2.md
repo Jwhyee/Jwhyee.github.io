@@ -17,16 +17,38 @@ toc_icon: "file"
 
 ## ✅ 문제 해결
 
-### 📝 게시글 추가
-
-우선 게시글 추가는 `ajax`를 이용한 `REST API` 통신을 이용하고 있다.<br>
-당시에 `ajax`에 빠져있던 상태라 수정, 삭제에 대한 기능을 비동기 통신으로 변경했었다.(왜 그랬을까..) 
-
-게다가 가장 큰 문제점은 `input` 태그의 `name` 값들이 `DTO`와 다른 점이다...
-
 ![](https://golden-goblin.com/content-thief/wp-content/uploads/sites/5/kboard_attached/1/202006/5ed8e0d37033f5013918.gif){: .center}
 
-우선 `HTML`에 들어간 값들을 변경하는 작업을 한 뒤, `Controller`의 로직을 변경했다.
+우선 게시글 추가는 `ajax`를 이용한 `REST API` 통신을 이용하고 있다.<br>
+당시에 `ajax`에 빠져있던 상태라 수정, 삭제에 대한 기능을 비동기 통신으로 변경했었다...<br>
+게다가 가장 큰 문제점은 `input` 태그의 `name` 값들이 `DTO`와 다른 점이다...
+
+우선 `HTML`에 들어간 값들을 변경하는 작업을 한 뒤, 이후 작업을 진행했다.<br>
+처음 개발을 진행할 때 각 필드명을 이상하게 지어놔서 간단하게 작성해놓도록 하겠다!
+
+```java
+public class Board extends BaseEntity {
+    //post_sort : 게시글 카테고리(자유, 정보, 질문)
+    private String boardTitle;
+
+    //post_sub_sort : 게시글 세부 카테고리(정보, 질문에 대한 세부 분야)
+    private String subBoardTitle;
+
+    //post_title : 게시글 제목
+    private String title;
+
+    //post_sub_title : 게시글 부제목
+    private String subTitle;
+
+    //content : 게시글 내용
+    private String content;
+}
+
+```
+
+### 📝 게시글 추가
+
+`Controller`의 우선 게시글 추가 로직을 보도록하자!
 
 ```java
 /* 변경하기 전 코드 */
@@ -68,12 +90,14 @@ public class BoardController{
 
 어떤 점이 변화되었는지 한 줄씩 살펴보자!
 
+#### 게시글 작성 권한 부여
 ```java
 @PreAuthorize("isAuthenticated()")
 ```
 
 - 게시글 작성은 회원에 대한 권한이기 때문에 해당 코드를 추가했다.
 
+#### 데이터를 받아오는 방식 
 ```java
 // 기존 코드
 @RequestParam(value = "article_file", required = false) List<MultipartFile> multipartFile,
@@ -91,6 +115,7 @@ public class BoardController{
 - 때문에 `Java`에서는 json과 같이 key, value를 사용하는 `Map`으로 받을 수 있다!
 - `List<MultipartFile>`은 따로 파싱해서 사용하는 것보단 그대로 받아오는게 나을 것 같아 그대로 사용했다.
 
+#### ModelMapper 적용
 ```java
 public class BoardController{
     public Long addNewBoard(...) {
@@ -119,6 +144,7 @@ public class BoardController{
 
 해당 내용에 대해서 공부를 한 뒤 `MapStruct`로 리팩터링할지 정해봐야겠다!
 
+#### 저장 로직 간소화
 ```java
 public class BoardService{
     // 기존 코드
@@ -161,11 +187,12 @@ public class BoardService{
 `detail` 페이지는 해당 게시글의 `id`를 통해 로직을 처리하게 된다.<br>
 때문에 존재하지 않는 `id`가 들어왔을 때의 예외 처리가 무조건적으로 필요하다.
 
+#### 예외 발생 시 처리 방식
 ```java
 public class BoardController{
     public String showDetailPage() {
         // 기존 코드
-        boolean hasBoardError = boardService.boardReportedOrNull(boardId);
+        boolean hasBoardError = boardService.findBoardReportedOrNull(boardId);
         if (hasBoardError) {
             return "error-page";
         }
@@ -179,12 +206,14 @@ public class BoardController{
 - 기존 방식을 확인해보면 신고되거나, 없는 `id`라면 에러페이지로 가도록 지정해주었다.
   - 이 문제의 가장 큰 문제점은 모든 `Controller` 메소드에 작성을 해줘야하는 것이다.
   - 즉, 많은 부분에서 사용해야하지만, 중복으로 인해 `DRY` 원칙에 위배되는 코드이다.
-- 때문에 결국 `id`를 통해 `Board` 객체를 찾아야하는 것이라면, 하나의 메소드로 만들어 활용하는 것이 낫다.
+- 결론적으로 `id`를 통해 `Board` 객체를 찾아야하는 것이라면, 하나의 메소드로 만들어 활용하는 것이 낫다.
+  - 아래 코드를 통해 더 자세하게 확인해보자!
 
+#### 예외 처리 로직
 ```java
 public class BoardService{
     // 기존 코드
-    public boolean boardReportedOrNull(long bid) {
+    public boolean findBoardReportedOrNull(long bid) {
       boolean errorBoard = false;
         Optional<Board> currentBoard = Optional.ofNullable(boardRepository.findById(bid));
         if (currentBoard.isEmpty() || currentBoard.get().getIsReported()) {
@@ -213,6 +242,7 @@ public class BoardService{
 
 위와 같이 `Custom Exception`을 만들어 구성하였고, 아래 코드로 `Handler`를 추가로 구성하였다.
 
+#### 핸들러 구현
 ```java
 @ControllerAdvice
 @Slf4j
@@ -236,9 +266,7 @@ public class ExceptionHandlerController {
 
 ## 🤔 2일차 회고
 
-![image](https://user-images.githubusercontent.com/82663161/211379328-f2736aac-de2e-488a-bab8-1c64fe77c48d.png){: .center}
-
-정말 코드를 볼 때마다 경악스럽고, 그 때의 나로 돌아가 제발 공부하고 코드짜라고 전해주고 싶다.
+정말 코드를 볼 때마다 경악스럽고, 그 때의 나로 돌아가 제발 공부하고 코드를 짜라고 전해주고 싶다.
 
 그래도 그 때의 내가 이렇게 작성했으니 리팩터링을 하면서 공부를 할 수 있기도 한 것 같다.<br>
 이전 포스팅에서 목표로 한 비즈니스 로직 모듈화와 핸들러는 진행하였고, 카테고리 수정은 아직 진행하지 못했다.
