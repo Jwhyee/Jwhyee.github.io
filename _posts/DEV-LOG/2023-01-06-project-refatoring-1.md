@@ -27,12 +27,12 @@ toc_icon: "file"
 이 모든 내용을 하루 안에 수정하기에는 어려움이 있어 하나하나 수정을 해보고자 한다.<br>
 하나하나 수정하면서 앞으로 어떤 방식을 사용하는게 좋은지 공부해보도록 하자!
 
-## 🛠 문제 해결
+## ✅ 문제 해결
 
 우선 오늘 해결할 문제는 `Security`와 관련된 내용들이다!<br>
 리팩터링을 진행한 순서대로 차근차근 다시 정리해보자!
 
-### 1️⃣ AccountService의 관심사 분리
+### 🗂️ AccountService의 관심사 분리
 
 `Security` 수정에 들어가기 앞서 기존 `UserDetailsService`가 회원 관리 `Service`에 포함되어 있었다.
 
@@ -87,7 +87,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 위 코드에서는 임시로 아이디에 test가 포함되어 있으면 `ADMIN` 권한을 주도록 해놓았지만, 추후에 수정할 예정이다.
 
-### 2️⃣ SecurityConfig 리팩터링
+### 🔐 SecurityConfig 리팩터링
 
 앞서 언급했던 것과 같이 `SecurityConfig`를 구성하기 위한 `WebSecurityConfigurerAdapter`이 `deprecated`되었다.
 
@@ -168,7 +168,7 @@ public class SecurityConfig {
 
 해당 부분을 제대로 활용하기 위해서는 우선 `layout`과 `Thymeleaf Security`를 적용해야한다.
 
-### 3️⃣ Thymeleaf Security 적용
+### 🍃 Thymeleaf Security 적용
 
 바로 위에서 설명했듯이 모든 페이지에 로그인을 필요하는 방식을 적용해서 아래와 같이 구현이 되어있다.
 
