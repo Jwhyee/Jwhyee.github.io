@@ -116,6 +116,46 @@ public class BoardController{
 - `List<MultipartFile>`은 따로 파싱해서 사용하는 것보단 그대로 받아오는게 나을 것 같아 그대로 사용했다.
 
 #### ModelMapper 적용
+
+우선 Map 형태로 ModelMapper에 잘 들어가는지 간단한 테스트를 해보았다.
+
+```java
+@SpringBootTest
+class BoardControllerTest {
+
+    @Autowired
+    ModelMapper mapper;
+
+    @Test
+    @DisplayName("HashMap이 ModelMapper에 잘 들어오는지 확인")
+    void modelMapperTest() {
+        // given
+        Map<String, Object> testMap = new HashMap<>();
+        testMap.put("title", "제목테스트");
+        testMap.put("content", "내용테스트");
+        
+        // when
+        BoardForm dto = mapper.map(testMap, BoardForm.class);
+
+        Board savedBoard = mapper.map(dto, Board.class);
+
+        // then
+        assertThat(dto.getTitle()).isEqualTo("제목테스트");
+        assertThat(dto.getContent()).isEqualTo("내용테스트");
+
+        assertThat(savedBoard.getTitle()).isEqualTo("제목테스트");
+        assertThat(savedBoard.getContent()).isEqualTo("내용테스트");
+    }
+}
+```
+
+- `Controller Test`이기 때문에 `Mock`을 활용해서 진행하는게 가장 이상적이었을텐데,<br>
+나의 목적은 단순히 **잘 매핑되는지** 확인하기 위한 간단한 테스트이기 때문에 위와 같이 진행했다.
+
+![스크린샷 2023-01-10 13 34 43](https://user-images.githubusercontent.com/82663161/211462865-fce7972e-4c54-4e65-aa7d-d75ea83a3347.png){ .center}
+
+정상적으로 매핑이 되는 것을 확인했고, 실제 코드에 적용해보도록 하자!
+
 ```java
 public class BoardController{
     public Long addNewBoard(...) {
