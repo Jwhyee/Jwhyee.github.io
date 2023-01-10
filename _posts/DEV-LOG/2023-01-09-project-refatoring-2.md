@@ -46,9 +46,80 @@ public class Board extends BaseEntity {
 
 ```
 
+### 📅 날짜 구하기
+
+<center>
+  <img width="654" alt="스크린샷 2023-01-10 15 20 28" src="https://user-images.githubusercontent.com/82663161/211476421-128da64b-610c-4d53-85e3-6ca666075487.png">
+</center>
+
+사진과 같이 작성일에 대한 처리는 현재 시간으로 부터 `~전`이라는 표현식을 사용하고 있다.<br>
+당시에는 확장성에 대한 고려를 하지 않고 `BoardService`에 기능을 구현해놨다.<br>
+때문에 다른 곳에서 사용하기 위해서는 꼭 해당 서비스를 모델에 담아 보내는 불상사가 생겼다.
+
+이러한 불편함을 줄이고자 당시에 `Account`는 모든 페이지에 `Model`에 담아 보내니 도메인에 로직을 옮기자는 의견이 나왔다.<br>
+아무런 고민없이 `Account`로 옮겼고, 해당 `Entity`는 관련성도 없는 비즈니스 로직을 가진 상태가 되어버렸다.
+
+이를 수정하기 위해 `Ut.class`를 새로 추가해 도입하였다.
+
+```java
+@Component
+public class Ut {
+    public static String setDateTime(LocalDateTime localDateTime){
+        final int SEC = 60;
+        final int MIN = 60;
+        final int HOUR = 24;
+        final int DAY = 30;
+        final int MONTH = 12;
+        Instant instant = localDateTime.atZone(ZoneId.systemDefault()).toInstant();
+        Date date = Date.from(instant);
+
+        long curTime = System.currentTimeMillis();
+        long regTime = date.getTime();
+        long diffTime = (curTime - regTime) / 1000;
+        String msg = null;
+        if (diffTime < SEC) {
+            msg = diffTime + "초 전";
+        } else if ((diffTime /= SEC) < MIN) {
+            msg = diffTime + "분 전";
+        } else if ((diffTime /= MIN) < HOUR) {
+            msg = (diffTime) + "시간 전";
+        } else if ((diffTime /= HOUR) < DAY) {
+            msg = (diffTime) + "일 전";
+        } else if ((diffTime /= DAY) < MONTH) {
+            msg = (diffTime) + "달 전";
+        } else {
+            msg = (diffTime) + "년 전";
+        }
+        return msg;
+    }
+}
+```
+
+해당 클래스를 `Thymeleaf`에 불러와 사용하기 위해 `@Component`로 등록해주었다.<br>
+사용할 메소드를 `static`으로 지정해주었고, 기존 기능을 옮겨주었다.
+
+```html
+<!-- 기존 방식 --> 
+<p class="text-xs" th:text="${account.dateTime(board.getCreateDate())}"></p>
+<p class="text-xs" th:text="${boardService.dateTime(board.getCreateDate())}"></p>
+
+<!-- 변경된 방식 -->
+<p class="text-xs" th:text="${@ut.setDateTime(board.getCreateDate())}"></p>
+```
+
+이렇게 수정한 이유는 아래와 같다.
+
+- 회원과 비회원 모두 조회는 가능해야한다.
+  - 로그인이 필수였던 상황에서 비회원에 대한 권한도 부여했기 때문에 `Account`가 항상 존재할 수 없다.
+- 비즈니스 로직이 담긴 서비스 클래스를 View에 보내기엔 위험 부담이 크다.
+  - 애초에 `Service` 자체를 `Model`에 담아서 사용하는 것은 비정상적이라고 생각한다.
+  - 또한, 필요한 곳마다 `service`를 담아 보낼 수 없기에 이와 같이 구성했다.
+
+> 즉, 여러 곳에서 담당하지 않고, 한 곳에서만 시간 계산을 담당할 수 있도록 구성한 것이다.
+
 ### 📝 게시글 추가
 
-`Controller`의 우선 게시글 추가 로직을 보도록하자!
+우선 `Controller`의 게시글 추가 로직을 보도록하자!
 
 ```java
 /* 변경하기 전 코드 */
