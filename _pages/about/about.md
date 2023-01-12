@@ -10,5 +10,32 @@ toc_label: "MYSELF"
 
 # 가준영(Ka Jun Young)
 
-![header](https://capsule-render.vercel.app/api?type=waving&color=auto&height=300&section=header&text=Ka%20Jun%20Young&fontSize=90&animation=fadeIn&fontAlignY=38&desc=Web%20Back-End%20Developer&descAlignY=51&descAlign=62)
-{: .align-center}
+![header](https://capsule-render.vercel.app/api?type=waving&color=auto&height=300&section=header&text=Ka%20Jun%20Young&fontSize=90&animation=fadeIn&fontAlignY=38&desc=Web%20Back-End%20Developer&descAlignY=51&descAlign=62){: .center}
+
+## About Me.
+
+안녕하세요, Java Web Backend Developer 가준영입니다.😀
+
+저는 아래 내용들을 중요하게 생각하고 있습니다.
+- 모듈화
+- 회고를 통한 복습
+- 배우는 즐거움
+
+아직 많이 부족하지만 꾸준한 노력을 통해 성장하는 개발자를 꿈꾸고 있습니다.
+
+## About Blog.
+
+블로그에 포스팅한 내용들은 공식문서, 책 그리고 구글링을 통해 공부한 내용을 정리한 공간입니다.<br>
+지극히 개인적인 견해가 들어간 내용이 많으니 참고용으로 봐주시면 감사하겠습니다.
+
+포스팅 내용 중 잘못된 내용에 대한 지적은 언제든지 환영입니다!<br>
+해당 포스팅의 댓글 혹은 [이메일](kawnsdud@naver.com)로 연락주시면 감사하겠습니다!
+
+블로그보다 더 자세한 내용을 원하시면 아래 공식문서를 확인해주세요!
+
+### Java Document
+- [Java SE 8 Docs](https://docs.oracle.com/javase/8/docs/api/)
+- [Java SE 11 Docs](https://docs.oracle.com/en/java/javase/11/docs/api/index.html)
+
+### SpringFramework Document
+- [Spring Docs](https://docs.spring.io/spring-framework/docs/current/reference/html/index.html)
