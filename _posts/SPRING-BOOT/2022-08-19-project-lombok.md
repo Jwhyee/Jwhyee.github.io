@@ -217,7 +217,9 @@ public class Account {
 ```
 > 위와 같이 `AccessLevel`을 사용하면 생성자를 접근 제어자를 `protected`, `private` 등으로 지정이 가능하다. <br>
 > 즉, 현재 패키지, 혹은 현재 클래스 이외에서는 해당 생성자를 만들지 못하도록 막는 것이다.
+
 ### 객체를 생성할 때는 @Builder를 사용하자!
+
 ```java
 public class AccountService{
     public void createNewAccount() {
@@ -240,6 +242,7 @@ public class AccountService{
     }
 }
 ```
+
 > 위에서 설명한대로 진행하면 앞으로는 객체 생성을 할 때 `Builder`를 이용해서만 객체를 생성할 수 있을 것이다.
 > 이와 같은 패턴으로 작성하면 해당 객체를 새로 생성한 사람이 어떤 의도로 생성했는지 분명히 파악할 수 있다.
 
