@@ -61,7 +61,8 @@ function setLocation() {
 }
 ```
 
-`form`에 위도, 경도에 대한 데이터를 담아서 보낼 예정이기 때문에 위와 같이 `input`에 값을 추가해주었다.
+`form`에 위도, 경도에 대한 데이터를 담아서 보낼 예정이기 때문에 위와 같이 `input`에 값을 추가해주었다.<br>
+성공, 실패에 대한 함수는 따로 또 사용할 것 같진 않아서 익명함수로 대체해 사용했다.
 
 ## 🕹️ 받아온 데이터 사용하기
 
@@ -74,7 +75,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-public class TestController{
+public class LocationController{
 
     private final KakaoMapsApiRestTemplate template;
     
@@ -137,8 +138,9 @@ public class KakaoMapsApiRestTemplate {
         // Kakao Maps Api에 요청을 보내기 위한 RestTemplate
         RestTemplate restTemplate = new RestTemplate();
         
-        // Authorization에 secret key를 담아 요청
+        // 요청 header에 Authorization : KakaoAK key를 담아 요청
         HttpHeaders headers = new HttpHeaders();
+        // KakaoAK 띄어쓰기 주의!!!
         headers.set("Authorization", "KakaoAK " + REST_API_KEY);
 
         // 요청을 보낸 뒤, 받아온 값을 response에 저장
