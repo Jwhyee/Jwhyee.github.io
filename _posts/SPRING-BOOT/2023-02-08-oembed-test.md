@@ -30,7 +30,7 @@ toc_icon: "file"
 
 ### 🪟 View Setting
 
-![image](https://user-images.githubusercontent.com/82663161/217284477-602f686f-c041-4b30-b3c4-acb9215c16e7.png){ .center}
+![image](https://user-images.githubusercontent.com/82663161/217284477-602f686f-c041-4b30-b3c4-acb9215c16e7.png)
 
 화면은 위와 같이 구성하였고, 사용자가 URL을 입력한 뒤 확인 버튼을 누르면 요청을 보내는 형태이다.
 
@@ -206,13 +206,13 @@ public class JsonService {
 
 우선 요청 링크가 맞는지 확인하기 위해 `Youtube`의 `oEmbed` 요청을 넣어보았다.
 
-![PostmanPic1](https://user-images.githubusercontent.com/82663161/217293549-36922e3f-2db0-4fef-a233-3cdfac19420f.png){ .center}
+![PostmanPic1](https://user-images.githubusercontent.com/82663161/217293549-36922e3f-2db0-4fef-a233-3cdfac19420f.png)
 
 사진과 동일하게 정상적인 데이터를 가져오는 것을 확인할 수 있다.
 
 이번에는 내가 만든 기능이 잘 동작하는지 확인하기 위해 백엔드 서버에 요청을 보내보았다.
 
-![PostmanPic2](https://user-images.githubusercontent.com/82663161/217293163-6a73a8f7-7e4d-4ab5-9f20-dfe0ce24ae6b.png){ .center}
+![PostmanPic2](https://user-images.githubusercontent.com/82663161/217293163-6a73a8f7-7e4d-4ab5-9f20-dfe0ce24ae6b.png)
 
 데이터의 순서는 변하였지만, 빠진 내용 없이 모두 잘 들어온 것을 확인할 수 있다.
 
