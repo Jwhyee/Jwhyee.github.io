@@ -192,7 +192,6 @@ public class JsonService {
 `connection`에 필요한 정보를 받아오기 위해 `RequestMethod`와 어느 타입으로 받아올지에 대한 `RequestProperty`를 기입해준다.
 
 `connection.getInputStream()`을 통해 `oEmbedUrl`에 대한 요청을 받아오고, 이를 가져오기 위해 `BufferedReader`를 활용했다.
-
 받아온 값들을 합치기 위해 `StringBuilder`를 이용해 문자열 형태의 JSON 데이터를 완성시켜준 뒤, `JSONParser`를 이용해 `JSONObject`로 변환해준다.
 
 `URL`은 `IOException`, `JSONParser`는 `ParseException`이 발생할 수 있기 때문에
