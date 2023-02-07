@@ -4,7 +4,7 @@ last_modified_at: 2023-02-08T21:00:37-21:30
 categories: SPRING-BOOT
 tags:
   - SpringBoot
-  - KakaoMapsApi
+  - oEmbed
 toc: true
 toc_sticky: true
 toc_label: "Spring Boot"
