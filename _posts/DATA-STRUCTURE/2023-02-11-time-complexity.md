@@ -129,4 +129,64 @@ public class BigOTest{
 `arr.length == arr[0].length`와 같기 때문에 `n`으로 통용해 사용하였다.<br>
 `outer loop`, `inner loop` 모두 $n$번 반복하기 때문에 $n^2$이라고 표현할 수 있다.
 
-즉 이를 빅오 표기법으로 변경하면 $O(n^2)$으로 표현할 수 있다.
+즉, 이를 빅오 표기법으로 변경하면 $O(n^2)$으로 표현할 수 있다.
+
+$O(n^3)$은 3중으로 중첩된 반복문이 모두 n까지 반복하는 것이라고 이해하면 된다!
+
+### O(log n)
+
+코드를 보기 전에 우선 로그의 형태를 확인해보자!
+
+$log_b(a) = c$ ↔️ $b^c = a$
+
+위 식을 알고 있다면 아래 내용은 쉽게 이해할 수 있을 것이다!
+
+> 이진 탐색(이분 탐색)을 하기 위한 알고리즘
+
+```java
+public class BigOTest {
+    public static int binarySearch(int findNum, int start, int end, int[] searchArr) {
+        if (start > end) {
+            return -1;
+        }
+        int mid = (start + end) / 2;
+        if (searchArr[mid] == findNum) {
+            return mid;
+        } else if (searchArr[mid] > findNum) {
+            return binarySearch(findNum, start, mid - 1, searchArr);
+        } else {
+            return binarySearch(findNum, mid - 1, end, searchArr);
+        }
+    }
+
+    public static void main(String[] args) {
+        int[] searchArr = {1, 2, 3, 4, 5, 6, 7, 8};
+        int idx = binarySearch(5, 0, arr.length - 1, searchArr);
+        System.out.print(idx);
+    }
+}
+```
+
+이진 탐색이란 오름차순으로 정렬된 탐색할 배열의 시작 지점에서 끝 지점의 중앙 값을 가져와 조건에 맞는 구간을 탐색하는 방식이다.
+
+예를 들어 1 ~ 100까지 오름차순으로 정렬된 배열이 있고, 98이라는 수의 위치를 찾는다고 가정하자.
+1. 98이라는 수를 찾기 위해 1~50, 50~100으로 탐색할 구간을 나눈다.
+2. 현재 찾고 있는 수가 중앙값인 50과 비교를 해 탐색할 구간을 다시 정한다.
+3. 50보다 크기 때문에 재귀호출을 통해 49 ~ 100까지 다시 탐색을 한다.
+4. 현재 찾고 있는 수가 중앙값인 75와 비교를 해 탐색할 구간을 다시 정한다.
+5. 75보다 크기 때문에 재귀 호출을 통해 74 ~ 100까지 다시 탐색을 한다.
+6. ...
+
+이를 식으로 표현하자면 아래와 같다.
+- 첫 번째 루프 : $n$
+- 두 번째 루프 : $\frac{n}{2}$
+- 세 번째 루프 : $\frac{n}{4}$
+- 네 번째 루프 : $\frac{n}{16}$
+- ...
+- x번째 루프 : $\frac{n}{2^x}$
+
+가장 마지막의 경우를 식에서 `n`을 구하기 위한 식으로 나타내보면 $2^x = n$로 표현할 수 있다.
+
+이 형태에서 `x`를 구하기 위해 `log` 공식을 대입하면 $log_2n = x$로 표현할 수 있다.<br>
+상용 로그에서는 밑을 생략할 수 있기 때문에 $log n = x$로 표현하며, 
+이를 빅오 표기법으로 변경하면 $O(log n)$이라고 표현할 수 있다!
