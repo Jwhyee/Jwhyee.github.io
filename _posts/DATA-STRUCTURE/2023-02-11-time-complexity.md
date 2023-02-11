@@ -1,7 +1,8 @@
 ---
 title: "[알고리즘] - 시간복잡도"
-last_modified_at: 2023-02-09T21:00:37-21:30
+last_modified_at: 2023-02-11T21:00:37-21:30
 categories: DATA-STRUCTURE
+use_math: true
 tags:
   - Java
   - Big-O
