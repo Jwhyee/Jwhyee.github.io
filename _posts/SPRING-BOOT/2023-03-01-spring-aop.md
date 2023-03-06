@@ -135,6 +135,83 @@ public Object authenticationReset(ProceedingJoinPoint joinPoint) throws Throwabl
 즉, `MemberController`의 `showLoginPage()`와 `showSignUpPage()` 메소드를 제외한 
 `@GetMapping`이 붙은 메소드가 실행될 때, `authenticationReset()` 메소드가 실행되는 것이다.
 
+### 권한 재부여
+
+```java
+@Aspect
+@Slf4j
+@Component
+public class AuthenticationAspect {
+
+    private final MemberService memberService;
+
+    public AuthenticationAspect(MemberService memberService) {
+        this.memberService = memberService;
+    }
+
+    @Pointcut("@annotation(org.springframework.web.bind.annotation.GetMapping)")
+    public void getMapping() {}
+
+    @Pointcut("!execution(* com.package.MemberController.showLoginPage())")
+    public void excludeLoginPage() {}
+
+    @Pointcut("!execution(* com.package.MemberController.showSignUpPage())")
+    public void excludeSignUpPage() {}
+
+    @Around("getMapping() && excludeLoginPage() && excludeSignUpPage()")
+    public Object authenticationReset(ProceedingJoinPoint joinPoint) throws Throwable {
+        /* 메소드 실행 전 처리할 내용 */
+        
+        // 현재 로그인한 유저 정보 받아오기
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        
+        // Security는 보안상 SecurityUser의 Password를 비워둔다.
+        // 때문에 영속화된 멤버 객체를 새로 찾아와 업데이트 된 상태의 Member의 Security 정보를 다시 만들어준다.
+        String username = authentication.getName();
+        Member currentMember = memberService.findByUsername(username);
+        
+        // 찾은 Member 객체의 인증 초기화 및 권한 재부여
+        memberService.forceAuthentication(currentMember);
+
+        Object result = joinPoint.proceed();
+
+        /* 메소드 실행 후 처리할 내용 */
+
+        return result;
+    }
+
+}
+```
+```java
+public class MemberService {
+    /**
+     * 회원 정보 갱신을 위한 메소드
+     * @param member 현재 로그인된 Member
+     * */
+    @Transactional
+    public void forceAuthentication(Member member) {
+        SecurityUser securityUser = new SecurityUser(member, makeMemberAuthority(member));
+
+        UsernamePasswordAuthenticationToken authentication =
+                UsernamePasswordAuthenticationToken.authenticated(
+                        securityUser,
+                        null,
+                        securityUser.getAuthorities()
+                );
+        SecurityContext context = SecurityContextHolder.createEmptyContext();
+        context.setAuthentication(authentication);
+        SecurityContextHolder.setContext(context);
+    }
+
+    public List<GrantedAuthority> makeMemberAuthority(Member member) {
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        /* Member 권한에 따라 Authority를 추가 부여 */
+        authorities.add(new SimpleGrantedAuthority(Role.ROLE_EMPLOYEE.toString()));
+        return authorities;
+    }
+}
+```
+
 ## 🤔 회고
 
 이전에 AOP에 대해 잠깐 공부했던 기억이 있지만, 이번에 보니 뭔가 새로운 느낌이 들었다.<br>
