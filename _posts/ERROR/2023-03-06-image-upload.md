@@ -25,7 +25,8 @@ toc_icon: "file"
 
 ## 💬 상황 설명
 
-로컬 환경에서 테스트할 때에는 큰 문제 없이 이미지가 잘 올라갔지만, 배포 환경에서 이미지를 업로드하는 환경에서 이미지 업로드가 되지 않아, 로그를 찍어보니 View 단에서 다음과 같은 에러가 발생했다.
+로컬 환경에서 S3에 이미지를 업로드할 때에는 문제가 없었지만, EC2 배포 환경에서는 이미지를 업로드가 실패하는 에러가 발생했다.
+로그를 찍어보니 View 단에서 아래와 같은 에러가 발생하였고, EC2 로그를 보니 Controller 요청까지도 가지 않는 상황이었다.
 
 ```shell
 Request Entity Too Large
@@ -33,7 +34,8 @@ Request Entity Too Large
 
 ## 🔎 원인 분석
 
-우선 크기에 문제가 있는지 확인하기 위해 업로드 되는 최대 용량을 확인해보았고, 1.5MB까지는 정상적으로 업로드가 되고, 그 이상부터는 모두 업로드가 되지 않았다.
+우선 크기에 문제가 있는지 확인하기 위해 업로드 되는 최대 용량을 확인해보았다.
+왜인지 상황마다 다르긴했지만 1MB 이하는 모두 정상적으로 올라갔고, 1MB를 초과하면 업로드가 될 때도 있고, 실패할 때도 있었다.
 
 검색을 통해 확인해보니 두 가지 경우에서 발생할 수 있는 것을 확인할 수 있었다.
 
@@ -63,6 +65,9 @@ sudo vi /etc/nginx/nginx.conf
 
 위 명령어를 입력하면 nginx에 대한 설정을 확인 및 수정할 수 있다. 그 중 http 부분에 최대 바디 사이즈를 설정하는 코드를 추가해주면 된다.
 
+아래 설정을 따로 해주지 않으면 1MB로 설정되며, 필자는 뷰, 서버 단에서 검증 로직을 해놓았기 때문에 우선 50M을 기준으로 잡아놓았다.
+50M와 50MB는 모두 동일하게 작동하니 편한 방식으로 작성하면 된다!
+
 ```shell
 client_max_body_size 50M;
 ```
@@ -89,7 +94,6 @@ http {
 
 ### nginx 서비스 재시작
 
-
 ```shell
 # nginx에 문제가 없는지 테스트
 sudo nginx -t
@@ -99,15 +103,6 @@ sudo service nginx restart
 ```
 
 만약 nginx 테스트를 하는 과정에서 아래와 같이 나올 경우 nginx 관련 프로세스를 모두 죽이고 다시 시작해주면 된다.
-
-```shell
-nginx: [warn] conflicting server name "jwhy.net" on 0.0.0.0:80, ignored
-nginx: [warn] conflicting server name "www.jwhy.net" on 0.0.0.0:80, ignored
-nginx: [warn] conflicting server name "jwhy.net" on [::]:80, ignored
-nginx: [warn] conflicting server name "www.jwhy.net" on [::]:80, ignored
-```
-
-혹은 아래와 같은 에러도 동일하다.
 
 ```shell
 nginx   ...  root   14u  IPv6 ...      0t0  TCP *:https (LISTEN)
