@@ -1,6 +1,6 @@
 ---
 title: "[Spring] - Spring Scheduler"
-last_modified_at: 2023-02-07T21:00:37-21:30
+last_modified_at: 2023-03-06T21:00:37-21:30
 categories: SPRING-BOOT
 tags:
   - SpringBoot

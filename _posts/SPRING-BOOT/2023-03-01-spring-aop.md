@@ -1,6 +1,6 @@
 ---
 title: "[Spring] - AOP를 활용한 권한 재부여"
-last_modified_at: 2023-02-07T21:00:37-21:30
+last_modified_at: 2023-03-01T21:00:37-21:30
 categories: SPRING-BOOT
 tags:
   - SpringBoot
