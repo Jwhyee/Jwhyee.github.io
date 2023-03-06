@@ -26,7 +26,7 @@ toc_icon: "file"
 ## 💬 상황 설명
 
 로컬 환경에서 S3에 이미지를 업로드할 때에는 문제가 없었지만, EC2 배포 환경에서는 이미지를 업로드가 실패하는 에러가 발생했다.
-로그를 찍어보니 View 단에서 아래와 같은 에러가 발생하였고, EC2 로그를 보니 Controller 요청까지도 가지 않는 상황이었다.
+View 단에서 로그를 찍어보니 아래와 같은 에러가 발생하였고, EC2에서 Spring 로그를 보니 `API` 요청도 가지 않는 상황이었다.
 
 ```shell
 Request Entity Too Large
@@ -42,13 +42,14 @@ Request Entity Too Large
 1. 서버(Spring) 측에서 파일 업로드 크기를 제한
 2. 클라이언트 측에서 지원하지 않는 파일 크기를 업로드 하려고 시도
 
-1번 내용에 대해서는 application.yml에 아래와 같이 설정을 해놨기 때문에 제외했다.
+1번 내용에 대해서는 `application.yml`에 아래와 같이 설정을 해놨기 때문에 제외했다.
+
 ```yaml
 spring:
   servlet:
     multipart:
-      max-file-size: 10MB
-      max-request-size: 10MB
+      max-file-size: 50MB
+      max-request-size: 50MB
 ```
 
 결론적으로 2번 내용 때문에 발생한 것인데 로컬에서는 잘 작동하지만 배포 환경에서 문제인거면 결국 EC2와 관련이 있는 것으로 방향을 잡았다.
@@ -57,7 +58,7 @@ spring:
 
 ### nginx 옵션 추가
 
-EC2 console을 SSH로 접속한 뒤에 아래와 같은 명령어로 설정 파일 수정
+EC2 Console을 `SSH`로 접속한 뒤에 아래와 같은 명령어로 설정 파일 수정
 
 ```shell
 sudo vi /etc/nginx/nginx.conf
