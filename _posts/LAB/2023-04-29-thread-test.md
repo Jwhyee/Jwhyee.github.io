@@ -115,8 +115,6 @@ Postman에서 제공하는 Runner를 이용해 테스트 진행
 
 - ⏰ 소요 시간 : 5s 738ms
 
-5.738 + 5.640
-
 #### 활성 쓰레드 100개
 
 <center>
@@ -193,7 +191,7 @@ io-8080-exec-7
 ### Postman 결과
 
 <table style="margin: 0 auto">
-    <th colspan="2">
+    <th colspan="2" align="center">
         <p>POSTMAN</p>
     </th>
     <tr>
@@ -213,6 +211,7 @@ io-8080-exec-7
         </td>
     </tr>
 </table>
+<br>
 
 총 400개의 요청을 Delay가 없도록 보냈지만, 어느정도의 Delay가 존재하는 것을 로그 시간을 보면 알 수 있다.
 원하던 결과는 아니지만, `Non-blocking I/O` 방식의 총 10개의 쓰레드를 사용한 것을 로그를 통해 알 수 있었다.
@@ -220,7 +219,7 @@ io-8080-exec-7
 ### CURL 결과
 
 <table style="margin: 0 auto">
-    <th colspan="2">
+    <th colspan="2" align="center">
         <p>CURL</p>
     </th>
     <tr>
@@ -240,6 +239,7 @@ io-8080-exec-7
         </td>
     </tr>
 </table>
+<br>
 
 총 400개의 데이터 중에 일부만 저장되었고, `Non-blocking I/O`, `Blocking I/O` 두 방식 모두 사용한 것을 확인할 수 있다.
 둘 이상의 스레드가 공유 자원에 동시에 접근하려고 할 때, 그 결과 값이 각 스레드의 수행 순서나 타이밍 등에 의해 달라져 **경합 상태**가 일어난 것이다.
