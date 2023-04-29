@@ -23,7 +23,7 @@ toc_icon: "file"
 
 ## Spring Scheduler란?
 
-> 스프링에서 제공하는 스케쥴링 기능으로, 원하는 주기로 작업을 실행하거나, 특정 시간에 작업을 실행하도록 설정할 수 있다.
+스프링에서 제공하는 스케쥴링 기능으로, 원하는 주기로 작업을 실행하거나, 특정 시간에 작업을 실행하도록 설정할 수 있다.
 
 ## 프로젝트 적용
 
@@ -35,7 +35,7 @@ toc_icon: "file"
 또한, 로컬에서는 잘 작동할 수 있지만, 배포 환경에서는 다를 수 있기 때문에 
 `JVM`의 기본 시간대를 설정하기 위해 `TimeZone`을 설정해준다.
 
-해당 어노테이션 없이 아래 내용을 진행하면 스케쥴이 정상적으로 진행되지 않는다.
+해당 어노테이션 없이 아래 내용을 진행하면 스케쥴이 정상적으로 진행되지 않을 수 있다.
 
 ```java
 @SpringBootApplication
@@ -58,7 +58,7 @@ public class TestApplication {
 
 `@Component` 어노테이션을 통해 `Bean`에 등록해주어 사용한다.
 
-> `@Bean`과 `@Component`의 차이는 향로님 [블로그](https://jojoldu.tistory.com/27)에 잘 정리되어 있으니 확인해보면 좋겠다!
+`@Bean`과 `@Component`의 차이는 [향로님 블로그](https://jojoldu.tistory.com/27)에 잘 정리되어 있으니 확인해보면 좋겠다!
 
 ```java
 @Component
