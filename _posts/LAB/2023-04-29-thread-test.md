@@ -27,47 +27,38 @@ Spring MVC를 공부하던 중, Thread Pool의 크기를 조정한 뒤에 여러
 
 기본적으로 많은 기능은 필요 없기 때문에 최소한의 기능만 `dependencies`에 추가했다!
 
+```shell
+implementation 'org.springframework.boot:spring-boot-starter-aop:3.0.2'
+implementation 'org.springframework.boot:spring-boot-starter-web'
+implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+```
+
 ```java
 @RestController
-@RequiredArgsConstructor
 public class RequestController {
-
-    private final RequestService requestService;
-
-    // 메모리 리포지토리
-    Map<Long, RequestDto> repo = new HashMap<>();
     
-    // 메모리 ID
-    private Long requestId = 1L;
+  private final Map<Long, Request> repo = new HashMap<>();
+  private Long requestId = 1L;
 
-    @Getter @Setter
-    public static class RequestDto {
-        private String requestTitle;
-        private LocalDateTime savedDate;
-    }
+  @PostMapping("/")
+  public Request doMemoryRequest(RequestDto dto) {
+    Request newReq = Request.builder()
+            .id(requestId++)
+            .title(dto.getRequestTitle())
+            .savedDate(LocalDateTime.now())
+            .build();
+    repo.put(requestId, newReq);
+    log.info("request = {}", newReq);
+    return newReq;
+  }
 
-    @PostMapping("/")
-    public Object doRequest(RequestDto dto) {
-        dto.setSavedDate(LocalDateTime.now());
-        requestService.pooh(requestId);
-        repo.put(requestId++, dto);
-        return repo;
-    }
+  @GetMapping("/data")
+  public Object showMemoryData() {
+    log.info("data_size={}", repo.size());
+    return repo;
+  }
 }
-
-@Service
-public class RequestService {
-
-    public void pooh(long id) {
-        long sum = id;
-        for (int i = 0; i < 100; i++) {
-            for (int j = 0; j < 100; j++) {
-                sum += i * j;
-            }
-        }
-    }
-}
-
 ```
 
 ## 📝 테스트
@@ -196,7 +187,7 @@ CURL을 통해 요청 로그 기준으로 시작 시간과 종료 시간의 차�
   </tbody>
 </table>
 
-## 🤔 회고
+## 💡 결과
 
 ### 로그 메시지 분석
 
@@ -275,12 +266,73 @@ io-8080-exec-7
 총 400개의 데이터 중에 일부만 저장되었고, `Non-blocking I/O`, `Blocking I/O` 두 방식 모두 사용한 것을 확인할 수 있다.
 둘 이상의 스레드가 공유 자원에 동시에 접근하려고 할 때, 그 결과 값이 각 스레드의 수행 순서나 타이밍 등에 의해 달라져 **경합 상태**가 일어난 것이다.
 
+## 📝 추가 테스트
+
 사실상 메모리에 중요한 아이디 정보를 보관하는 일은 없기 때문에, 아래와 같이 프로젝트 구조를 변경하고 다시 테스트를 진행해봤다.
 
 - Entity 추가 (ID 자동 증가)
 - JPA Repository 도입
 
-시간은 비슷하게 걸렸지만, 400개의 데이터 모두 정상적으로 저장된 것을 확인할 수 있었다.
+```java
+@RestController
+@Slf4j
+@RequiredArgsConstructor
+public class RequestController {
+
+    private final RequestService requestService;
+
+    @PostMapping("/")
+    public Request doRequest(RequestDto dto) {
+        Request request = requestService.saveRequest(dto);
+        log.info("request = {}", request);
+        return request;
+    }
+
+    @GetMapping("/data")
+    public Object showData() {
+        Map<Long, Request> requestMap = requestService.listToMap();
+        log.info("data_size={}", requestMap.size());
+        return requestMap;
+    }
+}
+```
+
+```java
+@Service
+@RequiredArgsConstructor
+public class RequestService {
+
+  private final RequestRepository repository;
+
+  public Request saveRequest(RequestDto dto) {
+    return repository.save(Request.builder()
+            .title(dto.getRequestTitle())
+            .savedDate(LocalDateTime.now())
+            .build());
+  }
+
+  @Transactional(readOnly = true)
+  public Map<Long, Request> listToMap() {
+    return repository.findAll().stream()
+            .collect(Collectors.toMap(Request::getId, Function.identity()));
+  }
+}
+
+```
+
+JPA를 사용해 데이터를 저장했지만, 요청에 대한 시간은 이전과 비슷했다. 하지만, 이전과 다르게 400개의 데이터가 모두 안정적으로 저장되는 것을 알 수 있었다.
+
+
+## 🤔 회고
+
+코드를 변경하기 전에는 DB와 ID를 모두 메모리에 저장했기 때문에, 여러 쓰레드에서 동시에 접근할 경우 ID가 동일할 수 있다.
+예시로 `requestId`가 15일 때, 3번과 9번 쓰레드가 동시에 요청을 처리한다고 가정하면,
+9번에서 저장을 했다면, 3번 데이터는 덮어쓰기가 되는 것이다.
+또한, 두 쓰레드에서 값이 증가되기 때문에 `requestId`가 17이 되버릴 수 있다.
+
+하지만, JPA를 도입한 후에는 데이터가 정상적으로 저장되는 것을 알 수 있었다. 그 이유는 각각의 요청이 Transaction을 통해 관리되기 때문이다.
+여러 개의 트랜잭션에서 동시에 동일한 데이터를 수정하려 해도, 하나의 트랜잭션이 완료될 때까지 다른 트랜잭션은 접근할 수 없기 때문이다.
+그러므로 JPA를 사용했을 때, 동시성 이슈가 발생하지 않았던 것이다. 
 
 ## 레퍼런스
 
