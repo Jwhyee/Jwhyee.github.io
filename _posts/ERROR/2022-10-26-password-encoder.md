@@ -12,9 +12,8 @@ toc_label: "PasswordEncoder Error"
 toc_icon: "file"
 ---
 ## 💬 상황 설명
-> 비밀번호 변경 기능을 구현하던 중 아래와 같은 에러 구문 확인<br>
-> `log`도 없이 단순히 아래 구문만 뜬게 이상하여 `Bean` 등록이 제대로 되어있는지, 로직에는 문제가 없는지 확인을 했지만 아무런 문제가 없었다.<br>
-> 문제를 좁혀가며 로깅을 진행하였고, `MemberContext`의 `getPassword()`에서 `null`값이 찍히는 것을 확인하였다.
+비밀번호 변경 기능을 구현하던 중 아래와 같은 에러 구문을 확인했다.
+`log`도 없이 단순히 아래 구문만 뜬게 이상하여 `Bean` 등록이 제대로 되어있는지, 로직에는 문제가 없는지 확인을 했지만 아무런 문제가 없었다.
 
 ```bash
 Empty encoded password
@@ -43,7 +42,7 @@ public class MemberService{
 
 ## 🔎 원인 분석
 
-검색을 통해 확인해보니 아래와 같은 글귀를 확인할 수 있었다.
+문제를 좁혀가며 로깅을 진행하였고, `MemberContext`의 `getPassword()`에서 `null`값이 찍히는 것을 확인하였고, 검색해보니 아래와 같은 글을 확인할 수 있었다.
 
 > `Spring Security`는 인증을 수행하면 `Authentication` 객체에서 암호를 지우는 과정을 수행한다.
 
@@ -51,8 +50,9 @@ public class MemberService{
 `Spring Security`에서 인증을 완료해서 `password`를 날려버린 것이다.
 
 ### ✅ 해결 과정
-> `SecurityConfig`를 통해 해결하면 인증 후에도 `password`가 지워지지 않아 `JWT` 연동 시 보안에 취약해질 수 있다.<br>
-> 때문에 `MemberContext`의 `username`을 활용해서 다시 찾아오는 방안으로 수정했다.
+
+`SecurityConfig`를 통해 해결하면 인증 후에도 `password`가 지워지지 않아 `JWT` 연동 시 보안에 취약해질 수 있다.
+때문에 `MemberContext`의 `username`을 활용해서 다시 찾아오는 방안으로 수정했다.
 
 ```java
 public class MemberService {
@@ -74,5 +74,5 @@ public class MemberService {
 }
 ```
 
-> [참고 블로그1](https://java8.tistory.com/m/509)<br>
-> [참고 블로그2](https://javachoi.tistory.com/421)
+> [java개발자님 블로그](https://java8.tistory.com/m/509)<br>
+> [johnna_endure님 블로그](https://javachoi.tistory.com/421)

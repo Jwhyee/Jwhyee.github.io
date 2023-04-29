@@ -53,7 +53,7 @@ public class AccountController{
 
 ### ✅ 해결 과정
 
-구글링을 통해 여러 방법을 찾아봤지만, 대부분의 글들은 `th:object`, `th:field`에 대한 오타 문제였다.<br>
+구글링을 통해 여러 방법을 찾아봤지만, 대부분의 글들은 `th:object`, `th:field`에 대한 오타 문제였다.
 국내 블로그나 커뮤니티에서는 답을 찾을 수 없어서 **StackOverFlow**로 향하였고, 답을 찾을 수 있었다.
 
 ```java
@@ -75,5 +75,5 @@ public class SecurityConfig{
 우선 위와 같이 세션이 없다면 세션을 생성해주는 방식으로 해결한 뒤 나중에 다른 방법을 찾으면 그 때 제거해도 될 것 같다.
 
 ### 참고 블로그
-> [참고 블로그1](https://stackoverflow.com/questions/52982246/spring-thymeleaf-throws-cannot-create-a-session-after-the-response-has-been-com)<br>
-> [참고 블로그2](https://stackoverflow.com/questions/63626289/when-i-use-thaction-and-method-attribute-together-in-form-tag-in-thymeleaf-it)
+- [StackOverflow(52982246)](https://stackoverflow.com/questions/52982246/spring-thymeleaf-throws-cannot-create-a-session-after-the-response-has-been-com)
+- [StackOverflow(63626289)](https://stackoverflow.com/questions/63626289/when-i-use-thaction-and-method-attribute-together-in-form-tag-in-thymeleaf-it)

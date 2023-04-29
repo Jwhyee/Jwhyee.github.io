@@ -28,8 +28,11 @@ nested exception is org.hibernate.service.spi.ServiceException: Unable to create
 
 ### ✅ 해결 과정
 
-가장 처음으로 확인한 것은 'DB는 존재하는가?'였다.<br>
-역시나 맥북 초기화 이후 프로젝트를 실행한 적이 없어서 DB조차 생성이 되어있지 않았다.
+#### 1. DB 확인
+
+우선, 최근에 맥북을 초기화해서 DB 존재 여부부터 확인했다.
+역시나, 프로젝트를 실행할 일이 없다보니 DB가 생성되어 있지 않았다.
+
 ```sql
 create database dbname;
 use dbname;
@@ -38,9 +41,14 @@ grant all privileges on dbname.* to username@'%' with grant option;
 flush privileges;
 ```
 
-모든 정상적으로 생성한 뒤에도 결과는 그대로였다.<br>
-에러 구문을 조금 더 자세히 보니 `dialect`라는 내용이 들어가있어 확인해보니 버전에 맞지 않은 `dialect`를 사용하고 있었다.<br>
-버전을 변경해보니 정상적으로 프로젝트가 실행되는 것을 확인할 수 있었다.<br>
+모든 정상적으로 생성한 뒤에도 결과는 그대로였다.
+
+#### 2. 에러 구문 확인
+
+에러 구문을 더 자세히 확인해보니 `dialect`라는 내용이 있었다.
+`properties` 파일을 확인해보니 버전에 맞지 않는 내용을 적어놓았다.
+현재 버전에 맞게 수정하니 정상적으로 작동하는 것을 확인할 수 있었다.
+
 해당 구문을 지워도 정상적으로 작동되니 나중에 필요하다 싶을 때 넣어도 될 것 같다.
 
 ```yaml
