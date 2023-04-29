@@ -34,7 +34,10 @@ public class RequestController {
 
     private final RequestService requestService;
 
+    // 메모리 리포지토리
     Map<Long, RequestDto> repo = new HashMap<>();
+    
+    // 메모리 ID
     private Long requestId = 1L;
 
     @Getter @Setter
@@ -46,8 +49,8 @@ public class RequestController {
     @PostMapping("/")
     public Object doRequest(RequestDto dto) {
         dto.setSavedDate(LocalDateTime.now());
-        repo.put(requestId++, dto);
         requestService.pooh(requestId);
+        repo.put(requestId++, dto);
         return repo;
     }
 }
@@ -100,8 +103,6 @@ server:
 ### 1차 테스트(Postman)
 
 Postman에서 제공하는 Runner를 이용해 테스트 진행
-- Iterations : 400
-- Delay : 0
 
 <center>
     <img width="920" alt="스크린샷 2023-04-29 오후 8 00 03" src="https://user-images.githubusercontent.com/82663161/235299198-2ba133e9-7cd2-4f5b-8cd0-80f775290434.png">
@@ -113,7 +114,7 @@ Postman에서 제공하는 Runner를 이용해 테스트 진행
     <img width="686" alt="스크린샷 2023-04-29 오후 6 50 49" src="https://user-images.githubusercontent.com/82663161/235296522-297ecff5-8d4f-4f31-a57a-405c783ad97c.png">
 </center>
 
-- ⏰ 소요 시간 : 5s 738ms
+⏰ 소요 시간 : 5s 738ms
 
 #### 활성 쓰레드 100개
 
@@ -121,7 +122,7 @@ Postman에서 제공하는 Runner를 이용해 테스트 진행
     <img width="670" alt="스크린샷 2023-04-29 오후 6 49 24" src="https://user-images.githubusercontent.com/82663161/235296467-60763f5f-5cd6-41a5-8a86-13be6dad13b0.png">
 </center>
 
-- ⏰ 소요 시간 : 5s 640ms
+⏰ 소요 시간 : 5s 640ms
 
 ### 2차 테스트(CURL)
 
@@ -133,31 +134,67 @@ CURL을 통해 요청 로그 기준으로 시작 시간과 종료 시간의 차�
 
 #### 활성 쓰레드 1개
 
-1차 시도
-- 시작 : 19:12:16.219
-- 종료 : 19:12:17.162
-- ⏰ 소요 시간 : 0s 943ms
-- 💾 저장 개수 : 400
-
-2차 시도
-- 시작 : 19:14:45.725
-- 종료 : 19:14:46.519
-- ⏰ 소요 시간 : 0s 794ms
-- 💾 저장 개수 : 400
+<table align="center" style="text-align: center; margin: 0 auto">
+  <thead style="font-weight: bold;">
+    <td>구분</td>
+    <td>1차 시도</td>
+    <td>2차 시도</td>
+  </thead>
+  <tbody>
+    <tr>
+      <td>시작</td>
+      <td>19:12:16.219</td>
+      <td>19:14:45.725</td>
+    </tr>
+    <tr>
+      <td>종료</td>
+      <td>19:12:17.162</td>
+      <td>19:14:46.519</td>
+    </tr>
+    <tr>
+      <td>소요 시간</td>
+      <td>0s 943ms</td>
+      <td>0s 794ms</td>
+    </tr>
+    <tr>
+      <td>저장 개수</td>
+      <td>400</td>
+      <td>400</td>
+    </tr>
+  </tbody>
+</table>
 
 #### 활성 쓰레드 100개
 
-1차 시도
-- 시작 : 19:26:44.614
-- 종료 : 19:26:45.577
-- ⏰ 소요 시간 : 0s 963ms
-- 💾 저장 개수 : 376
-
-2차 시도
-- 시작 : 19:28:26.715
-- 종료 : 19:28:27.603
-- ⏰ 소요 시간 : 0s 888ms
-- 💾 저장 개수 : 362
+<table align="center" style="text-align: center; margin: 0 auto">
+  <thead style="font-weight: bold;">
+    <td>구분</td>
+    <td>1차 시도</td>
+    <td>2차 시도</td>
+  </thead>
+  <tbody>
+    <tr>
+      <td>시작</td>
+      <td>19:26:44.614</td>
+      <td>19:28:26.715</td>
+    </tr>
+    <tr>
+      <td>종료</td>
+      <td>19:26:45.577</td>
+      <td>19:28:27.603</td>
+    </tr>
+    <tr>
+      <td>소요 시간</td>
+      <td>0s 963ms</td>
+      <td>0s 888ms</td>
+    </tr>
+    <tr>
+      <td>저장 개수</td>
+      <td>376</td>
+      <td>362</td>
+    </tr>
+  </tbody>
+</table>
 
 ## 🤔 회고
 
