@@ -239,7 +239,7 @@ io-8080-exec-7
 <br>
 
 총 400개의 요청을 Delay가 없도록 보냈지만, 어느정도의 Delay가 존재하는 것을 로그 시간을 보면 알 수 있다.
-원하던 결과는 아니지만, `Non-blocking I/O` 방식의 총 10개의 쓰레드를 사용한 것을 로그를 통해 알 수 있었다.
+원하던 결과는 아니지만, `Non-blocking I/O` 방식의 총 9개의 쓰레드를 사용한 것을 로그를 통해 알 수 있었다.
 
 ### CURL 결과
 
@@ -333,6 +333,38 @@ JPA를 사용해 데이터를 저장했지만, 요청에 대한 시간은 이전
 하지만, JPA를 도입한 후에는 데이터가 정상적으로 저장되는 것을 알 수 있었다. 그 이유는 각각의 요청이 Transaction을 통해 관리되기 때문이다.
 여러 개의 트랜잭션에서 동시에 동일한 데이터를 수정하려 해도, 하나의 트랜잭션이 완료될 때까지 다른 트랜잭션은 접근할 수 없기 때문이다.
 그러므로 JPA를 사용했을 때, 동시성 이슈가 발생하지 않았던 것이다. 
+
+만약, 꼭 Memory를 이용해서 저장해야할 경우, 아래 코드와 같이 `synchronized`를 추가해주면 동시성 이슈를 해결할 수 있다.
+이는, 멀티 쓰레드 환경에서 공유 자원을 동기화시켜 여러 쓰레드가 공유 자원에 동시에 접근하지 못하도록 제한하는 것이다.
+
+```java
+@RestController
+@Slf4j
+public class RequestController {
+    
+    private final Map<Long, Request> repo = new HashMap<>();
+    private Long requestId = 1L;
+
+    @PostMapping("/")
+    public synchronized Request doMemoryRequest(RequestDto dto) {
+        Request newReq = Request.builder()
+                .id(requestId++)
+                .title(dto.getRequestTitle())
+                .savedDate(LocalDateTime.now())
+                .build();
+        repo.put(requestId, newReq);
+        log.info("request = {}", newReq);
+        return newReq;
+    }
+
+    @GetMapping("/data")
+    public Object showMemoryData() {
+        log.info("data_size={}", repo.size());
+        return repo;
+    }
+}
+
+```
 
 ## 레퍼런스
 
