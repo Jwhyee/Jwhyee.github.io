@@ -191,9 +191,6 @@ io-8080-exec-7
 ### Postman 결과
 
 <table style="margin: 0 auto">
-    <th colspan="2" align="center">
-        <p>POSTMAN</p>
-    </th>
     <tr>
         <td>
             <img width="450" alt="스크린샷 2023-04-29 오후 7 56 51" src="https://user-images.githubusercontent.com/82663161/235299040-bdb7832c-3d7f-4038-a5f6-71ae56e5a350.png">
@@ -219,9 +216,6 @@ io-8080-exec-7
 ### CURL 결과
 
 <table style="margin: 0 auto">
-    <th colspan="2" align="center">
-        <p>CURL</p>
-    </th>
     <tr>
         <td>
             <img width="450" alt="스크린샷 2023-04-29 오후 7 52 47" src="https://user-images.githubusercontent.com/82663161/235298906-7c324644-4304-498c-8f4f-7ecd396f179a.png">
