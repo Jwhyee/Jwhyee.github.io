@@ -13,7 +13,7 @@ toc_icon: "file"
 
 Effective Java 3/E를 공부하며 작성한 글입니다.<br>
 혼자 공부하고 정리한 내용이며, 틀린 부분은 지적해주시면 감사드리겠습니다 😀
-{: .notice--warning}
+{: .notice--primary}
 
 ## 매개변수(parameter)란?
 
