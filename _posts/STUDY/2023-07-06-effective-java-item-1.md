@@ -4,7 +4,7 @@ last_modified_at: 2023-07-06T21:00:37-21:30
 categories: STUDY
 tags:
   - Effective Java
-  - item1
+  - Java
 toc: true
 toc_sticky: true
 toc_label: "Effective Java"
