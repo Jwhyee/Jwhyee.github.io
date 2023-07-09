@@ -59,16 +59,6 @@ public record PostRecordDto(Long id, String title, String content) { }
 @AllArgsConstructor
 ```
 
-## 특징
-
-`record` 타입의 특징은 아래와 같다.
-
-1. 불변 객체
-2. 생성자를 통한 값 지정
-
-불변 객체라는 말은 생성자를 통해 값을 지정해야한다는 것과 동일하다.
-자세한 내용은 아래 프로젝트에 적용하면서 살펴보도록 하자!
-
 ## 프로젝트 적용
 
 > 아래 코드는 기본적인 CRUD에 대한 이해하기 쉽게 작성한 테스트 코드이며, 일부 어노테이션만 적용한 점 양해 부탁드립니다.
@@ -167,7 +157,7 @@ public record SignUpDto(String username, String password, String phone,
 이를 인스턴스화 시키기 위해서는 아래와 같이 작성해야한다.
 
 ```java
-new SignUpDto("abc123", "1234", "01012341234",
+SignUpDto dto = new SignUpDto("abc123", "1234", "01012341234",
         "email@email.com", "male", "Tanziro",
         "member", "active");
 ```
