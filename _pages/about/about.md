@@ -9,9 +9,9 @@ toc_label: "MYSELF"
 
 ![header](https://capsule-render.vercel.app/api?type=waving&color=auto&height=300&section=header&text=Ka%20Jun%20Young&fontSize=90&animation=fadeIn&fontAlignY=38&desc=Web%20Back-End%20Developer&descAlignY=51&descAlign=62){: .center}
 
-<div style="margin: 0 auto; padding: 1.25rem 5rem">
+<div style="margin: 0 auto; padding: 0 5rem">
 
-<h2>About Me.</h2>
+<h2 style="margin: 0 0 0.5em">About Me.</h2>
 
 <p>안녕하세요, <code class="language-plaintext highlighter-rouge">Java Web Backend Developer</code> 가준영입니다.😀</p>
 
@@ -21,7 +21,7 @@ toc_label: "MYSELF"
 
 <p>아직 많이 부족하지만 꾸준한 노력을 통해 성장하는 개발자를 꿈꾸고 있습니다.</p>
 
-<h2>About Blog.</h2>
+<h2 style="margin: 0 0 0.5em">About Blog.</h2>
 
 <p>블로그에 포스팅한 내용들은 공식문서, 책 그리고 구글링을 통해 공부한 내용을 정리한 공간입니다.<br>
 지극히 개인적인 견해가 들어간 내용이 많으니 참고용으로 봐주시면 감사하겠습니다.</p>
