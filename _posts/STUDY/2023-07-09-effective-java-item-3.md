@@ -17,166 +17,325 @@ Effective Java 3/E를 공부하며 작성한 글입니다.<br>
 
 ## 싱글톤이란?
 
-> 인스턴스를 오직 하나만 생성할 수 있는 클래스를 말한다.
+> 싱글톤(singleton)이란, 인스턴스를 오직 하나만 생성할 수 있는 클래스이다.
+> 싱글톤의 전형적인 예로는 함수와 같은 **무상태 객체**나 설계상 유일해야하는 시스템 컴포넌트를 들 수 있다.
+
+### 무상태 객체란?
+
+우선 상태가 있는(stateful) 클래스가 무엇인지부터 알아보는 것이 좋을 것 같다!
+
+```java
+/**
+ * 사용자의 주문을 저장하는 클래스
+ * */
+public class Order {
+    private String nickname;
+
+    private int price;
+
+    public Order(String nickname, int price) {
+        this.nickname = nickname;
+        this.price = price;
+    }
+}
+```
+
+```java
+/**
+ * 사용자의 주문을 처리하는 클래스
+ * */
+public class OrderService {
+    private Order nextOrder;
+    private int orderCount;
+
+    public void makeOrder(String nickname, int price) {
+        nextOrder = new Order(nickname, price);
+        orderCount++;
+    }
+
+    public Order getOrder() {
+        return nextOrder;
+    }
+
+}
+```
+
+```java
+// 사용자가 주문을 요청하는 테스트 클래스
+public class OrderServiceTest {
+    
+    @Test
+    void orderTest1() {
+        OrderService service = new OrderService();
+        service.makeOrder("user1", 10000);
+        service.makeOrder("user2", 30000);
+
+        System.out.println(service.getOrder());
+        
+    }
+}
+```
+
+위와 같이 상태를 저장할 수 있는 것을 상태가 있는 클래스라고 부른다.
+하지만 가장 큰 문제는 `Order nextOrder`라는 객체를 공유하기 때문에
+여러 주문이 들어와도 가장 마지막 주문만 확인할 수 있게 된다.
+즉, 주문량에 따라 앞서 들어온 주문은 무시될 수 있다는 것이다.
+
+반대로 무상태는 **상태를 공유하는 필드 변수가 없는 것**을 의미한다.
+즉, 특정 클라이언트가 의존할 수 있는 필드 변수가 존재할 수 없고, 값을 변경할 수 없어야한다.
+위 코드를 싱글톤을 사용한 무상태 객체로 변환한다면 다음과 같다.
+
+```java
+public class OrderService {
+    // private 생성자를 통해 현재 OrderService를 싱글톤으로 만듦
+    public static final OrderService INSTANCE = new OrderService();
+    private OrderService(){}
+    
+    // 외부에서 만들어진 OrderRepository 객체를 가져옴
+    // 해당 필드는 클라이언트 코드에서 의존하지 않으며, 객체를 참조하는 용도로만 사용
+    private final OrderRepository repository = OrderRepository.INSTANCE;
+
+    // 아래 두 메소드는 클래스 내부 상태에 의존하지 않는다.
+    // 주어진 매개 변수와 외부 OrderRepository 객체만으로 동작
+    public void makeOrder(String nickname, int price) {
+        repository.save(new Order(nickname, price));
+    }
+
+    public List<Order> getOrderList() {
+        return repository.findAllOrder();
+    }
+
+}
+```
 
 ## 싱글톤을 생성하는 방법
 
-### public static final 필드 방식의 싱글톤
+### 1. public static final 필드 방식
 
 ```java
-public class Singleton {
-    public static final Singleton INSTANCE = new Singleton();
+public class DateTimeUtil {
+    public static final DateTimeUtil INSTANCE = new DateTimeUtil();
+    private DateTimeUtil() {}
 
-    private Singleton() { }
-
-    public void say() {
-        System.out.println("Hello, World!");
-    }
-}
-
-public class Main {
-    public static void main(String[] args) {
-        Singleton instance = Singleton.INSTANCE;
-        instance.say();
+    public String getPassedTime(LocalDateTime localDateTime) {
+        ...
     }
 }
 ```
 
-위 클래스를 통해 알 수 있는 사실은 아래와 같다.
-
-1. 생성자는 `private`로 타 클래스에서 객체를 생성할 수 없다.
-2. `INSTANCE` static 변수를 통해 클래스 생성과 동시에 만들어진 객체를 가져올 수 있다.
-
-정적 팩터리 메소드에서 알아봤듯이 클래스가 메모리에 올라갈 때, 정적 변수 및 메소드도 함께 메모리에 올라간다.
-때문에 객체가 단 1번만 생성될 수 있는 것이다.
-
-해당 방식의 가장 큰 장점은 간결하며, 해당 클래스에서 싱글톤임이 API에 명백히 드러나는 것이다.
-
-<center>
-<img src="https://github.com/Jwhyee/effective-java/assets/82663161/89209561-2d56-40bb-8ebf-b74d38148f53">
-</center>
-
-### 정적 팩토리 방식의 싱글톤
+위 코드와 같이 생성자를 `private`로 감추면, 다른 클래스에서 해당 객체를 생성할 수 없게 된다.
+즉, `DateTimeUtil.INSTANCE`를 통해서만 객체를 생성할 수 있으며,
+해당 객체는 `static final` 필드이기 때문에 딱 한 번만 생성이 된다.
 
 ```java
-public class Singleton {
-    private static final Singleton instance = new Singleton();
-
-    private Singleton() {
-        
+public class UtilTest {
+    @Test
+    void utilTest1() {
+        // 테스트 실패!
+        // 메소드가 static이 아니기 때문에 컴파일 에러 발생!
+        String time = DateTimeUtil.getPassedTime(LocalDateTime.now().minusHours(2));
+        System.out.println(time);
+        assertTrue(time.equals("2시간 전"));
     }
-    public static Singleton getInstance() {
-        return instance;
-    }
 
-    public void say() {
-        System.out.println("Hello, World!");
-    }
-}
-
-public class Main {
-    public static void main(String[] args) {
-        Singleton INSTANCE = Singleton.getInstance();
-        instance.say();
+    @Test
+    void utilTest2() {
+        // 테스트 성공!
+        // 정상 접근 가능!
+        DateTimeUtil util = DateTimeUtil.INSTANCE;
+        String time = util.getPassedTime(LocalDateTime.now().minusHours(2));
+        System.out.println(time);
+        assertTrue(time.equals("2시간 전"));
     }
 }
 ```
 
-앞서 본 코드와 크게 다를 것은 없어 보이지만, `public static final`이 아닌 `private static final`로 변경되었다.
+이러한 `Utility` 클래스는 여러 곳에서 사용하기 위해 만든 클래스이므로, 싱글톤으로 사용하기 유용하다.
+하지만, 메소드 쓰임에 따라 `item1`에서 공부한 정적 팩터리 방식으로 만드는 것이 더 유리할 수도 있다!
 
-해당 코드의 장점은 총 3가지가 존재한다.
+#### 취약점
 
-1. API를 바꾸지 않고도 싱글톤이 아니게 변경할 수 있다.
+`Reflection`에서 제공하는 API를 통해 `private` 생성자를 가져올 수 있는 방법이 존재한다.
 
-하나의 인스턴스를 반환하던 상태에서 호출하는 스레드별로 다른 인스턴스를 넘겨주게 할 수 있다.
-
-2. 원한다면 정적 팩터리를 제네릭 싱글톤 팩터리로 만들 수 있다.
-3. 정적 팩터리의 메소드 참조를 공급자(supplier)로 사용할 수 있다.
+> Reflection은 Class 객체를 통해 클래스의 정보를 가져오고,
+> 객체를 생성하거나 메소드를 호출하는 등의 작업을 할 수 있도록 지원하는 기능이다.
 
 ```java
-// 코드1
-public static final Singleton INSTANCE = new Singleton();
-
-// 코드2
-private static final Singleton INSTANCE = new Singleton();
-public static Singleton getInstance() {
-    return INSTANCE;
+public class OrderServiceTest {
+    
+    @Test
+    void utilReflectionTest() {
+        try {
+            // DateTimeUtil 클래스의 생성자를 가져온다.
+            // getDeclaredConstructor() -> 모든 접근 제어자를 무시하고, 클래스의 생성자를 가져온다.
+            Constructor<DateTimeUtil> constructor = DateTimeUtil.class.getDeclaredConstructor();
+            
+            // 가져온 생성자를 접근 가능하도록 설정
+            constructor.setAccessible(true);
+            
+            // 설정된 생성자를 사용해 DateTimeUtil 클래스의 새로운 인스턴스를 생성
+            DateTimeUtil util = constructor.newInstance();
+            
+            // 인스턴스 내부 메소드 호출
+            util.showCurrentTime();
+            
+        } catch (InvocationTargetException | NoSuchMethodException | InstantiationException | IllegalAccessException e) {
+            // 다양한 Exception이 발생할 수 있음!
+            throw new RuntimeException(e);
+        }
+    }
+    
 }
 ```
 
-**코드1**과 같이 인스턴스 변수를 바로 가져와서 사용할 경우 공급자로 사용할 수 없다.
-하지만 **코드2**와 같이 정적 팩터리 방식으로 만들면 `Singleton::getInstance`를 `Supplier<Singleton>`으로 사용할 수 있는 것이다.
-
-### 열거 타입 방식의 싱글톤
+혹여나 이러한 방식의 공격을 방어하려면 아래와 같이 또 다른 객체가 생성될 때, 예외를 던져주면 된다.
 
 ```java
-public enum Singleton {
+public class DateTimeUtil {
+    public static final DateTimeUtil INSTANCE = new DateTimeUtil();
+    private static boolean instanceCreated = false;
+
+    private DateTimeUtil() {
+        if (instanceCreated) {
+            throw new IllegalStateException("이미 객체가 생성되어 있습니다.");
+        }
+    }
+
+    static {
+        instanceCreated = true;
+    }
+}
+```
+
+여기서 사용한 `static` 블록은 클래스가 로딩될 때(처음으로 해당 클래스가 사용될 때) 자동으로 실행되는 블록이다.
+
+```java
+// DateTimeUtil 클래스 로드
+Constructor<DateTimeUtil> constructor = DateTimeUtil.class.getDeclaredConstructor();
+
+// 이미 위에서 클래스가 로딩되어 instanceCreated가 true인 상태
+// 때문에 IllegalStateException 발생!
+DateTimeUtil util = constructor.newInstance();
+```
+
+### 2. 정적 팩터리 방식
+
+`item1`에서 봤던 것과 같이 이번에는 정적 팩터리 방식으로 인스턴스를 가져오는 것이다.
+
+```java
+public class DateTimeUtil {
+    private static final DateTimeUtil INSTANCE = new DateTimeUtil();
+    private DateTimeUtil() { ... }
+    
+    public static DateTimeUtil getInstance() { return INSTANCE; }
+    
+    ...
+
+    public String getPassedTime(LocalDateTime localDateTime) {
+        ...
+    }
+}
+```
+
+1번에서 봤던 방식과 크게 달라 보이는 점은 없지만, API를 바꾸지 않고도 싱글톤이 아니게 변경할 수 있다는 장점이 있다.
+
+```java
+public class DateTimeUtil {
+    // 스레드별 독립적으로 관리할 TreadLocal 선언
+    // threadLocalInstance를 초기화하기 위해 스레드별로 인스턴스를 생성하는 withInitial() 사용
+    // 이를 통해 스레드별 새로운 객체 생성
+    private static final ThreadLocal<DateTimeUtil> threadLocalInstance = ThreadLocal.withInitial(() -> new DateTimeUtil());
+
+    // 스레드별로 할당된 DateTimeUtil 인스턴스 반환
+    public static DateTimeUtil getInstance() {
+        // 현재 스레드에 할당된 DateTimeUtil 인스턴스 반환
+        // 각 스레드별로 자신만의 인스턴스를 사용할 수 있음
+        return threadLocalInstance.get();
+    }
+
+    // 몇 번째로 생성된 인스턴스인지 나타내는 변수 
+    // AtomicInteger -> 멀티 스레드 환경에서도 값의 일관성을 보장함
+    /*
+      1, 2번 스레드에서 int에 동시에 접근할 경우에 대한 예시
+     1번 스레드 : -----(1)--------------(1)-----
+     2번 스레드 : -----------(2)---(2)----------
+     - 1번 스레드가 변수를 읽고 1을 증가시키기 전에 2번 스레드가 변수를 읽고 1을 증가시킨다면,
+     - 1번 스레드가 1을 증가시키기 전에 2번 스레드가 증가시킨 결과를 반영하지 못해 무결성이 깨짐 
+    */
+    private static final AtomicInteger counter = new AtomicInteger(1);
+
+    private final int instanceNumber;
+
+    private DateTimeUtil() {
+        // 멀티 스레드 환경에서 객체가 생성될 때마다 값을 증가시킴
+        instanceNumber = counter.getAndIncrement();
+    }
+
+    public void showCurrentTime() {
+        // 인스턴스 번호와 현재 시간 출력
+        System.out.println("Instance " + instanceNumber + ": " + System.currentTimeMillis());
+    }
+}
+```
+
+앞서 봤던 코드와 동일하게 `getInstance()`라는 메소드를 통해 `DateTimeUtil` 객체를 가져오지만,
+객체를 가져오는 방식은 완전히 변경되었다.
+
+앞서 진행했던 테스트에서 `showCurrentTime()`을 추가해 실행하면 아래와 같은 결과가 나온다.
+
+```java
+Instance 1: 1691418372053
+Instance 2: 1691418372058
+```
+
+분명 1개의 스레드만 사용하고 있을텐데 2가 나오는 이유는 `Reflection` 테스트 때문이다.
+우리는 단일 스레드 환경에서 다른 객체가 생성되는 것을 방지하기 위해 방어 코드를 작성했지만,
+이와 같이 `ThreadLocal`을 사용하면 새로운 객체가 만들어져도 다른 스레드에서 작업하기 때문에 문제가 발생할 수 없다.
+
+#### 클래스 직렬화
+
+...
+
+### 열거 타입 방식의 싱글턴
+
+#### 열거 타입이란?
+
+`enum`은 클래스와 같이 멤버 변수, 메소드 등을 정의할 수 있다.
+가장 다른 점은 열거형 상수를 사용할 수 있다는 점이다.
+
+```java
+public enum DayOfWeek {
+    MONDAY,
+    TUESDAY,
+    WEDNESDAY,
+    THURSDAY,
+    FRIDAY,
+    SATURDAY,
+    SUNDAY
+}
+```
+
+```java
+DayOfWeek today = DayOfWeek.MONDAY;
+```
+
+위 코드를 예시로 `MONDAY`의 값을 갖는 객체로도 활용할 수 있다.
+
+#### 싱글톤 생성 방식
+
+위에서 설명한대로 열거형 상수를 1개만 선언한다는 것은 해당 객체는 무조건 싱글톤이라는 것과 동일한 말이다.
+
+```java
+public enum DateTimeUtil {
+    
     INSTANCE;
     
-    public void say() {
-        System.out.println("Hello, World!");
+    public String getPassedTime(LocalDateTime localDateTime) {
+        ...
     }
+
 }
 ```
 
-앞서 확인한 두 가지 방식 중에서 가장 간결하며, 추가적인 노력 없이 직렬화할 수 있다.
-또한, 다른 방식에 취약한 복잡한 직렬화나 역직렬화, 리플렉션 공격에서도 제 2의 인스턴스가 생기는 일을 완벽히 막아준다.
-
-대부분의 상황에서는 원소가 하나뿐인 열거 타입이 싱그롵ㄴ을 만드는 가장 좋은 방식이다.
-
-## 싱글톤의 장점
-
-### 메모리적 이점
-
-```java
-Singleton instance = new Singleton();
-```
-
-위 코드와 같이 new 연산자를 통해 계속해서 객체를 생성하면 메모리에 여러 객체가 쌓이게 된다.
-
-```java
-// Singleton 클래스
-public static final Singleton INSTANCE = new Singleton();
-
-// Main 클래스
-Singleton instance = Singleton.INSTANCE;
-```
-
-하지만 위와 같이 싱글톤 방식을 사용하면, 클래스가 올라갈 때 최초 한 번의 new 연산자를 통해 메모리에 고정해 메모리 낭비를 방지할 수 있다.
-
-### 데이터 공유
-
-싱글톤 인스턴스가 전역으로 사용되기 때문에 다른 클래스의 인스턴스가 접근하기 용이하다.
-하지만 모든 코드가 동일하듯, 동시에 해당 인스턴스에 접근하게 되면 동시성 문제가 발생하게 된다.
-
-이를 막기 위해서는 `syncronized`를 통해 멀티스레드 환경에서 동시에 접근하지 못하도록 해야한다.
-
-## 단점
-
-### 리플렉션 공격
-
-1번, 2번 방식은 리플렉션 API 중 `AccessibleObject.setAccessible`을 사용해 `private` 생성자를 호출해 공격 당할 수 있다..
-이러한 공격을 방어하려면 생성자를 수정하여 두 번째 객체가 생성되려할 때 예외를 던지게 하면 된다.
-
-### 테스트 이슈
-
-어플리케이션을 실행한 상태에서는 이미 싱글톤 객체는 메모리에 올라가있다.
-때문에 테스트에서 정상적으로 사용하기 위해서는 싱글톤 인스턴스의 상태를 초기화시켜주어야 한다.
-
-만약 내가 인스턴스의 멤버 변수의 값을 변경했다고 가정하자.
-그 상태에서 테스트를 진행하면 변경된 값이 나오게 된다.
-이러한 상황에서 정상적인 테스트는 어렵기 때문에 인스턴스를 새로 초기화시켜주는 것이 좋다.
-
-## 정리
-
-총 2가지 방식(1번 방식, 2번 방식) 중 공급자가 크게 필요하지 않을 경우에는 `public static final INSTANCE`를 시용하는 것이 효율적이다.
-또한, 직렬화된 인스턴스를 역직렬화할 때마다 새로운 인스턴스가 만들어지는 불상사가 생길 수 있어 `readResolve` 메소드를 추가해주는 것이 좋다.
-
-```java
-private Object readResolve(){
-    // 진짜 INSTANCE를 반환하고, 새로 만들어진 가짜 INSTANCE는 GC에 맡긴다.
-    return INSTANCE;
-}
-```
-
-싱글톤을 사용해야한다면 가능한 세 번째 방식을 사용하는 것이 좋다.
+앞서 봤던 방식과 다르게 가장 간단하다.
+대부분의 상황에서 원소가 하나뿐인 열거 타입이 싱글턴을 만드는 가장 좋은 방법이다.
