@@ -1,7 +1,7 @@
 ---
 title: "[Item6] - 불필요한 객체 생성을 피하라."
 last_modified_at: 2023-08-11T21:00:37-21:30
-categories: STUDY/EFFECTIVE-JAVA
+categories: EFFECTIVE-JAVA
 tags:
   - Effective Java
   - Java
