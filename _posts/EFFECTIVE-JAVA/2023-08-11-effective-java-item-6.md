@@ -5,6 +5,7 @@ categories: STUDY
 tags:
   - Effective Java
   - Java
+  - Study
 toc: true
 toc_sticky: true
 toc_label: "Effective Java"
