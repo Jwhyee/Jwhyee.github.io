@@ -1,6 +1,6 @@
 ---
 title: "[Spring] - SpringBoot 3.x 버전에서 Swagger 사용하기"
-last_modified_at: 2023-09-04:00:37-21:30
+last_modified_at: 2023-09-04T21:00:37-21:30
 categories: SPRING-BOOT
 tags:
   - SpringBoot
