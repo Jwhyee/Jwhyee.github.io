@@ -1,6 +1,6 @@
 ---
 title: "[Item15] - 클래스와 멤버의 접근 권한을 최소화하라."
-last_modified_at: 2023-09-24T21:00:37-21:30
+last_modified_at: 2023-10-04T21:00:37-21:30
 categories: EFFECTIVE-JAVA
 tags:
   - Effective Java
