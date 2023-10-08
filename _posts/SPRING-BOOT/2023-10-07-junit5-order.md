@@ -1,5 +1,5 @@
 ---
-title: "[Spring] - JUnit5 Nested Order"
+title: "[JUnit5] - @Nested 테스트 순서 지정"
 last_modified_at: 2023-10-07T21:00:37-21:30
 categories: SPRING-BOOT
 tags:

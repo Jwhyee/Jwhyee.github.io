@@ -100,10 +100,11 @@ public class StreamFunctionalTest {
 
     @Test
     void integerToStringMap() {
-        int[][] arr = {{1, 0, 0, 0},
-                        {1, 1, 0, 0},
-                        {0, 1, 0, 0},
-                        {0, 1, 1, 1}
+        int[][] arr = {
+                {1, 0, 0, 0},
+                {1, 1, 0, 0},
+                {0, 1, 0, 0},
+                {0, 1, 1, 1}
         };
         
         Arrays.stream(arr)
