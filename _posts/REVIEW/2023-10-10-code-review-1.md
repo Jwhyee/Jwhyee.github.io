@@ -18,7 +18,7 @@ Spring Boot를 이용해 특정 요구사항을 정해 API를 개발하는 스�
 
 ### EOL(End Of Line) 이슈
 
-![image](https://github.com/Back-Mo/java-spring-api-study/assets/82663161/2e7d10c7-802b-4419-afad-a81e15247729){.center}
+![image](https://github.com/Back-Mo/java-spring-api-study/assets/82663161/2e7d10c7-802b-4419-afad-a81e15247729)
 
 ```yaml
 .idea/**
@@ -52,7 +52,7 @@ public void deleteMenu(Long id){
 }
 ```
 
-![image](https://github.com/Back-Mo/java-spring-api-study/assets/82663161/6401d5f8-0403-484a-8091-45bd2fcded87){.center}
+![image](https://github.com/Back-Mo/java-spring-api-study/assets/82663161/6401d5f8-0403-484a-8091-45bd2fcded87)
 
 프로젝트를 진행할 때마다 실제 데이터를 DB에서 삭제하는 방식으로 개발했다.
 하지만, 실무에서는 실제로 데이터를 삭제하는 것이 아닌 논리 삭제(Soft Delete)를 한다고 한다.
@@ -87,11 +87,11 @@ public class Menu {
 
 보통 `Controller`에서 프론트로 값을 반환하기 전에 DTO로 변환하는 습관이 있었다.
 
-![image](https://github.com/Back-Mo/java-spring-api-study/assets/82663161/383a28ee-0ea8-401f-a20d-25977dcf4f7e){.center}
+![image](https://github.com/Back-Mo/java-spring-api-study/assets/82663161/383a28ee-0ea8-401f-a20d-25977dcf4f7e)
 
 하지만 아래 사진처럼 가능한 `Repository`에서 DTO로 변환하는 것이 좋다고 한다.
 
-![image](https://github.com/Back-Mo/java-spring-api-study/assets/82663161/368a2a58-44cc-48cb-8953-6dfe877e647b){.center}
+![image](https://github.com/Back-Mo/java-spring-api-study/assets/82663161/368a2a58-44cc-48cb-8953-6dfe877e647b)
 
 자세한 내용은 [짱민님 블로그](https://leezzangmin.tistory.com/47)에서 확인할 수 있다.
 
@@ -135,12 +135,12 @@ public class ResponseData {
 }
 ```
 
-![image](https://github.com/Back-Mo/java-spring-api-study/assets/82663161/3c7b3879-2f9c-4125-862a-f7e49682a5aa){.center}
+![image](https://github.com/Back-Mo/java-spring-api-study/assets/82663161/3c7b3879-2f9c-4125-862a-f7e49682a5aa)
 
 지금까지 눈치채지 못했지만, 이전에 작성했던 코드들도 모두 `success`와 `fail`에 대한 반환 값이 동일했다.
 또한, 실패에 대한 반환은 `ExceptionHandler`에서만 사용하기에 적절하지 않았다.
 
-![image](https://github.com/Back-Mo/java-spring-api-study/assets/82663161/ecbd92f8-383b-49e0-9ba2-efd8ebeca2a8){.center}
+![image](https://github.com/Back-Mo/java-spring-api-study/assets/82663161/ecbd92f8-383b-49e0-9ba2-efd8ebeca2a8)
 
 추가적으로 실패에 대한 요청을 보낼 때, `RFC_7807` 규약이 있다는 것을 새로 알았다.
 
@@ -193,7 +193,7 @@ void saveMenuTest() {
 
 즉, 첫 `assert`에서 실패할 경우 뒷 테스트는 진행되지 않아 순서를 변경하거나, 성공하는 테스트로 다시 수정 후 테스트를 진행해야 한다.
 
-![image](https://github.com/Back-Mo/java-spring-api-study/assets/82663161/47e13f89-d7c7-4845-9a5f-b871215d55aa){.center}
+![image](https://github.com/Back-Mo/java-spring-api-study/assets/82663161/47e13f89-d7c7-4845-9a5f-b871215d55aa)
 
 하지만 `SoftAssertions`를 이용하면 모든 `assertions`를 실행한 후, 실패 내역에 대해서 확인할 수 있게 된다.
 
@@ -209,7 +209,7 @@ public ResponseData.ApiResult<?> saveMenuApi(@RequestBody MenuDto dto){
 }
 ```
 
-![image](https://github.com/Back-Mo/java-spring-api-study/assets/82663161/bb9a7ccb-d7d1-4b57-ba4c-b28edb86261b){.center}
+![image](https://github.com/Back-Mo/java-spring-api-study/assets/82663161/bb9a7ccb-d7d1-4b57-ba4c-b28edb86261b)
 
 하지만 `ApiResult<?>`에 들어가는 타입은 `Dto`가 명백하기 때문에 `ApiResult<MenuDto>` 이렇게 자료형을 제한하는 것이 올바르다고 한다.
 리뷰에 있는 그대로, 와일드카드 타입을 쓰게될 경우, 타입의 안정성을 해치게 된다.
@@ -235,7 +235,7 @@ public class DuplicationMenuException extends RuntimeException {
 }
 ```
 
-![image](https://github.com/Back-Mo/java-spring-api-study/assets/82663161/1a936918-0d1b-49e9-8e2a-5e1ed5af7d39){.center}
+![image](https://github.com/Back-Mo/java-spring-api-study/assets/82663161/1a936918-0d1b-49e9-8e2a-5e1ed5af7d39)
 
 `CustomException`을 만들어서 좋은 것은 메시지를 구체화할 수 있는 것인데, 내부가 중복되는 불상사가 생긴다.
 
