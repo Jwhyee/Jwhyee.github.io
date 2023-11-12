@@ -1,5 +1,5 @@
 ---
-title: "[Kotlin] - 제어문"
+title: "[Kotlin] - 클래스"
 last_modified_at: 2023-11-12T22:10:37-23:30
 categories: KOTLIN
 tags:
