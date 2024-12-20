@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 # init
-gem "jekyll", "~> 3.9.2"
+gem "jekyll", "~> 3.9.4"
 gem "github-pages", group: :jekyll_plugins
 gem "jekyll-include-cache", group: :jekyll_plugins
 # for create auto categories
@@ -11,3 +11,4 @@ gem "jekyll-archives", "~> 2.2"
 gem "webrick", "~> 1.7"
 group :jekyll_plugins do
 	gem "jemoji"
+end
