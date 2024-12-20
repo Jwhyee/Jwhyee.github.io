@@ -6,5 +6,7 @@ main:
     url: /tags/
   - title: "Year"
     url: /year-archive/
+  - title: "random"
+    url: /random/
   # - title: "Sitemap"
   #   url: /sitemap/
