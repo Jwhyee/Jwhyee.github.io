@@ -257,22 +257,13 @@
           <i class="fas fa-fw fa-home"></i><span class="label">Home</span>
         </a>
       </li>
-      {% assign categories_max = 0 %}
-      {% for category in site.categories %}
-        {% if category[1].size > categories_max %}
-          {% assign categories_max = category[1].size %}
-        {% endif %}
-      {% endfor %}
-      {% for i in (1..categories_max) reversed %}
-        {% for category in site.categories %}
-          {% if category[1].size == i %}
-            <li>
-              <a href="{{site.url}}/categories/#{{ category[0] | slugify }}" style="text-decoration: none;">
-                <i class="far fa-xs fa-circle"></i><span class="label">{{ category[0] }} ({{ category[1].size }})</span>
-              </a>
-            </li>
-          {% endif %}
-        {% endfor %}
+      {% assign sorted_categories = site.categories | sort: "first" %}
+      {% for category in sorted_categories %}
+      <li>
+        <a href="{{ site.url }}/categories/#{{ category[0] | slugify }}" style="text-decoration: none;">
+          <i class="far fa-xs fa-circle"></i><span class="label">{{ category[0] }} ({{ category[1].size }})</span>
+        </a>
+      </li>
       {% endfor %}
     </ul>
   </div>
