@@ -263,9 +263,8 @@
           {% assign categories_max = category[1].size %}
         {% endif %}
       {% endfor %}
-      {% assign sorted_categories = site.categories | sort: "first" %}
       {% for i in (1..categories_max) reversed %}
-        {% for category in sorted_categories %}
+        {% for category in site.categories %}
           {% if category[1].size == i %}
             <li>
               <a href="{{site.url}}/categories/#{{ category[0] | slugify }}" style="text-decoration: none;">
