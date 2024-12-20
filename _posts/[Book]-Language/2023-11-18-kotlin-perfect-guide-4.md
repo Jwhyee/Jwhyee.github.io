@@ -1,7 +1,7 @@
 ---
 title: "[Kotlin] - Pair"
 last_modified_at: 2023-11-12T22:10:37-23:30
-categories: [Book]-Language
+categories: "[Book]-Language"
 tags:
   - 코틀린 완벽 가이드
   - Kotlin

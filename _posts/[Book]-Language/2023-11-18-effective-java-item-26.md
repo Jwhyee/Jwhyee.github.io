@@ -1,7 +1,7 @@
 ---
 title: "[Item26] - 로 타입은 사용하지 말라."
 last_modified_at: 2023-11-18T21:00:37-21:30
-categories: [Book]-Language
+categories: "[Book]-Language"
 tags:
   - Effective Java 3/E
   - Java

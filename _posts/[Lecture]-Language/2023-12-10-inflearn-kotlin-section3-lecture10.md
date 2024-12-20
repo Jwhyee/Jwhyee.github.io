@@ -1,7 +1,7 @@
 ---
 title: "[Kotlin] - 코틀린에서 상속을 다루는 방법"
 last_modified_at: 2023-12-10T22:10:37-23:30
-categories: [Lecture]-Language
+categories: "[Lecture]-Language"
 tags:
   - 자바 개발자를 위한 코틀린 입문
   - Kotlin

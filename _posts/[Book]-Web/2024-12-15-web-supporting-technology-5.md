@@ -1,7 +1,7 @@
 ---
 title: "[Chapter5] URI의 설계"
 last_modified_at: 2024-12-15T21:00:37-21:30
-categories: [Book]-Web
+categories: "[Book]-Web"
 tags:
   - "웹을 지탱하는 기술"
 toc: true

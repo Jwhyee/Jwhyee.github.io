@@ -1,7 +1,7 @@
 ---
 title: "[Item22] - 인터페이스는 타입을 정의하는 용도로만 사용하라."
 last_modified_at: 2023-10-23T21:00:37-21:30
-categories: [Book]-Language
+categories: "[Book]-Language"
 tags:
   - Effective Java 3/E
   - Java

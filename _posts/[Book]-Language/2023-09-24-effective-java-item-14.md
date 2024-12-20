@@ -1,7 +1,7 @@
 ---
 title: "[Item14] - Comparable을 구현할지 고려하라."
 last_modified_at: 2023-09-24T21:00:37-21:30
-categories: [Book]-Language
+categories: "[Book]-Language"
 tags:
   - Effective Java 3/E
   - Java

@@ -1,7 +1,7 @@
 ---
 title: "[Item32] - 제네릭과 가변인수를 함께 쓸 때는 신중하라."
 last_modified_at: 2023-12-16T21:00:37-21:30
-categories: [Book]-Language
+categories: "[Book]-Language"
 tags:
   - Effective Java 3/E
   - Java

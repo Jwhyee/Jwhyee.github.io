@@ -1,7 +1,7 @@
 ---
 title: "[Chapter3] REST 웹의 아키텍처 스타일"
 last_modified_at: 2024-12-12T21:00:37-21:30
-categories: [Book]-Web
+categories: "[Book]-Web"
 tags:
   - "웹을 지탱하는 기술"
 toc: true

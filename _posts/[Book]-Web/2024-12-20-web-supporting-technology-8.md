@@ -1,7 +1,7 @@
 ---
 title: "[Chapter8] 스테이터스 코드"
 last_modified_at: 2024-12-20T21:00:37-21:30
-categories: [Book]-Web
+categories: "[Book]-Web"
 tags:
   - "웹을 지탱하는 기술"
 toc: true

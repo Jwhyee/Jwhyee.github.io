@@ -1,7 +1,7 @@
 ---
 title: "[Item11] - equals를 재정의하려거든 hashCode도 재정의하라."
 last_modified_at: 2023-09-12T21:00:37-21:30
-categories: [Book]-Language
+categories: "[Book]-Language"
 tags:
   - Effective Java 3/E
   - Java

@@ -1,7 +1,7 @@
 ---
 title: "[Item1] - 생성자 대신 정적 팩터리 메서드를 고려하라."
 last_modified_at: 2023-07-06T21:00:37-21:30
-categories: [Book]-Language
+categories: "[Book]-Language"
 tags:
   - Effective Java 3/E
   - Java

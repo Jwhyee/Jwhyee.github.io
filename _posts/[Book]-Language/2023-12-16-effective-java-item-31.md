@@ -1,7 +1,7 @@
 ---
 title: "[Item31] - 한정적 와일드카드를 사용해 API 유연성을 높이라."
 last_modified_at: 2023-12-16T21:00:37-21:30
-categories: [Book]-Language
+categories: "[Book]-Language"
 tags:
   - Effective Java 3/E
   - Java
