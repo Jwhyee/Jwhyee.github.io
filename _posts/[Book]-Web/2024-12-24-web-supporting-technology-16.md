@@ -163,7 +163,7 @@ Content-Type: application/json
 
 비관적이라는 말이 '앞으로의 일이 잘 안될 것이라고 보는 것'이라는 의미를 가진 것과 같이 **사용자를 신용하지 못하고, 경합이 발생하지 않도록** 하는 제어 방법 중 하나이다.
 
-![image](https://github.com/user-attachments/assets/fe22d8e3-36ac-4841-8e2e-e455a241fb42)
+![image](https://private-user-images.githubusercontent.com/82663161/398357926-fe22d8e3-36ac-4841-8e2e-e455a241fb42.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzUwMjgwMTcsIm5iZiI6MTczNTAyNzcxNywicGF0aCI6Ii84MjY2MzE2MS8zOTgzNTc5MjYtZmUyMmQ4ZTMtMzZhYy00ODQxLThlMmUtZTQ1NWEyNDFmYjQyLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDEyMjQlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQxMjI0VDA4MDgzN1omWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTE4NmEwYjFhOWMzN2I5ZjNjYWRmMTcyM2EyYzA2ZmVmNTk5MTNiNmY0YmY5ZGFlMDdhOTY3NWU3NmU2MjE1YWQmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.vmIk_1A6PGi7z1r5WAXKNGJaVYIXupQhzlQeAv6SZbg)
 
 이 방법은 WebDAV를 사용한 것인데, 사진을 보는 것과 같이 먼저 접근한 쪽에서 해당 리소스에 대한 LOCK을 걸고, 수정을 진행한다. 만약 그 과정에서 B가 접근할 경우에는 423 Locked라는 에러를 보내, 해당 리소스가 잠겨있다는 것을 나타낼 수 있다.
 
@@ -177,6 +177,6 @@ Content-Type: application/json
 
 즉, 클라이언트가 갱신 요청할 때, 자신이 갱신하고자 하는 리소스의 변경 여부를 확인하는 구조가 필요한 것이다. ETag 혹은 Last-Modified를 사용하는 방법이 있다.
 
-![image2](https://github.com/user-attachments/assets/97a79224-0054-4753-9313-72b9d49b7519)
+![image2](https://private-user-images.githubusercontent.com/82663161/398360117-97a79224-0054-4753-9313-72b9d49b7519.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzUwMjgwMTcsIm5iZiI6MTczNTAyNzcxNywicGF0aCI6Ii84MjY2MzE2MS8zOTgzNjAxMTctOTdhNzkyMjQtMDA1NC00NzUzLTkzMTMtNzJiOWQ0OWI3NTE5LnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDEyMjQlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQxMjI0VDA4MDgzN1omWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTZlZDc1OWJhMmJiOTZiZmZkZDdkYzU0YWVkNjkxNzkxNTQwNjQ3ZDYzYmViZDcxYTM3OGM5NGExMWEwNGI3YTkmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.WTqRW3kFROE1eDOr3orYl3AxHRq3svnO0BHplG3LkeU)
 
 이렇게, 경합을 일으킨 사용자에게 확인한 후, 갱신 또는 삭제를 한다. 이전 갱신을 무시한 채 갑자기 변경하거나 삭제하는 것은 문제가 될 수 있으므로, 방법을 써서 클라이언트에게 경합을 확인해야 한다.
