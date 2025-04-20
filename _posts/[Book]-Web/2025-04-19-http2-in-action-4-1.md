@@ -32,7 +32,7 @@ HTTP/1은 동기적이고, 단일 요청 및 응답 프로토콜이다. 즉, 클
 
 HTTP/2의 경우 단일 TCP 커넥션만으로, 여러 요청을 동시에 병렬로 처리한다.
 
-![Image](https://github.com/user-attachments/assets/8fecdc26-8661-4657-b04e-cc0e85ecd4e1)
+![Image](https://i.imgur.com/v5CAV4w.png)
 
 그림을 보면 알 수 있듯이, HTTP/1은 요청을 보낼 때마다 TCP 커넥션을 만들고, 응답이 올 때까지 다른 요청을 보낼 수 없지만, HTTP/2는 단일 TCP 환경에서 스트림을 통해 요청을 보내고, 응답이 오기 전에도 또 다른 요청을 계속해서 보낼 수 있다.
 
