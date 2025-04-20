@@ -1,5 +1,5 @@
 ---
-title: "[Chapter4] HTTP2 프로토콜 기초 (1)"
+title: "[Chapter4] HTTP2 프로토콜 기초 (2)"
 last_modified_at: 2025-04-19T21:00:37-21:30
 categories: "[Book]-Web"
 tags:
