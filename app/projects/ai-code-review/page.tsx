@@ -1,30 +1,53 @@
+'use client';
+
+import React, { useState } from 'react';
 import { projects } from "@/src/data/projects";
 import CodeBlock from "@/src/components/CodeBlock";
 import Link from "next/link";
 import Markdown from "@/src/components/Markdown";
 import Image from "next/image";
+import ImageModal from "@/src/components/ImageModal";
 
 export default function AiCodeReviewProjectPage() {
   const project = projects.find((p) => p.id === 'ai-code-review');
+  const [modalState, setModalState] = useState<{ isOpen: boolean; src: string; alt: string }>({
+    isOpen: false,
+    src: '',
+    alt: '',
+  });
 
   if (!project) return <div>Project not found</div>;
+
+  const openModal = (src: string, alt: string) => {
+    setModalState({ isOpen: true, src, alt });
+  };
+
+  const closeModal = () => {
+    setModalState((prev) => ({ ...prev, isOpen: false }));
+  };
 
   return (
     <main className="bg-zinc-950 min-h-screen py-12 px-4 print:py-0 print:px-0">
       <div className="max-w-[210mm] mx-auto bg-zinc-950 shadow-2xl print:shadow-none min-h-[297mm] print:min-h-0 print:max-w-none print:w-full p-10 md:p-16 print:p-16">
         {/* Back Link */}
         <Link href="/" className="text-zinc-500 hover:text-white mb-12 inline-block transition-colors font-mono text-[8pt] font-bold group no-print">
-          <span className="group-hover:-translate-x-1 inline-block transition-transform mr-2">←</span> 
+          <span className="group-hover:-translate-x-1 inline-block transition-transform mr-2">←</span>
           BACK TO RESUME
         </Link>
 
         {/* Header */}
         <header className="mb-12 border-b-2 border-white pb-8">
-          <h1 className="text-h1 mb-2 tracking-tighter text-white">
-            {project.title}
-          </h1>
-          <p className="text-[12pt] text-zinc-400 font-medium tracking-wide max-w-2xl leading-relaxed">
-            <Markdown content={project.overview.description} />
+          <div className="flex justify-between items-start mb-4">
+            <h1 className="text-h1 tracking-tighter text-white">
+              {project.title}
+            </h1>
+            <div className="text-right no-print">
+              <p className="text-[10pt] font-mono text-emerald-500 font-bold">2025.08 — 2025.09</p>
+              <p className="text-[8pt] text-zinc-500 uppercase tracking-widest">Deep Dive Report</p>
+            </div>
+          </div>
+          <p className="text-[12pt] text-zinc-400 font-medium tracking-wide max-w-3xl leading-relaxed">
+            <Markdown content="개인 스터디 시간을 활용해 사내 인프라 기반의 **Zero-Budget AI 코드 리뷰 시스템**을 구축하여, 리뷰 병목 해결 및 팀 코드 품질 상향 평준화를 달성한 과정을 기술합니다." />
           </p>
           <div className="flex flex-wrap gap-1.5 mt-8">
             {project.overview.techStack.map((tech) => (
@@ -35,183 +58,224 @@ export default function AiCodeReviewProjectPage() {
           </div>
         </header>
 
-        {/* 1. Why this project? (Motivation) */}
-        <section className="mb-16 space-y-6">
+        {/* 1. Context & Motivation (Phase 1) */}
+        <section className="mb-16 space-y-8">
           <h2 className="text-[14pt] border-l-4 border-white pl-4 mb-6 uppercase tracking-tighter font-black text-white">
-            1. Why this project? (Motivation)
+            1. Zero-Budget Automation (Phase 1)
           </h2>
-          <div className="text-zinc-300 space-y-4 leading-relaxed text-[10.5pt]">
-            <p>
-              성장하는 팀에서 코드 리뷰는 필수적이지만, 시니어 개발자의 리소스 부족으로 인해 MR(Merge Request)이 정체되는 현상이 빈번했습니다. 
-              유료 AI 리뷰 도구 도입을 검토했으나, 엄격한 사내 보안 정책과 비용 문제로 인해 외부 클라우드 기반 솔루션은 사용이 불가능했습니다.
-            </p>
-            <ul className="list-disc list-inside space-y-2 ml-4 text-zinc-400">
-              <li><Markdown content="**리뷰 리소스의 병목:** 단순 코딩 컨벤션이나 오타 검증에 시니어의 시간이 소모되는 비효율 발생" /></li>
-              <li><Markdown content="**보안 및 비용 제약:** 클라우드 LLM 사용 시 소스 코드 유출 리스크와 구독 비용 부담" /></li>
-            </ul>
-            <p>
-              <Markdown content="이러한 페인 포인트를 해결하기 위해 **사내 유휴 서버와 로컬 LLM**을 활용하여, 보안 가이드라인을 준수하면서도 리뷰 리드타임을 획기적으로 단축할 수 있는 **Zero-Budget AI 리뷰 시스템**을 구축했습니다." />
-            </p>
-          </div>
-        </section>
 
-        {/* 2. Architecture & Pipeline Flow */}
-        <section className="mb-16 space-y-8 print:break-inside-avoid">
-          <h2 className="text-[14pt] border-l-4 border-white pl-4 mb-6 uppercase tracking-tighter font-black text-white">
-            2. Architecture & Pipeline Flow
-          </h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 px-1">
-            <div className="space-y-3">
-              <h3 className="text-[9pt] font-black text-emerald-500 uppercase tracking-widest">Event-Driven Automation</h3>
-              <p className="text-zinc-400 text-[10pt] leading-relaxed">
-                <Markdown content="**GitLab Webhook**과 노코드 자동화 툴인 **n8n**을 연동하여 MR 생성/수정 이벤트를 실시간으로 포착합니다. 중간 단계에서 비즈니스 로직과 무관한 파일(lock, asset 등)을 필터링하고 Diff 데이터를 정제하여 LLM에 전달하는 파이프라인을 설계했습니다." />
-              </p>
+          <div className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+              <div className="space-y-2">
+                <h3 className="text-[10pt] font-black text-zinc-500 uppercase tracking-widest">The Challenge (Situation)</h3>
+                <div className="text-zinc-300 text-[10.5pt] leading-relaxed">
+                  <Markdown content="차세대 의약품 배송 서비스 개발의 임시 팀장으로서 실무와 매니징을 병행하며 **리뷰 리소스 부족과 병목 현상**을 겪었습니다. 신입 팀원과의 코드 품질 편차를 줄이기 위한 교육적 리뷰가 절실했으나, 유료 도구 도입은 경영진의 회의적인 스탠스로 인해 **예산 지원이 불가능**한 상황이었습니다." />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <h3 className="text-[10pt] font-black text-zinc-500 uppercase tracking-widest">The Strategy (Action)</h3>
+                <div className="text-zinc-300 text-[10.5pt] leading-relaxed">
+                  <Markdown content="업무 외 개인 시간을 활용하여 사내 오픈소스 인프라를 조합한 파이프라인을 설계했습니다. **GitLab Webhook + n8n + LM Studio(로컬 LLM)**를 연동하여 외부망 노출 없이 동작하는 경제적 자동화 환경을 구축했습니다." />
+                </div>
+              </div>
             </div>
-            <div className="space-y-3">
-              <h3 className="text-[9pt] font-black text-emerald-500 uppercase tracking-widest">Local LLM Integration</h3>
-              <p className="text-zinc-400 text-[10pt] leading-relaxed">
-                <Markdown content="**LM Studio**를 통해 사내 로컬 서버에 LLM(Llama-3, Qwen 등)을 서빙했습니다. 외부망 연결 없이 API를 호출함으로써 소스 코드 유출을 원천 차단하고, 서버 가동 비용 외의 추가 지출이 없는 경제적인 시스템을 완성했습니다." />
-              </p>
-            </div>
-          </div>
 
-          {/* Pipeline Diagrams */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 px-1">
-            <div className="bg-zinc-900/30 border border-zinc-800 rounded-lg overflow-hidden group hover:border-emerald-500/50 transition-colors">
+            {/* Architecture Image - Block Layout (Clickable) */}
+            <div
+              className="bg-zinc-900/30 border border-zinc-800 rounded-lg overflow-hidden group hover:border-emerald-500/50 transition-colors mt-4 cursor-zoom-in"
+              onClick={() => openModal("/images/ai-code-review/gitlab-request-flow.png", "GitLab Pipeline Workflow")}
+            >
               <div className="p-3 border-b border-zinc-800 bg-zinc-900/50 flex justify-between items-center">
-                <span className="text-[7pt] font-black text-zinc-500 uppercase tracking-[0.2em]">Pipeline Architecture</span>
+                <div className="flex items-center gap-2">
+                  <span className="text-[7pt] font-black text-zinc-500 uppercase tracking-[0.2em]">GitLab Pipeline Workflow (Phase 1)</span>
+                  <span className="text-[6pt] bg-zinc-800 text-zinc-400 px-1.5 py-0.5 rounded border border-zinc-700 font-mono group-hover:text-emerald-500 group-hover:border-emerald-500/50 transition-colors uppercase">Click to Enlarge</span>
+                </div>
               </div>
-              <div className="relative aspect-square w-full bg-zinc-950">
-                <Image 
-                  src="/images/ai-code-review/github-pipeline-architecture.png"
-                  alt="AI Code Review Pipeline Architecture"
-                  fill
-                  className="object-contain p-6 opacity-90 group-hover:opacity-100 transition-opacity"
-                />
-              </div>
-            </div>
-            <div className="bg-zinc-900/30 border border-zinc-800 rounded-lg overflow-hidden group hover:border-emerald-500/50 transition-colors">
-              <div className="p-3 border-b border-zinc-800 bg-zinc-900/50 flex justify-between items-center">
-                <span className="text-[7pt] font-black text-zinc-500 uppercase tracking-[0.2em]">Request & Comment Flow</span>
-              </div>
-              <div className="relative aspect-square w-full bg-zinc-950">
-                <Image 
+              <div className="relative aspect-[21/9] w-full bg-zinc-950">
+                <Image
                   src="/images/ai-code-review/gitlab-request-flow.png"
                   alt="GitLab Request Flow"
                   fill
-                  className="object-contain p-6 opacity-90 group-hover:opacity-100 transition-opacity"
+                  className="object-contain p-8 opacity-90 group-hover:opacity-100 transition-opacity"
                 />
               </div>
             </div>
+
+            <ul className="list-disc list-inside space-y-2 text-zinc-400 text-[10.5pt] ml-2">
+              <li><Markdown content="**데이터 정제:** Git Diff 포맷을 분석하여 Hunk 단위로 분해하고 로직과 무관한 노이즈(Import, 주석) 필터링" /></li>
+              <li><Markdown content="**추론 안정화:** `gpt-oss-20b` 모델 적용 및 n8n Merge 노드를 활용한 컨텍스트 데이터 유실 방지" /></li>
+              <li><Markdown content="**프롬프트 고도화:** Google AI Studio를 활용한 약 100회 이상의 반복 검증으로 최적의 System Prompt 도출" /></li>
+            </ul>
           </div>
         </section>
 
-
-        {/* 3. Problems & Technical Solutions */}
-        <section className="mb-16 space-y-10">
-          <h2 className="text-[14pt] border-l-4 border-white pl-4 mb-6 uppercase tracking-tighter font-black text-white">
-            3. Problems & Technical Solutions
-          </h2>
-
-          <div className="space-y-12 px-1">
-            {/* Problem 1 */}
-            <div className="space-y-4 print:break-inside-avoid">
-              <div className="inline-block bg-red-900/10 text-red-500 px-2 py-0.5 rounded text-[7pt] font-black uppercase tracking-widest mb-1 border border-red-500/20">
-                Problem 01: Token Management
-              </div>
-              <h3 className="text-[12pt] font-bold text-white tracking-tight">방대한 Diff 데이터로 인한 토큰 소모 및 환각</h3>
-              <p className="text-[10pt] text-zinc-400 leading-relaxed">
-                MR 전체 Diff를 그대로 전송할 경우 LLM의 컨텍스트 윈도우를 초과하거나, 로직과 무관한 코드들로 인해 분석 정확도가 떨어지는 문제가 발생했습니다.
-              </p>
-              <div className="bg-zinc-900/30 p-5 rounded-lg border border-zinc-800/50 space-y-3">
-                <p className="text-emerald-500 font-black text-[8pt] uppercase tracking-widest">Solution Implementation: Payload Trimming</p>
-                <CodeBlock 
-                  language="javascript"
-                  code={`// import, package 선언, 주석 등 비논리적 변경사항 제거
-function trimDiff(diff) {
-  return diff.split('\\n')
-    .filter(line => 
-      (line.startsWith('+') || line.startsWith('-')) &&
-      !line.match(/^(\\+|\\-)\\s*(import|package|\\/\\/|\\/\\*)/)
-    )
-    .join('\\n');
-}`}
-                />
-                <p className="text-zinc-500 text-[8pt] font-mono"><Markdown content="이를 통해 토큰 소모량을 **약 60% 절감**하고 리뷰 응답의 품질을 향상시켰습니다." /></p>
-              </div>
-            </div>
-
-            {/* Problem 2 */}
-            <div className="space-y-4 print:break-inside-avoid">
-              <div className="inline-block bg-red-900/10 text-red-500 px-2 py-0.5 rounded text-[7pt] font-black uppercase tracking-widest mb-1 border border-red-500/20">
-                Problem 02: Prompt Engineering
-              </div>
-              <h3 className="text-[12pt] font-bold text-white tracking-tight">LLM의 지나친 칭찬 혹은 무의미한 조언</h3>
-              <p className="text-[10pt] text-zinc-400 leading-relaxed">
-                기본 설정에서는 AI가 &quot;좋은 코드입니다&quot;와 같은 원론적인 답변만 반복하거나, 언어의 특성을 무시한 조언을 하는 경우가 있었습니다.
-              </p>
-              <div className="bg-zinc-900/30 p-5 rounded-lg border border-zinc-800/50 space-y-3">
-                <p className="text-emerald-500 font-black text-[8pt] uppercase tracking-widest">Solution: Context-Aware Prompting</p>
-                <ul className="list-disc list-inside space-y-1.5 text-zinc-300 text-[9.5pt]">
-                  <li><Markdown content="**Role Identity:** &quot;당신은 Kotlin/Spring Boot 전문가입니다&quot;와 같이 페르소나를 명확히 부여" /></li>
-                  <li><Markdown content="**Constraint:** 칭찬을 배제하고 오직 수정이 필요한 로직, 잠재적 버그, 성능 병목에 대해서만 불릿 포인트로 응답하도록 강제" /></li>
-                  <li><Markdown content="**Language:** 답변 언어를 한국어로 고정하고 팀의 코딩 컨벤션을 프롬프트에 주입" /></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* 4. Project Highlights & Results */}
+        {/* 2. Technical Evolution (Phase 2) */}
         <section className="mb-16 space-y-10 print:break-inside-avoid">
           <h2 className="text-[14pt] border-l-4 border-white pl-4 mb-6 uppercase tracking-tighter font-black text-white">
-            4. Project Highlights & Results
+            2. System Refactoring (Phase 2)
           </h2>
-          <div className="bg-zinc-900/30 border border-zinc-800 rounded-lg p-10 text-center mx-1">
-            <h4 className="text-zinc-500 font-black uppercase tracking-widest mb-8 text-[9pt]">Operational Impact</h4>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full max-w-3xl mx-auto">
-              <div className="bg-zinc-950 p-4 rounded border border-zinc-800">
-                <p className="text-[7pt] text-zinc-500 uppercase mb-1">Cost Savings</p>
-                <p className="text-[12pt] font-black text-emerald-500">₩0 / Year</p>
+
+          <div className="text-zinc-300 text-[10.5pt] leading-relaxed px-1">
+            <Markdown content="초기 n8n 기반 파이프라인의 낮은 확장성과 데이터 가공의 한계를 극복하기 위해, **Kotlin & Spring Boot 3 기반의 전용 서버**로 시스템을 전면 리팩터링했습니다. 이를 통해 GitHub App 형태의 유연한 연동과 정교한 인라인 리뷰 기능을 확보했습니다." />
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 px-1">
+            {[
+              { title: "Facade Pattern", desc: "**이벤트 유형**에 따른 명확한 라우팅 및 단일 진입점 관리" },
+              { title: "Producer-Consumer", desc: "**Coroutine Channel** 기반 큐로 GitHub/Gemini API 속도 제한(Rate Limit) 안정적 관리" },
+              { title: "Hexagonal Arch", desc: "**외부 의존성(AI, GitHost)** 추상화로 테스트 용이성 및 교체 유연성 확보" }
+            ].map((item, i) => (
+              <div key={i} className="bg-zinc-900/20 border border-zinc-800 p-5 rounded-lg">
+                <h4 className="text-emerald-500 font-black text-[8pt] uppercase tracking-widest mb-2">{item.title}</h4>
+                <div className="text-zinc-400 text-[9.5pt] leading-snug">
+                  <Markdown content={item.desc} />
+                </div>
               </div>
-              <div className="bg-zinc-950 p-4 rounded border border-zinc-800">
-                <p className="text-[7pt] text-zinc-500 uppercase mb-1">Review Lead Time</p>
-                <p className="text-[12pt] font-black text-emerald-500">-70%</p>
+            ))}
+          </div>
+
+          <div
+            className="bg-zinc-900/30 border border-zinc-800 rounded-lg overflow-hidden group hover:border-emerald-500/50 transition-colors mx-1 cursor-zoom-in mt-4"
+            onClick={() => openModal("/images/ai-code-review/github-pipeline-architecture.png", "Refactored System Architecture")}
+          >
+            <div className="p-3 border-b border-zinc-800 bg-zinc-900/50 flex justify-between items-center">
+              <div className="flex items-center gap-2">
+                <span className="text-[7pt] font-black text-zinc-500 uppercase tracking-[0.2em]">Refactored System Architecture (Phase 2)</span>
+                <span className="text-[6pt] bg-zinc-800 text-zinc-400 px-1.5 py-0.5 rounded border border-zinc-700 font-mono group-hover:text-emerald-500 group-hover:border-emerald-500/50 transition-colors uppercase">Click to Enlarge</span>
               </div>
-              <div className="bg-zinc-950 p-4 rounded border border-zinc-800">
-                <p className="text-[7pt] text-zinc-500 uppercase mb-1">Data Privacy</p>
-                <p className="text-[12pt] font-black text-emerald-500">100% Local</p>
+            </div>
+            <div className="relative aspect-[16/7] w-full bg-zinc-950">
+              <Image
+                src="/images/ai-code-review/github-pipeline-architecture.png"
+                alt="AI Code Review System Architecture"
+                fill
+                className="object-contain p-8 opacity-90 group-hover:opacity-100 transition-opacity"
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* 3. Engineering Highlights */}
+        <section className="mb-16 space-y-12">
+          <h2 className="text-[14pt] border-l-4 border-white pl-4 mb-6 uppercase tracking-tighter font-black text-white">
+            3. Engineering Highlights
+          </h2>
+
+          <div className="space-y-16 px-1">
+            {/* Feature 1: Async Job Queue */}
+            <div className="space-y-4 print:break-inside-avoid">
+              <div className="flex items-center gap-3 mb-2">
+                <span className="text-zinc-500 font-mono text-[10pt]">01.</span>
+                <h3 className="text-[12pt] font-bold text-white tracking-tight">Coroutine Channel 기반 비동기 작업 큐</h3>
               </div>
-              <div className="bg-zinc-950 p-4 rounded border border-zinc-800">
-                <p className="text-[7pt] text-zinc-500 uppercase mb-1">Noise Reduction</p>
-                <p className="text-[12pt] font-black text-blue-500">60%</p>
+              <div className="text-[10pt] text-zinc-400 leading-relaxed ml-8">
+                <Markdown content="Redis와 같은 별도 인프라 없이 **In-memory Channel**로 고가용성 큐를 구현했습니다. `SupervisorJob`과 `runCatching`을 활용하여 개별 작업의 실패가 전체 시스템으로 전파되지 않도록 설계했으며, `Semaphore`와 `Jitter`를 활용해 Rate Limit을 정밀하게 제어합니다." />
+              </div>
+              <div className="ml-8 mt-4">
+                <CodeBlock
+                  language="kotlin"
+                  code={`@Component
+class ReviewJobQueue(private val codeReviewService: CodeReviewService) {
+    private val channel = Channel<ReviewJob>(capacity = Channel.BUFFERED)
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+
+    @PostConstruct
+    fun start() {
+        repeat(workerCount) { idx ->
+            scope.launch(CoroutineName("worker-$idx")) {
+                for (job in channel) {
+                    runCatching { 
+                        // Semaphore로 동시성 상한 제어 + Jitter 쿨다운 적용
+                        codeReviewService.review(job) 
+                    }.onFailure { logger.error("Review failed", it) }
+                }
+            }
+        }
+    }
+}`}
+                />
+              </div>
+            </div>
+
+            {/* Feature 2: Diff Parser */}
+            <div className="space-y-4 print:break-inside-avoid">
+              <div className="flex items-center gap-3 mb-2">
+                <span className="text-zinc-500 font-mono text-[10pt]">02.</span>
+                <h3 className="text-[12pt] font-bold text-white tracking-tight">정교한 커스텀 Diff 파서 엔진</h3>
+              </div>
+              <div className="text-[10pt] text-zinc-400 leading-relaxed ml-8">
+                <Markdown content="단순 문자열 비교가 아닌, Unified Diff 포맷을 직접 분석하여 의미 있는 변경점만 추출합니다. **Sealed Class 기반 ReviewType 설계**를 통해 PR 전체 요약, 파일 코멘트, 멀티라인 인라인 코멘트를 타입 안전하게 다형적으로 처리합니다." />
+              </div>
+              <div className="bg-zinc-900/30 p-6 rounded-lg border border-zinc-800/50 ml-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-3">
+                  <h4 className="text-[8pt] font-black text-emerald-500 uppercase tracking-widest">Efficiency</h4>
+                  <ul className="text-zinc-400 text-[9pt] space-y-1.5 list-disc list-inside">
+                    <li><Markdown content="**Import 및 Package** 구문 변경 자동 제외" /></li>
+                    <li><Markdown content="삭제만 있는 파일 및 빈 변경 사항 필터링" /></li>
+                    <li><Markdown content="**토큰 소모량 60% 절감** 및 환각 방지" /></li>
+                  </ul>
+                </div>
+                <div className="space-y-3">
+                  <h4 className="text-[8pt] font-black text-emerald-500 uppercase tracking-widest">Accuracy</h4>
+                  <ul className="text-zinc-400 text-[9pt] space-y-1.5 list-disc list-inside">
+                    <li><Markdown content="Hunk 헤더 기반 **old/new 라인 번호** 추적" /></li>
+                    <li><Markdown content="멀티라인 코멘트 범위(Range) 정밀 계산" /></li>
+                    <li><Markdown content="**AS-IS / TO-BE** 코드 제안 템플릿 생성" /></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* Feature 3: Security */}
+            <div className="space-y-4 print:break-inside-avoid">
+              <div className="flex items-center gap-3 mb-2">
+                <span className="text-zinc-500 font-mono text-[10pt]">03.</span>
+                <h3 className="text-[12pt] font-bold text-white tracking-tight">보안 중심 설계 (Zero-Trust)</h3>
+              </div>
+              <div className="text-[10pt] text-zinc-400 leading-relaxed ml-8">
+                <Markdown content="Webhook 검증 단계에서 **Constant-Time Comparison(상수 시간 비교)**을 구현하여 Timing Attack을 방어하고, RS256 기반 JWT 인증 및 Installation Token 캐싱으로 보안성과 성능을 동시에 확보했습니다." />
+              </div>
+              <div className="ml-8 grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="bg-zinc-950 p-4 border border-zinc-800 rounded">
+                  <p className="text-emerald-500 font-bold text-[9pt] mb-1">상수 시간 서명 검증</p>
+                  <div className="text-zinc-500 text-[8.5pt]">
+                    <Markdown content="HMAC-SHA256 서명 비교 시 조기 반환을 방지하여 응답 시간 차이로 서명을 유추하는 공격 차단" />
+                  </div>
+                </div>
+                <div className="bg-zinc-950 p-4 border border-zinc-800 rounded">
+                  <p className="text-emerald-500 font-bold text-[9pt] mb-1">GitHub App 인증</p>
+                  <div className="text-zinc-500 text-[8.5pt]">
+                    <Markdown content="**JJWT**를 활용한 RS256 서명 및 토큰 캐싱으로 불필요한 API 호출 최소화" />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* 5. Lessons Learned */}
-        <section className="mb-16 space-y-6 print:break-inside-avoid">
+        {/* 4. Outcomes & Impact */}
+        <section className="mb-16 space-y-10 print:break-inside-avoid">
           <h2 className="text-[14pt] border-l-4 border-white pl-4 mb-6 uppercase tracking-tighter font-black text-white">
-            5. Lessons Learned
+            4. Outcomes & Impact
           </h2>
-          <div className="bg-zinc-900/20 p-8 rounded-lg border border-zinc-800/50 space-y-6">
-            <div className="space-y-3">
-              <h4 className="text-zinc-200 font-bold flex items-center gap-2 text-[10pt]">
-                <span className="text-emerald-500">●</span> 기술의 조합이 만드는 비즈니스 가치
-              </h4>
-              <p className="text-zinc-400 leading-relaxed text-[9.5pt]">
-                <Markdown content="고가의 SaaS를 도입하지 않더라도 `n8n`, `LM Studio`와 같은 오픈소스 도구들을 영리하게 조합하여 실제 팀의 생산성 문제를 해결할 수 있음을 경험했습니다. 엔지니어링의 본질은 화려한 기술의 나열이 아닌, 문제 해결을 위한 최적의 설계를 찾는 것임을 깨달았습니다." />
-              </p>
+          <div className="bg-zinc-900/30 border border-zinc-800 rounded-lg p-10 mx-1">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              {[
+                { label: "Review Lead Time", value: "-70%", color: "text-emerald-500" },
+                { label: "Infra Cost", value: "₩0", color: "text-emerald-500" },
+                { label: "Token Saving", value: "60%", color: "text-blue-500" },
+                { label: "Data Privacy", value: "100%", color: "text-emerald-500" }
+              ].map((stat, i) => (
+                <div key={i} className="text-center">
+                  <p className="text-[7pt] text-zinc-500 uppercase tracking-widest mb-2">{stat.label}</p>
+                  <p className={`text-[18pt] font-black ${stat.color}`}>{stat.value}</p>
+                </div>
+              ))}
             </div>
-            <div className="space-y-3">
-              <h4 className="text-zinc-200 font-bold flex items-center gap-2 text-[10pt]">
-                <span className="text-emerald-500">●</span> LLM 실전 활용의 노하우 체득
-              </h4>
-              <p className="text-zinc-400 leading-relaxed text-[9.5pt]">
-                <Markdown content="LLM을 프로덕션 수준의 워크플로우에 통합할 때 가장 중요한 것은 모델의 크기보다 **&quot;전처리(Trimming)&quot;**와 **&quot;프롬프트 제어(Guardrails)&quot;**임을 이해하게 되었습니다. 데이터의 질이 결과물의 품질을 결정하는 `Garbage In, Garbage Out`의 원칙을 다시 한번 확인했습니다." />
-              </p>
+            <div className="mt-10 border-t border-zinc-800 pt-8">
+              <div className="text-zinc-400 text-[10pt] leading-relaxed italic text-center">
+                <Markdown content='&quot;주도적으로 팀의 생산성 병목을 해결한 성과를 인정받아, 연봉 인상에 긍정적인 성과 평가를 달성했습니다.&quot;' />
+              </div>
             </div>
           </div>
         </section>
@@ -224,7 +288,14 @@ function trimDiff(diff) {
           <span>DEEP DIVE / {project.title.toUpperCase()}</span>
         </footer>
       </div>
+
+      {/* Image Modal */}
+      <ImageModal
+        isOpen={modalState.isOpen}
+        src={modalState.src}
+        alt={modalState.alt}
+        onClose={closeModal}
+      />
     </main>
   );
 }
-

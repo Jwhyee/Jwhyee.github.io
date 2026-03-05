@@ -106,15 +106,20 @@ export default function ProfanityFilterProjectPage() {
           <div className="space-y-12 px-1">
             {/* Problem 1 */}
             <div className="space-y-4 print:break-inside-avoid">
-              <div className="inline-block bg-red-900/10 text-red-500 px-2 py-0.5 rounded text-[7pt] font-black uppercase tracking-widest mb-1 border border-red-500/20">
+              <div className="inline-block bg-red-900/10 text-red-500 px-2 py-0.5 rounded text-[7pt] font-black uppercase tracking-widest mb-3 border border-red-500/20">
                 Problem 01: Performance Bottleneck
               </div>
               <h3 className="text-[12pt] font-bold text-white tracking-tight">정규식 기반 탐지의 극심한 지연</h3>
               <p className="text-[10pt] text-zinc-400 leading-relaxed">
                 10만 자 이상의 텍스트에서 수천 개의 금칙어를 탐지할 때, 정규식 엔진은 역추적(Backtracking)과 패턴 수만큼의 반복 검사로 인해 심각한 CPU 점유와 응답 지연을 초래했습니다.
               </p>
-              <div className="bg-zinc-900/30 p-5 rounded-lg border border-zinc-800/50 space-y-3">
-                <p className="text-emerald-500 font-black text-[8pt] uppercase tracking-widest">Solution Implementation:</p>
+              <div className="bg-zinc-900/30 p-5 rounded-lg border border-zinc-800/50 space-y-4">
+                <div className="space-y-2">
+                  <p className="text-emerald-500 font-black text-[8pt] uppercase tracking-widest">Solution Implementation:</p>
+                  <div className="text-zinc-300 text-[9.5pt] leading-relaxed">
+                    <Markdown content="모든 금칙어를 Trie 자료구조로 구축하고, 매칭 실패 시 이동할 지점을 미리 계산하는 **Failure Function**을 연결했습니다. 이를 통해 텍스트를 단 한 번만 순회하며 수천 개의 패턴을 동시에 찾아내는 **O(N) 복합 탐색**을 구현하여, 기존 정규식 대비 약 **27배의 성능 향상**을 달성했습니다." />
+                  </div>
+                </div>
                 <CodeBlock 
                   language="kotlin"
                   code={`// Aho-Corasick PayloadTrie를 활용한 O(N) 고속 탐색
@@ -128,15 +133,20 @@ val detectedBans = trie.parseText(normalizedSentence)
 
             {/* Problem 2 */}
             <div className="space-y-4 print:break-inside-avoid">
-              <div className="inline-block bg-red-900/10 text-red-500 px-2 py-0.5 rounded text-[7pt] font-black uppercase tracking-widest mb-1 border border-red-500/20">
+              <div className="inline-block bg-red-900/10 text-red-500 px-2 py-0.5 rounded text-[7pt] font-black uppercase tracking-widest mb-3 border border-red-500/20">
                 Problem 02: Obfuscation Evasion
               </div>
               <h3 className="text-[12pt] font-bold text-white tracking-tight">숫자와 공백을 혼용한 우회 패턴</h3>
               <p className="text-[10pt] text-zinc-400 leading-relaxed">
                 사용자들은 금칙어 사이에 숫자나 특수문자를 삽입하여 필터링을 교묘하게 회피합니다. 이를 패턴으로 모두 정의하는 것은 비효율적이었습니다.
               </p>
-              <div className="bg-zinc-900/30 p-5 rounded-lg border border-zinc-800/50 space-y-3">
-                <p className="text-emerald-500 font-black text-[8pt] uppercase tracking-widest">Solution Implementation:</p>
+              <div className="bg-zinc-900/30 p-5 rounded-lg border border-zinc-800/50 space-y-4">
+                <div className="space-y-2">
+                  <p className="text-emerald-500 font-black text-[8pt] uppercase tracking-widest">Solution Implementation:</p>
+                  <div className="text-zinc-300 text-[9.5pt] leading-relaxed">
+                    <Markdown content="탐색 수행 전, 설정된 정책(`NUMBERS`, `WHITESPACES`)에 따라 입력 텍스트에서 숫자와 공백을 제거하는 **전처리 정규화(Normalization) 파이프라인**을 도입했습니다. 원본을 훼손하지 않고 내부적으로 정제된 텍스트 스트림에 대해 탐색을 수행함으로써, 변칙적으로 삽입된 방해 요소를 무력화합니다." />
+                  </div>
+                </div>
                 <CodeBlock 
                   language="kotlin"
                   code={`// 정책 기반 정규화(Normalization) 전처리
@@ -151,24 +161,31 @@ private fun applyPolicies(text: String, policies: Set<ProfanityFilterRegex>): St
 
             {/* Problem 3 */}
             <div className="space-y-4 print:break-inside-avoid">
-              <div className="inline-block bg-red-900/10 text-red-500 px-2 py-0.5 rounded text-[7pt] font-black uppercase tracking-widest mb-1 border border-red-500/20">
+              <div className="inline-block bg-red-900/10 text-red-500 px-2 py-0.5 rounded text-[7pt] font-black uppercase tracking-widest mb-3 border border-red-500/20">
                 Problem 03: False Positives
               </div>
               <h3 className="text-[12pt] font-bold text-white tracking-tight">정상 단어 내 금칙어 포함 이슈 (&quot;시발점&quot;)</h3>
               <p className="text-[10pt] text-zinc-400 leading-relaxed">
                 단순 문자열 제거 방식을 사용하면 의미 있는 정상 단어까지 훼손되는 문제가 발생했습니다. 비속어와 화이트리스트 간의 정교한 구분법이 필요했습니다.
               </p>
-              <div className="bg-zinc-900/30 p-5 rounded-lg border border-zinc-800/50 space-y-3">
-                <p className="text-emerald-500 font-black text-[8pt] uppercase tracking-widest">Solution Implementation:</p>
+              <div className="bg-zinc-900/30 p-5 rounded-lg border border-zinc-800/50 space-y-4">
+                <div className="space-y-2">
+                  <p className="text-emerald-500 font-black text-[8pt] uppercase tracking-widest">Solution Implementation:</p>
+                  <div className="text-zinc-300 text-[9.5pt] leading-relaxed">
+                    <Markdown content="탐지된 금칙어의 인덱스 구간과 미리 정의된 **허용 단어(White-list)**의 구간을 비교하는 **Interval Overlap** 로직을 구현했습니다. 금칙어 구간이 허용 단어 구간에 완전히 포함될 경우(예: '시발' ⊂ '시발점') 이를 정상어로 판단하여 제외함으로써 필터링의 정확도를 극대화했습니다." />
+                  </div>
+                </div>
                 <CodeBlock 
                   language="kotlin"
                   code={`// Interval Overlap 검증 로직
 // 탐지된 비속어 구간이 허용 단어(WhiteList) 구간 내에 포함되면 무시
 val remains = detectedBans.filterNot { ban ->
     detectedAllows.any { allow -> 
-        ban.start >= allow.start && ban.end <= allow.end 
+        overlaps(ban.start, ban.end, allow.start, allow.end)
     }
-}`}
+}
+
+private fun overlaps(s1: Int, e1: Int, s2: Int, e2: Int) = s1 <= e2 && s2 <= e1`}
                 />
               </div>
             </div>

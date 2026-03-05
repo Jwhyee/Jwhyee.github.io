@@ -107,33 +107,43 @@ export default function WillDoneProjectPage() {
           <div className="space-y-12 px-1">
             {/* Problem 1 */}
             <div className="space-y-4 print:break-inside-avoid">
-              <div className="inline-block bg-red-900/10 text-red-500 px-2 py-0.5 rounded text-[7pt] font-black uppercase tracking-widest mb-1 border border-red-500/20">
+              <div className="inline-block bg-red-900/10 text-red-500 px-2 py-0.5 rounded text-[7pt] font-black uppercase tracking-widest mb-3 border border-red-500/20">
                 Problem 01: Schedule Resilience
               </div>
               <h3 className="text-[12pt] font-bold text-white tracking-tight">동적인 업무 환경에서의 스케줄링 붕괴</h3>
               <p className="text-[10pt] text-zinc-400 leading-relaxed">
                 일반적인 타임 트래커는 고정된 블록 방식을 사용하여 긴급 업무나 조기 종료 시 전체 타임라인을 수동으로 밀거나 당겨야 하는 번거로움이 있었습니다.
               </p>
-              <div className="bg-zinc-900/30 p-5 rounded-lg border border-zinc-800/50 space-y-3">
-                <p className="text-emerald-500 font-black text-[8pt] uppercase tracking-widest">Solution: Time-Shift Engine</p>
-                <ul className="list-disc list-inside space-y-1.5 text-zinc-300 text-[9.5pt]">
-                  <li><Markdown content="**Urgent Task Injection:** 긴급 업무 발생 시 현재 업무를 `PENDING` 처리하고 소요 시간만큼 이후 모든 일정을 수학적으로 자동 시프트(Shift)" /></li>
-                  <li><Markdown content="**Unplugged Time Avoidance:** 점심시간 등 고정 제외 시간을 인식하여 업무 블록을 자동으로 분할 배정" /></li>
+              <div className="bg-zinc-900/30 p-5 rounded-lg border border-zinc-800/50 space-y-4">
+                <div className="space-y-2">
+                  <p className="text-emerald-500 font-black text-[8pt] uppercase tracking-widest">Solution: Time-Shift Engine</p>
+                  <div className="text-zinc-300 text-[9.5pt] leading-relaxed">
+                    <Markdown content="실시간 일정 변화를 수학적으로 계산하여 자동 조정하는 **지능형 타임 시프트(Time-Shift) 엔진**을 구현했습니다. 긴급 업무 삽입 시 현재 작업을 즉시 분할(Split)하여 `PENDING`으로 전환하고 후속 일정을 밀어내며, 점심시간 등 고정 제외 시간을 인식하여 업무 블록을 최적으로 재배정합니다." />
+                  </div>
+                </div>
+                <ul className="list-disc list-inside space-y-1.5 text-zinc-400 text-[9pt] ml-1">
+                  <li><Markdown content="**Urgent Task Injection:** 현재 업무 중단 및 소요 시간만큼 이후 모든 일정 자동 시프트" /></li>
+                  <li><Markdown content="**Unplugged Time Avoidance:** 고정 시간대(점심, 회의)를 회피하여 업무 블록 자동 분할 배정" /></li>
                 </ul>
               </div>
             </div>
 
             {/* Problem 2 */}
             <div className="space-y-4 print:break-inside-avoid">
-              <div className="inline-block bg-red-900/10 text-red-500 px-2 py-0.5 rounded text-[7pt] font-black uppercase tracking-widest mb-1 border border-red-500/20">
+              <div className="inline-block bg-red-900/10 text-red-500 px-2 py-0.5 rounded text-[7pt] font-black uppercase tracking-widest mb-3 border border-red-500/20">
                 Problem 02: AI Service Reliability
               </div>
               <h3 className="text-[12pt] font-bold text-white tracking-tight">API 할당량 초과 및 서버 에러 대응</h3>
               <p className="text-[10pt] text-zinc-400 leading-relaxed">
                 Gemini API의 Free Tier 사용 시 할당량 제한(429)으로 인해 성과 분석 기능이 중단되는 리스크가 있었습니다.
               </p>
-              <div className="bg-zinc-900/30 p-5 rounded-lg border border-zinc-800/50 space-y-3">
-                <p className="text-emerald-500 font-black text-[8pt] uppercase tracking-widest">Solution Implementation: Multi-Model Fallback</p>
+              <div className="bg-zinc-900/30 p-5 rounded-lg border border-zinc-800/50 space-y-4">
+                <div className="space-y-2">
+                  <p className="text-emerald-500 font-black text-[8pt] uppercase tracking-widest">Solution Implementation: Multi-Model Fallback</p>
+                  <div className="text-zinc-300 text-[9.5pt] leading-relaxed">
+                    <Markdown content="서비스 가용성을 극대화하기 위해 **다중 모델 폴백(Multi-Model Fallback) 엔진**을 설계했습니다. API 호출 실패 시 에러 코드를 분석하여 `로컬 캐시 → flash-lite → flash → pro` 순으로 자동 전환하며 재시도하는 복구 로직을 통해, 어떤 상황에서도 성과 분석 서비스가 유지되도록 구축했습니다." />
+                  </div>
+                </div>
                 <CodeBlock 
                   language="rust"
                   code={`// Quota Exceeded 발생 시 하위 모델로 즉시 폴백하여 가용성 확보
@@ -151,19 +161,24 @@ for model in models {
 
             {/* Problem 3 */}
             <div className="space-y-4 print:break-inside-avoid">
-              <div className="inline-block bg-red-900/10 text-red-500 px-2 py-0.5 rounded text-[7pt] font-black uppercase tracking-widest mb-1 border border-red-500/20">
+              <div className="inline-block bg-red-900/10 text-red-500 px-2 py-0.5 rounded text-[7pt] font-black uppercase tracking-widest mb-3 border border-red-500/20">
                 Problem 03: The Harness Problem
               </div>
               <h3 className="text-[12pt] font-bold text-white tracking-tight">AI 에이전트의 제어 불능 이슈</h3>
               <p className="text-[10pt] text-zinc-400 leading-relaxed">
                 AI가 여러 작업을 동시에 처리하려다 맥락을 잃거나, 빌드 검증 없이 다음 작업을 진행하여 코드베이스가 오염되는 문제가 빈번했습니다.
               </p>
-              <div className="bg-zinc-900/30 p-5 rounded-lg border border-zinc-800/50 space-y-3">
-                <p className="text-emerald-500 font-black text-[8pt] uppercase tracking-widest">Solution: Strict Harness Protocol</p>
-                <ul className="list-disc list-inside space-y-1.5 text-zinc-300 text-[9.5pt]">
-                  <li><Markdown content="**SSOT (Single Source of Truth):** `STRUCTURE.md`를 통해 프로젝트의 현재 상태를 동기화" /></li>
-                  <li><Markdown content="**Atomic Loop:** `PLANNING.md`를 활용해 한 번에 하나의 작업만 진행하도록 물리적으로 강제" /></li>
-                  <li><Markdown content="**Verification Gate:** 빌드/테스트 성공 전에는 절대 다음 단계로 진행 불가" /></li>
+              <div className="bg-zinc-900/30 p-5 rounded-lg border border-zinc-800/50 space-y-4">
+                <div className="space-y-2">
+                  <p className="text-emerald-500 font-black text-[8pt] uppercase tracking-widest">Solution: Strict Harness Protocol</p>
+                  <div className="text-zinc-300 text-[9.5pt] leading-relaxed">
+                    <Markdown content="AI 에이전트의 실행을 시스템적으로 통제하기 위한 **엄격한 하네스(Harness) 프로토콜**을 수립했습니다. `STRUCTURE.md`를 단일 진실 공급원(SSOT)으로 운영하고, `PLANNING.md`를 통해 물리적 단일 작업 루프를 강제하며, 빌드/테스트 통과 전에는 절대로 다음 단계로 진행할 수 없도록 **Verification Gate**를 구축했습니다." />
+                  </div>
+                </div>
+                <ul className="list-disc list-inside space-y-1.5 text-zinc-400 text-[9pt] ml-1">
+                  <li><Markdown content="**SSOT (Single Source of Truth):** `STRUCTURE.md`를 통해 프로젝트 현재 상태 실시간 동기화" /></li>
+                  <li><Markdown content="**Atomic Loop:** `PLANNING.md` 기반으로 한 번에 하나의 작업만 수행하도록 물리적 제약" /></li>
+                  <li><Markdown content="**Verification Gate:** 빌드/테스트 성공 전에는 스테이징 및 다음 단계 진행 불가" /></li>
                 </ul>
               </div>
             </div>

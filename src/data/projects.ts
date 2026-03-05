@@ -175,43 +175,54 @@ if (remains.isNotEmpty()) {
         id: 'ai-code-review',
         title: 'AI Code Review System',
         overview: {
-            description: '사내 인프라 기반 Zero-Budget AI 리뷰 시스템',
+            description: '사내 인프라 기반의 Zero-Budget AI 리뷰 시스템에서 시작하여, Kotlin/Spring Boot 기반의 고성능 GitHub App으로 진화한 AI 코드 리뷰 엔진',
             techStack: [
-                { name: 'GitLab' }, { name: 'n8n' }, { name: 'LM Studio' }, { name: 'Webhooks' }
+                { name: 'Kotlin' }, { name: 'Spring Boot 3' }, { name: 'Google Gemini' }, 
+                { name: 'GitHub App' }, { name: 'GitLab' }, { name: 'n8n' }, { name: 'LM Studio' },
+                { name: 'Coroutine' }
             ],
             duration: '2025.08 - 2025.09',
             teamSize: '1인 개발',
-            contribution: '100%'
+            contribution: '100% (기획, 아키텍처 설계, 구현)'
         },
         content: {
-            background: '리뷰 리소스 부족으로 MR 정체가 빈번했으나, 유료 도구 도입이 어려운 환경에서 사내 보안을 준수하는 **Zero-Budget** 자동화 파이프라인 구축이 필요했습니다.',
+            background: '임시 팀장으로서 리뷰 병목 현상을 해결하고 신입/인턴의 코드 품질을 상향 평준화하기 위해, 예산 지원 없이 사내 보안 가이드라인을 준수하는 AI 리뷰 시스템 구축이 필요했습니다. 초기 GitLab/n8n/LM Studio 기반에서 성능과 안정성을 극대화하기 위해 Kotlin/Spring Boot 기반의 비동기 아키텍처로 리팩터링했습니다.',
             solutions: [
-                '**Event-Driven Pipeline:** GitLab Webhook과 n8n을 연동하여 MR 생성 시 즉시 트리거되는 비동기 리뷰 환경을 구축했습니다.',
-                '**Local LLM Integration:** LM Studio를 활용해 외부 클라우드 노출 없이 사내 로컬 서버에서 리뷰를 수행하여 보안 및 비용 문제를 해결했습니다.',
-                '**Payload Trimming:** 정규식을 활용해 import/주석 등 노이즈를 **60% 이상 제거**하여 토큰 소모를 줄이고 LLM의 환각 현상을 방지했습니다.'
+                '**Zero-Budget 파이프라인 구축:** GitLab Webhook과 n8n, 로컬 LLM(LM Studio)을 연동하여 외부망 노출 없이 동작하는 경제적 자동화 환경을 설계했습니다.',
+                '**지능형 Payload Trimming:** 정규식을 활용해 import, 주석, 빈 라인 등 로직과 무관한 노이즈를 **60% 이상 제거**하여 토큰 소모 및 환각 현상을 억제했습니다.',
+                '**비동기 워커 아키텍처:** Kotlin Coroutine Channel을 활용한 Producer-Consumer 패턴으로 GitHub/Gemini API의 Rate Limit을 안정적으로 관리하는 작업 큐를 구현했습니다.',
+                '**정교한 Diff 파싱 엔진:** Unified Diff 포맷을 분석하여 멀티라인 인라인 코멘트와 AS-IS/TO-BE 제안이 가능한 커스텀 파서를 직접 개발했습니다.'
             ],
-            tags: ['Cost: Zero', 'Workflow: Automated', 'Data: Noise Filtering'],
+            tags: ['Cost: Zero-Budget', 'Performance: Rate Limit Control', 'Architecture: Coroutine Channel', 'Security: HMAC/JWT'],
             code: {
-                title: 'Noise Filtering & Prompt Strategy',
-                language: 'javascript',
-                snippet: `// import, 주석 등 로직과 무관한 노이즈 제거 (Payload Trimming)
-function cleanDiff(diff) {
-  return diff.split('\\n')
-    .filter(line => 
-      (line.startsWith('+') || line.startsWith('-')) &&
-      !line.match(/^(\\+|\\-)\\s*(import|package|\\/\\/|\\/\\*)/)
-    )
-    .join('\\n');
+                title: 'Coroutine Channel based Async Job Queue',
+                language: 'kotlin',
+                snippet: `// Rate Limit 준수를 위한 Channel 기반 비동기 작업 큐
+private val channel = Channel<ReviewJob>(capacity = Channel.BUFFERED)
+private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+
+@PostConstruct
+fun startWorkers() {
+    repeat(workerCount) { idx ->
+        scope.launch(CoroutineName("worker-$idx")) {
+            for (job in channel) {
+                runCatching { 
+                    // Semaphore와 Jitter를 활용한 API 호출 제어
+                    codeReviewService.review(job) 
+                }.onFailure { logger.error("Review failed", it) }
+            }
+        }
+    }
 }`
             }
         },
         conclusion: {
             outcomes: [
-                '리뷰 리드타임 단축 및 팀 내 코드 품질 상향 평준화',
-                '상용 SaaS 대비 **연간 수백만 원 규모**의 인프라 비용 절감',
-                '보안 가이드라인을 준수하는 LLM 활용 파이프라인 표준 제시'
+                '**리뷰 리드타임 70% 단축:** 1차 AI 리뷰 피드백을 통해 휴먼 리뷰어가 핵심 비즈니스 로직에만 집중할 수 있는 환경 조성',
+                '**품질 상향 평준화:** 신입 팀원의 컨벤션 오류 즉각 교정 및 에러 리포트 감소로 실제 성과 평가에 긍정적 반영',
+                '**인프라 비용 최적화:** 상용 SaaS 대비 연간 수백만 원 규모의 비용을 절감하며 사내 보안 가이드라인 완벽 준수'
             ],
-            retrospective: '제한된 예산 환경에서도 오픈소스 도구의 조합으로 비즈니스 가치를 창출할 수 있음을 증명함.'
+            retrospective: '제한된 자원 환경에서 오픈소스와 AI를 결합하여 실질적인 비즈니스 임팩트를 낸 경험을 통해, 엔지니어의 역할은 "문제를 해결하는 최적의 도구 조합을 설계하는 것"임을 깊이 깨달았습니다.'
         }
     },
     {
