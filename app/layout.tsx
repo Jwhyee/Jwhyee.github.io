@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Backend Engineer Portfolio",
+  title: "가준영 | Backend Engineer",
   description: "A data-driven portfolio for Backend Engineering projects.",
 };
 

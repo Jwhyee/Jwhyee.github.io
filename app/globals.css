@@ -29,13 +29,33 @@ body {
 
 @page {
   margin: 0;
-  size: A4 landscape;
+  size: 297mm 167mm;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+.custom-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.syntax-highlighter-container pre {
+  margin: 0 !important;
+  background: transparent !important;
+  height: 100% !important;
 }
 
 @media print {
   body {
     background: #0a0a0a !important;
     color: #ffffff !important;
+  }
+  
+  .custom-scrollbar {
+    overflow: hidden !important;
   }
   
   /* Force dark mode colors in print if needed */

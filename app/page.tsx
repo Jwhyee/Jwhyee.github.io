@@ -6,41 +6,11 @@ import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import Image from 'next/image';
 
 /**
- * Simple Diagram Component for Architecture Visualization
- */
-const Diagram = ({ type, steps }: { type: 'pipeline' | 'fallback' | 'sequence', steps: { label: string; description: string }[] }) => {
-  return (
-    <div className="mt-4 p-4 bg-zinc-900/50 border border-zinc-800 rounded-lg">
-      <div className="flex flex-col gap-3">
-        {steps.map((step, idx) => (
-          <div key={idx} className="flex items-center gap-3">
-            <div className="flex-none w-6 h-6 rounded-full bg-zinc-700 flex items-center justify-center text-[10px] font-black border border-zinc-600">
-              {idx + 1}
-            </div>
-            <div className="flex-1">
-              <div className="flex items-center gap-2">
-                <span className="text-xs font-black text-zinc-200">{step.label}</span>
-                {idx < steps.length - 1 && (
-                  <svg className="w-3 h-3 text-zinc-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 9l-7 7-7-7" />
-                  </svg>
-                )}
-              </div>
-              <p className="text-[10px] text-zinc-500 leading-tight font-bold">{step.description}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
-
-/**
  * Page 0: Personal Introduction
  */
-const IntroPage = ({ pageNumber }: { pageNumber: number }) => (
-  <section className="h-screen w-full flex flex-col bg-black text-white p-12 print:h-screen print:w-[297mm] print:h-[210mm] print:break-after-page print:color-adjust-exact overflow-hidden">
-    <div className="flex-1 border-2 border-zinc-800 p-10 flex flex-col justify-between relative overflow-hidden">
+const IntroPage = () => (
+  <section className="h-screen w-full flex flex-col bg-black text-white p-12 print:h-screen print:w-[297mm] print:h-[167mm] print:break-after-page print:color-adjust-exact overflow-hidden">
+    <div className="flex-1 border-2 border-zinc-800 p-10 flex flex-col justify-center gap-12 relative overflow-hidden">
       <div className="absolute top-0 right-0 w-1/3 h-full bg-zinc-900/30 -skew-x-12 translate-x-1/2 z-0" />
 
       <div className="relative z-10">
@@ -122,19 +92,6 @@ const IntroPage = ({ pageNumber }: { pageNumber: number }) => (
           </div>
         </div>
       </div>
-
-        <footer className="text-xs text-zinc-600 font-mono flex justify-between items-center border-t border-zinc-800 pt-6">
-            <div className="flex gap-6">
-          <span className="flex items-center gap-2 tracking-widest font-black uppercase">
-            <span className="w-1.5 h-1.5 bg-zinc-600 rounded-full"></span>
-            PAGE {String(pageNumber).padStart(2, '0')} / INTRODUCTION
-          </span>
-            </div>
-            <div className="flex gap-4 font-black">
-                <span>© 2025</span>
-                <span>CRAFTED FOR EXCELLENCE</span>
-            </div>
-        </footer>
     </div>
   </section>
 );
@@ -142,8 +99,8 @@ const IntroPage = ({ pageNumber }: { pageNumber: number }) => (
 /**
  * Page 0-1: Career History
  */
-const CareerPage = ({ career, pageNumber }: { career: Career[], pageNumber: number }) => (
-  <section className="h-screen w-full flex flex-col bg-black text-white p-12 print:h-screen print:w-[297mm] print:h-[210mm] print:break-after-page print:color-adjust-exact overflow-hidden">
+const CareerPage = ({ career }: { career: Career[] }) => (
+  <section className="h-screen w-full flex flex-col bg-black text-white p-12 print:h-screen print:w-[297mm] print:h-[167mm] print:break-after-page print:color-adjust-exact overflow-hidden">
     <div className="flex-1 border-2 border-zinc-800 p-10 flex flex-col">
       <header className="mb-10 flex justify-between items-end">
         <div>
@@ -187,15 +144,6 @@ const CareerPage = ({ career, pageNumber }: { career: Career[], pageNumber: numb
           </div>
         ))}
       </div>
-
-        <footer className="text-xs text-zinc-600 font-mono flex justify-between items-center border-t border-zinc-800 pt-6">
-            <div className="flex gap-6">
-          <span className="flex items-center gap-2 tracking-widest font-black uppercase">
-            <span className="w-1.5 h-1.5 bg-zinc-600 rounded-full"></span>
-            PAGE {String(pageNumber).padStart(2, '0')} / CAREER HISTORY
-          </span>
-            </div>
-        </footer>
     </div>
   </section>
 );
@@ -203,24 +151,39 @@ const CareerPage = ({ career, pageNumber }: { career: Career[], pageNumber: numb
 /**
  * Page 1: Project Overview (Main)
  */
-const OverviewPage = ({ project, pageNumber }: { project: Project, pageNumber: number }) => (
-  <section className="h-screen w-full flex flex-col bg-black text-white p-12 print:h-screen print:w-[297mm] print:h-[210mm] print:break-after-page print:color-adjust-exact overflow-hidden">
-    <div className="flex-1 border-2 border-zinc-800 p-8 flex flex-col justify-between">
+const OverviewPage = ({ project }: { project: Project }) => (
+  <section className="h-screen w-full flex flex-col bg-black text-white p-12 print:h-screen print:w-[297mm] print:h-[167mm] print:break-after-page print:color-adjust-exact overflow-hidden">
+    <div className="flex-1 border-2 border-zinc-800 p-12 flex flex-col justify-center gap-16">
       <header>
         <h1 className="text-6xl font-black mb-4 tracking-tight">{project.title}</h1>
         <p className="text-xl text-zinc-400 font-black tracking-tight">{project.overview.description}</p>
       </header>
 
       <div className="grid grid-cols-2 gap-12 items-center">
-        <div className="space-y-6">
-          <p className="text-lg leading-relaxed text-zinc-200 font-black">
+        <div className="space-y-8">
+          <div className="grid grid-cols-3 gap-6 py-6 border-y border-zinc-800/50">
+            <div>
+              <p className="text-[10px] font-black text-zinc-500 uppercase tracking-widest mb-1">Duration</p>
+              <p className="text-sm font-black text-zinc-200">{project.overview.duration}</p>
+            </div>
+            <div>
+              <p className="text-[10px] font-black text-zinc-500 uppercase tracking-widest mb-1">Team Size</p>
+              <p className="text-sm font-black text-zinc-200">{project.overview.teamSize}</p>
+            </div>
+            <div>
+              <p className="text-[10px] font-black text-zinc-500 uppercase tracking-widest mb-1">Contribution</p>
+              <p className="text-sm font-black text-zinc-200">{project.overview.contribution}</p>
+            </div>
+          </div>
+          
+          <p className="text-lg leading-relaxed text-zinc-200 font-bold">
             {project.overview.intro}
           </p>
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap gap-2">
             {project.overview.techStack.map((tech) => (
               <span
                 key={tech.name}
-                className="bg-zinc-800 text-zinc-100 px-4 py-1.5 rounded-full text-sm font-black border border-zinc-700"
+                className="bg-zinc-900 text-zinc-400 px-3 py-1 rounded border border-zinc-800 text-[11px] font-black uppercase tracking-tight"
               >
                 {tech.name}
               </span>
@@ -243,124 +206,159 @@ const OverviewPage = ({ project, pageNumber }: { project: Project, pageNumber: n
               )}
           </div>
       </div>
-
-      <footer className="text-xs text-zinc-600 font-mono flex justify-between items-center border-t border-zinc-800 pt-6">
-        <span className="tracking-widest font-black uppercase">
-          PAGE {String(pageNumber).padStart(2, '0')} / PROJECT OVERVIEW
-        </span>
-      </footer>
     </div>
   </section>
 );
 
 /**
- * Page 2 & 3: Technical Deep Dive (2-Column Layout)
+ * Page 2 & 4: Technical Deep Dive - THE PROBLEM
  */
-const DeepDivePage = ({ project, deepDive, pageNumber }: { project: Project, deepDive: DeepDive, pageNumber: number }) => (
-  <section className="h-screen w-full flex flex-col bg-black text-white p-12 print:h-screen print:w-[297mm] print:h-[210mm] print:break-after-page print:color-adjust-exact overflow-hidden">
-    <div className="flex-1 border-2 border-zinc-800 p-8 flex flex-col gap-6 overflow-hidden">
-      <header className="flex justify-between items-end border-b border-zinc-800 pb-4">
-        <div className="space-y-1">
-          <h2 className="text-sm font-black text-zinc-500 uppercase tracking-[0.2em]">{project.title}</h2>
-          <h3 className="text-2xl font-black text-white tracking-tight">{deepDive.subSectionName}</h3>
+const DeepDiveProblemPage = ({ project, deepDive }: { project: Project, deepDive: DeepDive }) => (
+  <section className="h-screen w-full flex flex-col bg-black text-white p-12 print:h-screen print:w-[297mm] print:h-[167mm] print:break-after-page print:color-adjust-exact overflow-hidden">
+    <div className="flex-1 border-2 border-zinc-800 p-10 flex flex-col justify-center gap-10 relative overflow-hidden">
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-red-950/10 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2" />
+      
+      <header className="flex justify-between items-start border-b border-zinc-800 pb-6 relative z-10">
+        <div className="space-y-3">
+          <div className="flex items-center gap-3">
+            <h2 className="text-sm font-black text-zinc-500 uppercase tracking-[0.3em]">{project.title}</h2>
+            <div className="h-4 w-px bg-zinc-800" />
+            <h3 className="text-sm font-black text-red-500/80 tracking-[0.2em] uppercase">{deepDive.subSectionName}</h3>
+          </div>
+          <h1 className="text-3xl font-black text-white tracking-tight leading-tight max-w-4xl">
+            {deepDive.point.problemTitle}
+          </h1>
         </div>
-        <span className="text-[10px] font-mono text-zinc-400 bg-zinc-900 px-3 py-1 rounded-full border border-zinc-800 font-black uppercase tracking-widest">
-          Technical Deep Dive
-        </span>
       </header>
 
-      <div className="flex-1 grid grid-cols-12 gap-8 overflow-hidden">
-        {/* Left Column: Problem & Architecture */}
-        <div className="col-span-5 flex flex-col gap-6 overflow-y-auto pr-4">
-          <div className="space-y-3">
-            <h4 className="text-xs font-black text-red-500 uppercase tracking-widest flex items-center gap-2">
-              <span className="w-1.5 h-1.5 bg-red-600 rounded-full"></span>
-              The Problem
-            </h4>
-            <p className="text-[13px] text-zinc-200 leading-relaxed font-black">
-              {deepDive.point.problem}
-            </p>
-          </div>
-
-          <div className="space-y-3">
-            <h4 className="text-xs font-black text-green-500 uppercase tracking-widest flex items-center gap-2">
-              <span className="w-1.5 h-1.5 bg-green-600 rounded-full"></span>
-              Strategic Solution
-            </h4>
-            <p className="text-[13px] text-zinc-300 leading-relaxed font-black">
-              {deepDive.point.solution}
-            </p>
-          </div>
-
-          {deepDive.point.diagram && (
-            <div className="space-y-3">
-               <h4 className="text-xs font-black text-zinc-400 uppercase tracking-widest flex items-center gap-2">
-                <span className="w-1.5 h-1.5 bg-zinc-500 rounded-full"></span>
-                Architecture Flow
-              </h4>
-              <Diagram type={deepDive.point.diagram.type} steps={deepDive.point.diagram.steps} />
-            </div>
-          )}
+      <div className="flex flex-col gap-10 relative z-10">
+        <div className="max-w-4xl">
+          <p className="text-lg text-zinc-400 leading-relaxed font-bold border-l-2 border-red-900/50 pl-6">
+            &quot;{deepDive.point.problem}&quot;
+          </p>
         </div>
 
-        {/* Right Column: Implementation Code */}
-        <div className="col-span-7 flex flex-col rounded-xl overflow-hidden border border-zinc-800 bg-[#1e1e1e] shadow-2xl h-full">
-          <div className="bg-[#2d2d2d] px-6 py-2.5 border-b border-zinc-800 flex justify-between items-center flex-none">
-            <div className="flex items-center gap-4">
-              <h5 className="text-[11px] font-black text-zinc-200 uppercase tracking-widest truncate max-w-[300px]">
-                {deepDive.point.title}
-              </h5>
-              <span className="text-[10px] font-mono text-zinc-500 font-black uppercase">impl.{deepDive.point.language === 'kotlin' ? 'kt' : deepDive.point.language === 'rust' ? 'rs' : 'ts'}</span>
-            </div>
-            <div className="flex gap-2">
-              <div className="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
-              <div className="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
-              <div className="w-3 h-3 rounded-full bg-[#27c93f]"></div>
-            </div>
+        <div className="flex flex-col gap-6">
+          <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-red-500/20 border border-red-500/40 flex items-center justify-center shadow-[0_0_15px_rgba(239,68,68,0.2)]">
+                  <svg className="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                  </svg>
+              </div>
+              <h4 className="text-xl font-black text-zinc-100 uppercase tracking-widest">Pain Point Identified</h4>
           </div>
-          <div className="flex-1 overflow-hidden text-[11px] syntax-highlighter-container font-bold">
-            <SyntaxHighlighter
-              language={deepDive.point.language}
-              style={vscDarkPlus}
-              customStyle={{
-                margin: 0,
-                padding: '1.25rem',
-                background: 'transparent',
-                lineHeight: '1.5',
-                height: '100%',
-              }}
-            >
-              {deepDive.point.codeSnippet}
-            </SyntaxHighlighter>
+
+          <div className="grid grid-cols-2 gap-4">
+            {deepDive.point.symptoms?.map((symptom, i) => (
+              <div key={i} className="bg-zinc-900/60 border border-zinc-700/50 p-5 rounded-2xl flex gap-5 items-center group hover:scale-[1.02] hover:bg-zinc-800/80 hover:border-red-500/30 transition-all duration-300 shadow-lg">
+                <span className="text-xl font-black text-red-500/60 group-hover:text-red-500 transition-colors">0{i+1}</span>
+                <p className="text-[15px] text-zinc-200 font-bold leading-snug tracking-tight">{symptom}</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>
-
-      <footer className="text-xs text-zinc-600 font-mono flex justify-between items-center border-t border-zinc-800 pt-6 flex-none">
-        <span className="tracking-widest font-black uppercase">
-          PAGE {String(pageNumber).padStart(2, '0')} / PROJECT DEEP DIVE
-        </span>
-      </footer>
     </div>
   </section>
 );
+
+/**
+ * Page 3 & 5: Technical Deep Dive - THE SOLUTION
+ */
+const DeepDiveSolutionPage = ({ project, deepDive }: { project: Project, deepDive: DeepDive }) => (
+  <section className="h-screen w-full flex flex-col bg-black text-white p-12 print:h-screen print:w-[297mm] print:h-[167mm] print:break-after-page print:color-adjust-exact overflow-hidden">
+    <div className="flex-1 border-2 border-zinc-800 p-10 flex flex-col gap-8 overflow-hidden relative">
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-green-950/10 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2" />
+      
+      <header className="flex justify-between items-start border-b border-zinc-800 pb-6 relative z-10">
+        <div className="space-y-3">
+          <div className="flex items-center gap-3">
+            <h2 className="text-sm font-black text-zinc-500 uppercase tracking-[0.3em]">{project.title}</h2>
+            <div className="h-4 w-px bg-zinc-800" />
+            <h3 className="text-sm font-black text-green-500/80 tracking-[0.2em] uppercase">{deepDive.subSectionName}</h3>
+          </div>
+          <h1 className="text-3xl font-black text-white tracking-tight leading-tight max-w-4xl">
+              {deepDive.point.solutionTitle}
+          </h1>
+        </div>
+      </header>
+
+      <div className="flex-1 grid grid-cols-12 gap-8 overflow-hidden relative z-10">
+        {/* Left Section: Key Logic */}
+        <div className="col-span-5 flex flex-col">
+          <div className="bg-zinc-900/30 border border-zinc-800 rounded-2xl p-6 space-y-8 h-full">
+            <h4 className="text-sm font-black text-green-500 uppercase tracking-widest flex items-center gap-2">
+              <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+              Key Architectural Logic
+            </h4>
+            <div className="space-y-6">
+              {deepDive.point.keyLogic?.map((logic, i) => {
+                  const [title, desc] = logic.split(': ');
+                  return (
+                      <div key={i} className="group border-l-2 border-zinc-800 pl-4 hover:border-green-900/50 transition-colors">
+                          <p className="text-[11px] font-black text-zinc-500 uppercase tracking-widest mb-1 group-hover:text-green-500 transition-colors">{title}</p>
+                          <p className="text-[15px] text-zinc-200 font-bold leading-relaxed">{desc}</p>
+                      </div>
+                  );
+              })}
+            </div>
+          </div>
+        </div>
+
+        {/* Right Section: Code Implementation */}
+        <div className="col-span-7 flex flex-col overflow-hidden">
+          <div className="flex-1 flex flex-col rounded-3xl overflow-hidden border border-zinc-800 bg-[#080808] shadow-2xl">
+            <div className="bg-[#121212] px-6 py-3 border-b border-zinc-800 flex justify-between items-center">
+              <div className="flex items-center gap-4">
+                <div className="flex gap-2">
+                  <div className="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
+                  <div className="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
+                  <div className="w-3 h-3 rounded-full bg-[#27c93f]"></div>
+                </div>
+              </div>
+              <span className="text-[10px] font-mono text-zinc-400 font-black bg-zinc-800 px-3 py-1 rounded-full border border-zinc-700 uppercase tracking-widest">
+                {deepDive.point.language}
+              </span>
+            </div>
+            <div className="flex-1 overflow-hidden text-[11px] font-bold">
+              <SyntaxHighlighter
+                language={deepDive.point.language}
+                style={vscDarkPlus}
+                customStyle={{
+                  margin: 0,
+                  padding: '2rem',
+                  background: 'transparent',
+                  lineHeight: '1.6',
+                  height: '100%',
+                }}
+              >
+                {deepDive.point.codeSnippet}
+              </SyntaxHighlighter>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+);
+
 
 /**
  * Page 4: Outcomes & Retrospective (Redesigned)
  */
-const ConclusionPage = ({ project, pageNumber }: { project: Project, pageNumber: number }) => (
-  <section className="h-screen w-full flex flex-col bg-black text-white p-12 print:h-screen print:w-[297mm] print:h-[210mm] print:break-after-page print:color-adjust-exact overflow-hidden">
-    <div className="flex-1 border-2 border-zinc-800 p-10 flex flex-col justify-between relative overflow-hidden">
+const ConclusionPage = ({ project }: { project: Project }) => (
+  <section className="h-screen w-full flex flex-col bg-black text-white p-12 print:h-screen print:w-[297mm] print:h-[167mm] print:break-after-page print:color-adjust-exact overflow-hidden">
+    <div className="flex-1 border-2 border-zinc-800 p-10 flex flex-col justify-center gap-8 relative overflow-hidden">
       <div className="absolute top-0 right-0 w-64 h-64 bg-zinc-900/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
       
-      <header className="relative z-10 border-b border-zinc-800 pb-8 mb-8">
+      <header className="relative z-10 border-b border-zinc-800 pb-8 mb-4">
         <h2 className="text-sm font-black text-zinc-500 uppercase tracking-[0.3em] mb-2">{project.title}</h2>
         <h1 className="text-5xl font-black tracking-tight flex items-center gap-4 uppercase">
           Outcomes <span className="text-zinc-700">&</span> Retrospective
         </h1>
       </header>
 
-      <div className="flex-1 grid grid-cols-2 gap-12 relative z-10 overflow-hidden">
+      <div className="relative z-10 grid grid-cols-2 gap-12 overflow-hidden">
         {/* Left Column: Measurable Achievements */}
         <div className="flex flex-col h-full overflow-hidden">
           <div className="flex items-center gap-3 mb-4">
@@ -420,22 +418,11 @@ const ConclusionPage = ({ project, pageNumber }: { project: Project, pageNumber:
           </div>
         </div>
       </div>
-
-      <footer className="text-xs text-zinc-600 font-mono flex justify-between items-center border-t border-zinc-800 pt-6 mt-8 relative z-10">
-        <span className="tracking-widest font-black uppercase">
-          PAGE {String(pageNumber).padStart(2, '0')} / PROJECT CONCLUSION
-        </span>
-        <div className="px-3 py-1 bg-zinc-900 border border-zinc-800 rounded text-[10px] uppercase font-black tracking-widest text-zinc-400">
-          Reflective Summary
-        </div>
-      </footer>
     </div>
   </section>
 );
 
 export default function Home() {
-  let globalPageCounter = 1;
-
   return (
     <main className="bg-zinc-950 min-h-screen">
       {/* Floating Export Button */}
@@ -447,27 +434,31 @@ export default function Home() {
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
           </svg>
-          EXPORT TO PDF (A4 Landscape)
+          EXPORT TO PDF (16:9 Landscape)
         </button>
       </div>
 
       {/* Intro & Career Sections */}
-      <IntroPage pageNumber={globalPageCounter++} />
-      <CareerPage career={personalInfo.career} pageNumber={globalPageCounter++} />
+      <IntroPage />
+      <CareerPage career={personalInfo.career} />
 
       {/* Projects Sections */}
       {projects.map((project) => (
         <div key={project.id}>
-          <OverviewPage project={project} pageNumber={globalPageCounter++} />
+          <OverviewPage project={project} />
           {project.deepDives.map((deepDive, idx) => (
-            <DeepDivePage
-              key={`${project.id}-deepdive-${idx}`}
-              project={project}
-              deepDive={deepDive}
-              pageNumber={globalPageCounter++}
-            />
+            <div key={`${project.id}-deepdive-${idx}`}>
+              <DeepDiveProblemPage
+                project={project}
+                deepDive={deepDive}
+              />
+              <DeepDiveSolutionPage
+                project={project}
+                deepDive={deepDive}
+              />
+            </div>
           ))}
-          <ConclusionPage project={project} pageNumber={globalPageCounter++} />
+          <ConclusionPage project={project} />
         </div>
       ))}
     </main>
