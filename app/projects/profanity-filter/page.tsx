@@ -1,13 +1,30 @@
+'use client';
+
+import React, { useState } from 'react';
 import { projects } from "@/src/data/projects";
 import CodeBlock from "@/src/components/CodeBlock";
 import Link from "next/link";
 import Markdown from "@/src/components/Markdown";
 import Image from "next/image";
+import ImageModal from "@/src/components/ImageModal";
 
 export default function ProfanityFilterProjectPage() {
   const project = projects.find((p) => p.id === 'profanity-filter-library');
+  const [modalState, setModalState] = useState<{ isOpen: boolean; src: string; alt: string }>({
+    isOpen: false,
+    src: '',
+    alt: '',
+  });
 
   if (!project) return <div>Project not found</div>;
+
+  const openModal = (src: string, alt: string) => {
+    setModalState({ isOpen: true, src, alt });
+  };
+
+  const closeModal = () => {
+    setModalState((prev) => ({ ...prev, isOpen: false }));
+  };
 
   return (
     <main className="bg-zinc-950 min-h-screen py-12 px-4 print:py-0 print:px-0">
@@ -77,13 +94,14 @@ export default function ProfanityFilterProjectPage() {
           </div>
 
           {/* Algorithm Diagram */}
-          <div className="bg-zinc-900/30 border border-zinc-800 rounded-lg overflow-hidden group hover:border-emerald-500/50 transition-colors mx-1">
+          <div 
+            className="bg-zinc-900/30 border border-zinc-800 rounded-lg overflow-hidden group hover:border-emerald-500/50 transition-colors mx-1 cursor-zoom-in"
+            onClick={() => openModal("/images/profanity-filter/aho-corasick-tree.png", "Aho-Corasick Algorithm Structure")}
+          >
             <div className="p-3 border-b border-zinc-800 bg-zinc-900/50 flex items-center justify-between">
-              <span className="text-[7pt] font-black text-zinc-500 uppercase tracking-[0.2em]">Aho-Corasick Algorithm & Trie Diagram</span>
-              <div className="flex gap-1">
-                <div className="w-1.5 h-1.5 rounded-full bg-zinc-800"></div>
-                <div className="w-1.5 h-1.5 rounded-full bg-zinc-800"></div>
-                <div className="w-1.5 h-1.5 rounded-full bg-zinc-800"></div>
+              <div className="flex items-center gap-2">
+                <span className="text-[7pt] font-black text-zinc-500 uppercase tracking-[0.2em]">Aho-Corasick Algorithm & Trie Diagram</span>
+                <span className="text-[6pt] bg-zinc-800 text-zinc-400 px-1.5 py-0.5 rounded border border-zinc-700 font-mono group-hover:text-emerald-500 group-hover:border-emerald-500/50 transition-colors uppercase no-print">Click to Enlarge</span>
               </div>
             </div>
             <div className="relative aspect-[16/9] w-full bg-white">
@@ -197,7 +215,13 @@ private fun overlaps(s1: Int, e1: Int, s2: Int, e2: Int) = s1 <= e2 && s2 <= e1`
               <h4 className="text-white font-black uppercase tracking-widest text-[9pt]">Performance Benchmark Results</h4>
             </div>
             <div className="p-8 space-y-8">
-              <div className="relative aspect-[21/9] w-full bg-zinc-950 rounded border border-zinc-800/50 overflow-hidden">
+              <div 
+                className="relative aspect-[21/9] w-full bg-zinc-950 rounded border border-zinc-800/50 overflow-hidden cursor-zoom-in"
+                onClick={() => openModal("/images/profanity-filter/benchmark.png", "Performance Benchmark Results")}
+              >
+                <div className="absolute top-3 right-3 z-10 no-print">
+                  <span className="text-[6pt] bg-zinc-900/80 text-zinc-400 px-1.5 py-0.5 rounded border border-zinc-700 font-mono group-hover:text-emerald-500 group-hover:border-emerald-500/50 transition-colors uppercase">Click to Enlarge</span>
+                </div>
                 <Image 
                   src="/images/profanity-filter/benchmark.png"
                   alt="Regex vs Aho-Corasick Performance Comparison"
@@ -261,6 +285,15 @@ private fun overlaps(s1: Int, e1: Int, s2: Int, e2: Int) = s1 <= e2 && s2 <= e1`
           <span>DEEP DIVE / {project.title.toUpperCase()}</span>
         </footer>
       </div>
+
+      {/* Image Modal */}
+      <ImageModal
+        isOpen={modalState.isOpen}
+        src={modalState.src}
+        alt={modalState.alt}
+        onClose={closeModal}
+      />
     </main>
   );
 }
+

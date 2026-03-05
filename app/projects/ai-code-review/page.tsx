@@ -119,11 +119,10 @@ export default function AiCodeReviewProjectPage() {
             <Markdown content="초기 n8n 기반 파이프라인의 낮은 확장성과 데이터 가공의 한계를 극복하기 위해, **Kotlin & Spring Boot 3 기반의 전용 서버**로 시스템을 전면 리팩터링했습니다. 이를 통해 GitHub App 형태의 유연한 연동과 정교한 인라인 리뷰 기능을 확보했습니다." />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 px-1">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 px-1">
             {[
-              { title: "Facade Pattern", desc: "**이벤트 유형**에 따른 명확한 라우팅 및 단일 진입점 관리" },
-              { title: "Producer-Consumer", desc: "**Coroutine Channel** 기반 큐로 GitHub/Gemini API 속도 제한(Rate Limit) 안정적 관리" },
-              { title: "Hexagonal Arch", desc: "**외부 의존성(AI, GitHost)** 추상화로 테스트 용이성 및 교체 유연성 확보" }
+              { title: "Facade Pattern", desc: "PR 요약 및 코드 리뷰에 대한 **이벤트 유형**에 따른 명확한 라우팅 및 단일 진입점 관리" },
+              { title: "Producer-Consumer", desc: "**Coroutine Channel** 기반 큐로 GitHub/Gemini API 속도 제한(Rate Limit) 안정적 관리" }
             ].map((item, i) => (
               <div key={i} className="bg-zinc-900/20 border border-zinc-800 p-5 rounded-lg">
                 <h4 className="text-emerald-500 font-black text-[8pt] uppercase tracking-widest mb-2">{item.title}</h4>
@@ -169,25 +168,26 @@ export default function AiCodeReviewProjectPage() {
                 <h3 className="text-[12pt] font-bold text-white tracking-tight">Coroutine Channel 기반 비동기 작업 큐</h3>
               </div>
               <div className="text-[10pt] text-zinc-400 leading-relaxed ml-8">
-                <Markdown content="Redis와 같은 별도 인프라 없이 **In-memory Channel**로 고가용성 큐를 구현했습니다. `SupervisorJob`과 `runCatching`을 활용하여 개별 작업의 실패가 전체 시스템으로 전파되지 않도록 설계했으며, `Semaphore`와 `Jitter`를 활용해 Rate Limit을 정밀하게 제어합니다." />
+                <Markdown content="Redis와 같은 별도 인프라 없이 **In-memory Channel**로 고가용성 큐를 구현했습니다. `SupervisorJob`과 `runCatching`을 활용하여 개별 작업의 실패가 전체 시스템으로 전파되지 않도록 설계했으며, `Semaphore`를 활용해 Rate Limit을 정밀하게 제어합니다." />
               </div>
               <div className="ml-8 mt-4">
                 <CodeBlock
                   language="kotlin"
                   code={`@Component
 class ReviewJobQueue(private val codeReviewService: CodeReviewService) {
-    private val channel = Channel<ReviewJob>(capacity = Channel.BUFFERED)
-    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+    // 동시 실행 상한 제어
+    private val semaphore = Semaphore(MAX_CONCURRENCY)
 
     @PostConstruct
     fun start() {
         repeat(workerCount) { idx ->
-            scope.launch(CoroutineName("worker-$idx")) {
+            scope.launch {
                 for (job in channel) {
-                    runCatching { 
-                        // Semaphore로 동시성 상한 제어 + Jitter 쿨다운 적용
-                        codeReviewService.review(job) 
-                    }.onFailure { logger.error("Review failed", it) }
+                    runCatching {
+                        semaphore.withPermit {
+                            codeReviewService.review(job)
+                        }
+                    }.onFailure { /* 에러 전파 방지 */ }
                 }
             }
         }

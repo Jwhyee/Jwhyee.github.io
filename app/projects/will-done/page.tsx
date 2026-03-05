@@ -1,20 +1,37 @@
+'use client';
+
+import React, { useState } from 'react';
 import { projects } from "@/src/data/projects";
 import CodeBlock from "@/src/components/CodeBlock";
 import Link from "next/link";
 import Markdown from "@/src/components/Markdown";
 import Image from "next/image";
+import ImageModal from "@/src/components/ImageModal";
 
 export default function WillDoneProjectPage() {
   const project = projects.find((p) => p.id === 'will-done');
+  const [modalState, setModalState] = useState<{ isOpen: boolean; src: string; alt: string }>({
+    isOpen: false,
+    src: '',
+    alt: '',
+  });
 
   if (!project) return <div>Project not found</div>;
+
+  const openModal = (src: string, alt: string) => {
+    setModalState({ isOpen: true, src, alt });
+  };
+
+  const closeModal = () => {
+    setModalState((prev) => ({ ...prev, isOpen: false }));
+  };
 
   return (
     <main className="bg-zinc-950 min-h-screen py-12 px-4 print:py-0 print:px-0">
       <div className="max-w-[210mm] mx-auto bg-zinc-950 shadow-2xl print:shadow-none min-h-[297mm] print:min-h-0 print:max-w-none print:w-full p-10 md:p-16 print:p-16">
         {/* Back Link */}
         <Link href="/" className="text-zinc-500 hover:text-white mb-12 inline-block transition-colors font-mono text-[8pt] font-bold group no-print">
-          <span className="group-hover:-translate-x-1 inline-block transition-transform mr-2">←</span> 
+          <span className="group-hover:-translate-x-1 inline-block transition-transform mr-2">←</span>
           BACK TO RESUME
         </Link>
 
@@ -42,7 +59,7 @@ export default function WillDoneProjectPage() {
           </h2>
           <div className="text-zinc-300 space-y-4 leading-relaxed text-[10.5pt]">
             <p>
-              커리어 성장을 위해서는 꾸준한 기록이 필수적이지만, 바쁜 업무 속에서 &quot;오늘 무엇을 했는지&quot;를 매번 정리하는 것은 큰 심리적 부하를 줍니다. 
+              커리어 성장을 위해서는 꾸준한 기록이 필수적이지만, 바쁜 업무 속에서 &quot;오늘 무엇을 했는지&quot;를 매번 정리하는 것은 큰 심리적 부하를 줍니다.
               기존의 TODO 앱들은 할 일을 나열하는 데 그칠 뿐, 실제 업무 시간의 유동성을 반영하지 못하고 성과 문서화 단계로 이어지지 못하는 한계가 있었습니다.
             </p>
             <ul className="list-disc list-inside space-y-2 ml-4 text-zinc-400">
@@ -60,7 +77,7 @@ export default function WillDoneProjectPage() {
           <h2 className="text-[14pt] border-l-4 border-white pl-4 mb-6 uppercase tracking-tighter font-black text-white">
             2. Architecture & Vibe Coding Strategy
           </h2>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 px-1">
             <div className="space-y-3">
               <h3 className="text-[9pt] font-black text-emerald-500 uppercase tracking-widest">Core Engine Architecture</h3>
@@ -77,17 +94,18 @@ export default function WillDoneProjectPage() {
           </div>
 
           {/* App Preview Image */}
-          <div className="bg-zinc-900/30 border border-zinc-800 rounded-lg overflow-hidden group hover:border-emerald-500/50 transition-colors mx-1">
+          <div 
+            className="bg-zinc-900/30 border border-zinc-800 rounded-lg overflow-hidden group hover:border-emerald-500/50 transition-colors mx-1 cursor-zoom-in"
+            onClick={() => openModal("/images/will-done/app-main-image.png", "Will Done App Main Interface")}
+          >
             <div className="p-3 border-b border-zinc-800 bg-zinc-900/50 flex items-center justify-between">
-              <span className="text-[7pt] font-black text-zinc-500 uppercase tracking-[0.2em]">Application Preview & System Architecture</span>
-              <div className="flex gap-1">
-                <div className="w-1.5 h-1.5 rounded-full bg-zinc-800"></div>
-                <div className="w-1.5 h-1.5 rounded-full bg-zinc-800"></div>
-                <div className="w-1.5 h-1.5 rounded-full bg-zinc-800"></div>
+              <div className="flex items-center gap-2">
+                <span className="text-[7pt] font-black text-zinc-500 uppercase tracking-[0.2em]">Application Preview & System Architecture</span>
+                <span className="text-[6pt] bg-zinc-800 text-zinc-400 px-1.5 py-0.5 rounded border border-zinc-700 font-mono group-hover:text-emerald-500 group-hover:border-emerald-500/50 transition-colors uppercase no-print">Click to Enlarge</span>
               </div>
             </div>
             <div className="relative aspect-[16/9] w-full bg-zinc-950">
-              <Image 
+              <Image
                 src="/images/will-done/app-main-image.png"
                 alt="Will Done App Main Interface"
                 fill
@@ -116,14 +134,14 @@ export default function WillDoneProjectPage() {
               </p>
               <div className="bg-zinc-900/30 p-5 rounded-lg border border-zinc-800/50 space-y-4">
                 <div className="space-y-2">
-                  <p className="text-emerald-500 font-black text-[8pt] uppercase tracking-widest">Solution: Time-Shift Engine</p>
+                  <p className="text-emerald-500 font-black text-[8pt] uppercase tracking-widest">Solution: Recursive Scheduling Engine</p>
                   <div className="text-zinc-300 text-[9.5pt] leading-relaxed">
-                    <Markdown content="실시간 일정 변화를 수학적으로 계산하여 자동 조정하는 **지능형 타임 시프트(Time-Shift) 엔진**을 구현했습니다. 긴급 업무 삽입 시 현재 작업을 즉시 분할(Split)하여 `PENDING`으로 전환하고 후속 일정을 밀어내며, 점심시간 등 고정 제외 시간을 인식하여 업무 블록을 최적으로 재배정합니다." />
+                    <Markdown content="실시간 일정 변화를 **재귀적 스케줄링 엔진(Recursive Scheduling Engine)**을 통해 자동 조정하는 로직을 구현했습니다. 단순히 수치를 계산하는 것이 아니라, **재귀적 블록 분할(Recursive Block Splitting)** 기술을 적용하여 `Unplugged Time`이나 긴급 업무 발생 시 기존 블록을 물리적으로 쪼개어(Split) 사이사이에 재배정하는 **동적 시프트(Dynamic Shifting)**를 수행합니다." />
                   </div>
                 </div>
                 <ul className="list-disc list-inside space-y-1.5 text-zinc-400 text-[9pt] ml-1">
-                  <li><Markdown content="**Urgent Task Injection:** 현재 업무 중단 및 소요 시간만큼 이후 모든 일정 자동 시프트" /></li>
-                  <li><Markdown content="**Unplugged Time Avoidance:** 고정 시간대(점심, 회의)를 회피하여 업무 블록 자동 분할 배정" /></li>
+                  <li><Markdown content="**Recursive Block Splitting:** 고정된 휴식 시간이나 회의 시간을 피해 업무 블록을 원자 단위로 분할하여 최적 배치" /></li>
+                  <li><Markdown content="**Dynamic Shifting:** 긴급 업무 삽입 시 현재 작업을 즉시 `PENDING`으로 전환하고 후속 모든 일정의 시작/종료 시각을 연쇄적으로 재계산" /></li>
                 </ul>
               </div>
             </div>
@@ -144,15 +162,15 @@ export default function WillDoneProjectPage() {
                     <Markdown content="서비스 가용성을 극대화하기 위해 **다중 모델 폴백(Multi-Model Fallback) 엔진**을 설계했습니다. API 호출 실패 시 에러 코드를 분석하여 `로컬 캐시 → flash-lite → flash → pro` 순으로 자동 전환하며 재시도하는 복구 로직을 통해, 어떤 상황에서도 성과 분석 서비스가 유지되도록 구축했습니다." />
                   </div>
                 </div>
-                <CodeBlock 
+                <CodeBlock
                   language="rust"
-                  code={`// Quota Exceeded 발생 시 하위 모델로 즉시 폴백하여 가용성 확보
-let models = vec!["flash-lite", "flash", "pro"];
-for model in models {
-    match call_ai(model, prompt).await {
-        Ok(res) => return Ok(res),
-        Err(e) if e.is_quota_limit() => continue, // 429 에러 시 다음 모델 시도
-        Err(e) => return Err(e),
+                  code={`for model in models_to_try {
+    match try_generate_content(&client, &api_key, &model, &prompt).await {
+        Ok(text) => return Ok(text),
+        Err(e) => {
+            eprintln!("Model {} failed: {}", model.name, e);
+            continue; // 다음 우선순위 모델로 자동 폴백
+        }
     }
 }`}
                 />
@@ -186,11 +204,34 @@ for model in models {
         </section>
 
         {/* 4. Project Highlights & Results */}
-        <section className="mb-16 space-y-10 print:break-inside-avoid">
+        <section className="mb-16 space-y-12">
           <h2 className="text-[14pt] border-l-4 border-white pl-4 mb-6 uppercase tracking-tighter font-black text-white">
             4. Project Highlights & Results
           </h2>
-          <div className="bg-zinc-900/30 border border-zinc-800 rounded-lg p-10 text-center mx-1">
+
+          {/* UX Excellence Highlights */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 px-1">
+            <div className="bg-zinc-900/20 p-6 rounded-lg border border-zinc-800/50 space-y-3 hover:border-emerald-500/30 transition-colors print:break-inside-avoid">
+              <h4 className="text-emerald-500 font-black text-[8pt] uppercase tracking-widest">Logical Date System</h4>
+              <p className="text-zinc-300 text-[9.5pt] leading-relaxed">
+                <Markdown content="사용자의 실제 생활 패턴을 반영하여, 설정된 `dayStartTime`을 기준으로 새벽 작업을 전날의 성과로 귀속시키는 **논리적 날짜(Logical Date)** 시스템을 구축했습니다." />
+              </p>
+            </div>
+            <div className="bg-zinc-900/20 p-6 rounded-lg border border-zinc-800/50 space-y-3 hover:border-emerald-500/30 transition-colors print:break-inside-avoid">
+              <h4 className="text-emerald-500 font-black text-[8pt] uppercase tracking-widest">Context-Aware Input</h4>
+              <p className="text-zinc-300 text-[9.5pt] leading-relaxed">
+                <Markdown content="업무 입력 시 몰입을 방해하지 않도록, 포커스 시 부드럽게 확장되는 **Task Input Overlay** UX를 구현하여 문맥 중심적 인터페이스를 완성했습니다." />
+              </p>
+            </div>
+            <div className="bg-zinc-900/20 p-6 rounded-lg border border-zinc-800/50 space-y-3 hover:border-emerald-500/30 transition-colors print:break-inside-avoid">
+              <h4 className="text-emerald-500 font-black text-[8pt] uppercase tracking-widest">Modern Desktop Experience</h4>
+              <p className="text-zinc-300 text-[9.5pt] leading-relaxed">
+                <Markdown content="Tauri의 **Overlay Title Bar** 기능을 활용하여 OS 경계를 허무는 프레임리스 디자인을 적용, 생산성 도구에 최적화된 심리스한 UX를 제공합니다." />
+              </p>
+            </div>
+          </div>
+
+          <div className="bg-zinc-900/30 border border-zinc-800 rounded-lg p-10 text-center mx-1 print:break-inside-avoid">
             <h4 className="text-zinc-500 font-black uppercase tracking-widest mb-8 text-[9pt]">Development Metrics</h4>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full max-w-3xl mx-auto">
               <div className="bg-zinc-950 p-4 rounded border border-zinc-800">
@@ -246,6 +287,14 @@ for model in models {
           <span>DEEP DIVE / {project.title.toUpperCase()}</span>
         </footer>
       </div>
+
+      {/* Image Modal */}
+      <ImageModal
+        isOpen={modalState.isOpen}
+        src={modalState.src}
+        alt={modalState.alt}
+        onClose={closeModal}
+      />
     </main>
   );
 }
