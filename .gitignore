@@ -40,5 +40,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .idea
-/docs/*
-GEMINI.md
+# /docs/*
+# GEMINI.md

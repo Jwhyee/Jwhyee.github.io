@@ -2,41 +2,26 @@ export interface TechStackBadge {
     name: string;
 }
 
-export interface TechnicalPoint {
-    problemTitle: string; // Added: "~ 문제 발생" format
-    solutionTitle: string; // Added: "~ 방식으로 해결" format
-    title: string; // Keep for legacy if needed, but we will use the new ones
-    problem: string;
-    symptoms?: string[];
-    solution: string;
-    keyLogic?: string[];
-    tags?: string[];
-    codeSnippet: string;
-    language: string;
-    diagram?: {
-        type: 'pipeline' | 'fallback' | 'sequence';
-        steps: { label: string; description: string }[];
-    };
-}
-
-export interface DeepDive {
-    subSectionName: string;
-    point: TechnicalPoint; // One point per page
-}
-
 export interface Project {
     id: string;
     title: string;
     overview: {
         description: string;
-        intro: string;
         techStack: TechStackBadge[];
-        visualPlaceholder: string;
-        teamSize: string;
         duration: string;
+        teamSize: string;
         contribution: string;
     };
-    deepDives: DeepDive[]; // Exactly 2 items for Page 2 & 3
+    content: {
+        background: string;
+        solutions: string[];
+        tags: string[];
+        code: {
+            snippet: string;
+            language: string;
+            title: string;
+        };
+    };
     conclusion: {
         outcomes: string[];
         retrospective: string;
@@ -69,6 +54,10 @@ export interface PersonalInfo {
         blog: string;
     };
     aboutMe: string[];
+    coreTechStack: {
+        category: string;
+        techs: string[];
+    }[];
     career: Career[];
 }
 
@@ -86,9 +75,23 @@ export const personalInfo: PersonalInfo = {
         blog: 'https://jwhy-study.tistory.com/'
     },
     aboutMe: [
-        'Kotlin & Spring 기반의 서버 백엔드 개발자로, 스타트업 환경에서 레거시 시스템을 개선하고 신규 서비스를 구축하는 일을 중심으로 경험을 쌓아왔습니다.',
-        '단순히 기존 기능을 이전하는 데 그치지 않고, 복잡하게 얽힌 로직을 구조적으로 단순화하여 유지보수성과 가독성을 높이는 것에 집중했습니다.',
-        '서비스의 도메인이 코드로 자연스럽게 드러날 수 있도록 설계하는 것을 중요하게 생각하며, 팀 내 공유를 통해 함께 성장하는 개발 문화를 지향합니다.'
+        'Kotlin & Spring 기반의 서버 백엔드 개발자로, 스타트업 환경에서 레거시 시스템을 구조화하고 고가용성 서비스를 구축하는 데 주력해왔습니다.',
+        '복잡하게 얽힌 비즈니스 로직을 도메인 중심으로 단순화하여 유지보수성을 극대화하고, 성능 병목을 기술적으로 해결하는 과정을 즐깁니다.',
+        '서비스의 도메인이 코드로 자연스럽게 드러나는 설계를 지향하며, 팀 내 기술 공유와 협업 프로세스 자동화를 통해 동반 성장을 도모합니다.'
+    ],
+    coreTechStack: [
+        {
+            category: 'Backend',
+            techs: ['Kotlin', 'Java', 'Spring Boot']
+        },
+        {
+            category: 'Architecture & CI/CD',
+            techs: ['Github Actions', 'GitLab CI', 'n8n', 'Docker']
+        },
+        {
+            category: 'AI',
+            techs: ['Gemini CLI', 'oh-my-opencode', 'LM Studio']
+        }
     ],
     career: [
         {
@@ -100,16 +103,16 @@ export const personalInfo: PersonalInfo = {
                 {
                     title: '주임 / AI 기반 자동화 및 백엔드 아키텍처 리딩',
                     period: '2025.04 - 2025.10',
-                    description: '• AI 코드 리뷰 시스템 구축: GitLab/n8n/LM Studio 연동으로 Zero-Budget AI 리뷰 환경을 구축하여 리뷰 병목 해결 및 코드 품질 상향 평준화 달성.'
+                    description: '• AI 코드 리뷰 시스템 설계 및 구축: GitLab/n8n/LM Studio 연동 Zero-Budget 리뷰 환경 구축으로 팀 코드 품질 상향 평준화.'
                 },
                 {
                     title: '사원 / 글로벌 도메인 설계 및 프레임워크 트러블슈팅', period: '2024.05 - 2025.04',
-                    description: '• B2B 해외 배송 SOP 엔진 개발: JSON 스냅샷 기반 데이터 모델링과 동적 상태 추론 로직을 도입하여 글로벌 배송 추적의 데이터 무결성과 유연성 확보.'
+                    description: '• B2B 해외 배송 SOP 엔진 개발: JSON 스냅샷 기반 데이터 모델링으로 글로벌 배송 추적 데이터 무결성 및 유연성 확보.'
                 },
                 {
                     title: '인턴 / 레거시 성능 최적화 및 비동기 전환',
                     period: '2023.11 - 2024.04',
-                    description: '• 비동기 메일 발송 리팩터링: Coroutine async/awaitAll 기반 병렬 처리를 도입하여 동기식 SMTP I/O 병목을 제거하고 API 응답 속도 80% 이상 개선.'
+                    description: '• 비동기 메일 발송 리팩터링: Coroutine async/awaitAll 기반 병렬 처리를 도입하여 SMTP I/O 병목 제거 및 API 응답 80% 개선.'
                 }
             ]
         }
@@ -118,195 +121,54 @@ export const personalInfo: PersonalInfo = {
 
 export const projects: Project[] = [
     {
-        id: 'will-done',
-        title: 'Will Done',
-        overview: {
-            description: '업무 시간을 커리어로 연결하는 타임 트래커',
-            intro: '코드 한 줄 직접 작성하지 않고, 오직 AI 에이전트 오케스트레이션(Vibe Coding)만으로 구축한 풀스택 데스크톱 생산성 도구입니다. 흩어진 내 업무 시간을 커리어로 연결하는 타임 트래커 역할을 하며, 특히 백엔드 관점에서의 동시성 제어와 폴백 엔진 구현에 집중했습니다.',
-            techStack: [
-                { name: 'React 19' }, { name: 'Rust' }, { name: 'Tauri v2' },
-                { name: 'SQLite' }, { name: 'shadcn/ui' }, { name: 'Framer Motion' }
-            ],
-            visualPlaceholder: '/images/wil_done_app_image.png',
-            duration: '2026.02 - 2026.03',
-            teamSize: '1인 개발',
-            contribution: '100%'
-        },
-        deepDives: [
-            {
-                subSectionName: 'Harness: AI Agent Control Protocol',
-                point: {
-                    problemTitle: '하네스 이슈 발생',
-                    solutionTitle: '하네스 프로토콜 도입 방식으로 해결',
-                    title: 'AI 에이전트 제어 불능 문제 발생',
-                    problem: 'AI 에이전트가 여러 태스크를 한꺼번에 처리하려다 일부를 누락하거나, 빌드 실패를 무시하고 진행하는 "하네스 문제"가 발생하여 개발 안정성이 저해되었습니다.',
-                    symptoms: [
-                        '배치 처리 경향: 여러 태스크를 한꺼번에 처리하다 일부만 진행',
-                        '검증 없는 진행: 빌드가 깨진 상태로 다음 작업 진행',
-                        '문서-코드 불일치: 변경 후 레퍼런스 문서 업데이트 누락',
-                        '불완전한 커밋: 커밋 단위가 섞이고 논리성이 깨짐'
-                    ],
-                    solution: 'GEMINI.md를 통해 에이전트의 행동을 강제하는 "하네스 프로토콜"을 설계했습니다. STRUCTURE.md를 단일 진실 공급원(SSOT)으로 설정하여 문서-코드 동기화 강제하고, PLANNING.md 기반의 3-State Tracking 루프를 도입했습니다.',
-                    keyLogic: [
-                        'STRUCTURE.md: 현재 구현 상태의 단일 기준(SSOT) 정의',
-                        'PLANNING.md: 3-State Tracking으로 단일 작업 강제',
-                        'Verification Gate: pnpm build 통과 전 단계 진행 금지',
-                        'Atomic Commit Protocol: 레이어/목적별 원자적 커밋 강제'
-                    ],
-                    tags: ['Pattern: Harness Protocol', 'Impact: 100% Stability'],
-                    codeSnippet: `## 2. Planning & Tracking (Strict Single-Tasking)
-
-* **The Workflow Loop (Crucial)**: 
-  For every single task, you MUST follow 
-  this exact sequence:
-
-  1. Open PLANNING.md and change task
-     from - [ ] to - [~].
-  2. Write code for ONLY that specific task.
-  3. Run verification (pnpm build).
-  4. Change - [~] to - [x].`,
-                    language: 'markdown'
-                }
-            },
-            {
-                subSectionName: 'Reliability: AI Fallback Strategy',
-                point: {
-                    problemTitle: 'API Rate Limit 제약 문제 발생',
-                    solutionTitle: '다중 모델 폴백 엔진 방식으로 해결',
-                    title: 'API Rate Limit(429) 제약 문제 발생',
-                    problem: '무료 티어 API 특성상 빈번하게 발생하는 Rate Limit(429) 제약과 일시적 서버 불안정으로 인해, 핵심 기능인 "AI 회고 생성" 프로세스가 중단되는 병목이 존재했습니다.',
-                    symptoms: [
-                        'API Rate Limit (429) 빈번한 발생',
-                        '특정 모델의 일시적 응답 지연 및 타임아웃',
-                        '보고서 생성 도중 중단으로 인한 데이터 유실 위험'
-                    ],
-                    solution: '에러 발생 시 캐싱된 마지막 성공 모델을 우선 시도한 후, flash-lite > flash > pro 순서로 시도하는 폴백 엔진을 구축했습니다.',
-                    keyLogic: [
-                        'Local Cache: DB 캐싱을 통한 마지막 성공 모델 우선 시도',
-                        'Model Tiering: Flash-Lite → Flash → Pro 단계적 폴백',
-                        'Exponential Backoff: 실패 시 재시도 간격 동적 조정'
-                    ],
-                    tags: ['Pattern: Fallback Engine', 'Impact: 99% Reliability'],
-                    codeSnippet: `// 1. 가용 모델 동적 조회 및 우선순위 정렬
-let mut available = fetch_models(&api_key).await?;
-available.sort_by_key(|m| match m.name.as_str() {
-    n if n.contains("flash-lite") => 1,
-    n if n.contains("pro") => 3,
-    _ => 2,
-});
-
-// 2. 순차적 Failover 실행 및 성공 시 캐시 갱신
-for model in available {
-    if let Ok(text) = try_generate(&client, &model).await {
-        save_last_model(&pool, &model.name).await?;
-        return Ok(text);
-    }
-}`,
-                    language: 'rust'
-                }
-            }
-        ],
-        conclusion: {
-            outcomes: [
-                '하네스 프로토콜 도입으로 AI 에이전트 빌드 성공률 100% 유지',
-                'Tauri v2를 활용하여 macOS/Windows 크로스 플랫폼 배포 지원',
-                '다중 모델 폴백 엔진 도입 후 AI 생성 성공률 99% 달성'
-            ],
-            retrospective: '도구의 성능보다 "협업 규칙의 엄격성"이 AI 개발의 생산성을 결정짓는 핵심임을 깨달았습니다.'
-        }
-    },
-    {
         id: 'profanity-filter-library',
         title: 'Profanity Filter Library',
         overview: {
-            description: 'Aho-Corasick 기반 고성능 비속어 필터 라이브러리',
-            intro: '정규식 기반 탐지의 성능 병목을 해결하고, 변칙 우회 패턴을 O(N) 시간 복잡도로 처리하는 Kotlin/Java 라이브러리입니다. 수천 개의 금칙어를 단 한 번의 순회로 필터링하는 고성능 엔진을 구축하여, 복합 정규식 대비 약 27배 빠른 성능을 달성했습니다.',
+            description: 'Aho-Corasick 알고리즘 기반의 O(N) 고성능 비속어 탐색 엔진 및 라이브러리',
             techStack: [
                 { name: 'Kotlin' }, { name: 'Aho-Corasick' }, { name: 'Trie' },
-                { name: 'Jitpack' }, { name: 'Gradle' }, { name: 'OpenJDK 21' }
+                { name: 'Jitpack' }, { name: 'Gradle' }, { name: 'JUnit5' }
             ],
-            visualPlaceholder: '/images/profanity_benchmark.png',
             duration: '2026.01',
             teamSize: '1인 개발',
-            contribution: '100%'
+            contribution: '100% (기획, 알고리즘 설계, 구현, 배포)'
         },
-        deepDives: [
-            {
-                subSectionName: 'Efficiency: Aho-Corasick Engine',
-                point: {
-                    problemTitle: '변칙 패턴 탐지 성능 저하 문제 발생',
-                    solutionTitle: 'Aho-Corasick 알고리즘 방식으로 해결',
-                    title: '변칙 패턴 탐지 성능 저하 문제 발생',
-                    problem: '금칙어 사전의 크기가 커질수록 모든 패턴을 개별적으로 검사해야 하는 정규식 방식은 시간 복잡도가 선형적으로 증가하여 심각한 CPU 병목을 유발했습니다.',
-                    symptoms: [
-                        '수천 개의 패턴 개별 검사로 인한 O(N*K) 지연',
-                        '10만 자 기준 복합 정규식 탐지 시 85ms 이상 소요',
-                        '실시간 트래픽 환경에서의 API 응답 지연 발생'
-                    ],
-                    solution: 'Trie에 실패 함수(Failure Function) 개념을 결합한 아호코라식 알고리즘을 도입하여, 입력 문자열을 단 한 번만 순회하면서 모든 금칙어를 동시 탐색하도록 최적화했습니다.',
-                    keyLogic: [
-                        'Normalization: 숫자/공백 제거로 변칙 우회 탐지 가능',
-                        'Aho-Corasick: 입력 길이에만 비례하는 O(N) 속도 달성',
-                        'Failure Function: 매칭 실패 시 최장 접미사 노드로 즉시 점프'
-                    ],
-                    tags: ['Algorithm: O(N)', 'Impact: 27x Faster'],
-                    codeSnippet: `fun validate(sentence: String) {
-    // 1. 정책 기반 전처리 (공백, 숫자 제거)
-    val filtered = applyPolicies(sentence)
-
-    // 2. 아호코라식 일차 탐지 (O(N))
-    val detectedBans = trie.parseText(filtered)
-    
-    // 3. 화이트리스트 구간 중첩 제외 처리
-    val remains = filterByWhiteList(detectedBans)
-
-    if (remains.isNotEmpty()) {
-        throw ProfanityDetectedException(remains)
+        content: {
+            background: '단순 문자열 매칭(`contains`)이나 정규식(`Regex`)을 활용한 기존의 비속어 필터링은 금칙어 사전의 크기가 커질수록 성능이 선형적으로 저하(**O(N*K)**)되는 고질적인 문제를 안고 있었습니다. 특히 10만 자 이상의 대규모 텍스트에서 복합 정규식을 사용할 경우 **약 85ms**의 응답 지연이 발생하여 실시간 서비스 적용에 부적합했습니다. 또한, "시1발"과 같은 변칙 우회 패턴과 "시발점"과 같은 오탐지(False Positive) 사례를 정교하게 제어하기 위한 고성능 전용 엔진의 필요성을 느껴 본 프로젝트를 시작했습니다.',
+            solutions: [
+                '**Aho-Corasick 알고리즘 엔진 설계:** Trie 구조에 실패 함수(Failure Function)를 결합하여 금칙어 개수와 무관하게 입력 문자열의 길이에만 비례하는 **O(N)** 탐색 속도를 구현했습니다.',
+                '**지능형 정규화(Normalization) 파이프라인:** 탐색 전 단계에서 공백 및 숫자 제거 정책을 적용하여 변칙 우회 패턴을 원천 차단했습니다.',
+                '**수학적 구간 중첩(Interval Overlap) 필터링:** 금칙어 탐지 구간과 화이트리스트 구간의 교집합을 판별하는 로직을 구현하여 "시발점" 등 정상 단어를 완벽하게 보존했습니다.',
+                '**Jitpack 기반 배포 자동화:** Gradle 및 Maven 환경에서 즉시 도입 가능한 오픈소스 라이브러리 형태로 구축하여 범용성을 확보했습니다.'
+            ],
+            tags: ['Algorithm: O(N)', 'Performance: 27x Faster', 'False Positive Removal', 'Open Source'],
+            code: {
+                title: 'Core Engine: Overlap Detection Logic',
+                language: 'kotlin',
+                snippet: `// 비속어 탐지 결과 중 화이트리스트(허용 단어) 구간에 포함된 항목 필터링
+val remains = detectedBans.asSequence()
+    .filterNot { ban ->
+        // 금칙어 구간이 허용 단어 구간 내에 포함되는지 수학적으로 판단
+        detectedAllows.any { allow -> 
+            ban.start >= allow.start && ban.end <= allow.end 
+        }
     }
-}`,
-                    language: 'kotlin'
-                }
-            },
-            {
-                subSectionName: 'Precision: False Positive Prevention',
-                point: {
-                    problemTitle: '정상 단어 비속어 오탐지 문제 발생',
-                    solutionTitle: '구간 중첩 판별 로직 방식으로 해결',
-                    title: '정상 단어 비속어 오탐지 문제 발생',
-                    problem: "'시발점'과 같이 정상적인 단어 안에 금칙어가 포함된 경우를 구분하지 못해 발생하는 오탐지(False Positive) 문제가 사용자 경험을 저해했습니다.",
-                    symptoms: [
-                        '정상 단어 내 비속어 포함 시 무조건적 차단',
-                        '사용자 경험(UX) 저해 및 운영 리소스 낭비',
-                        '변칙 우회 패턴 탐지 시 오탐율 증가'
-                    ],
-                    solution: '금칙어 탐지 구간과 화이트리스트(White-list) 단어 구간의 중첩 여부를 수학적으로 판별하여 예외 처리 로직을 설계했습니다.',
-                    keyLogic: [
-                        'Interval Overlap: 두 구간의 시작/끝 인덱스 비교 판단',
-                        'White-list Trie: 예외 단어 전용 고속 탐색 트리 구축',
-                        'Atomic Precision: 정확한 금칙어 구간만 선별적 차단'
-                    ],
-                    tags: ['Precision: High', 'Logic: Interval Check'],
-                    codeSnippet: `// 구간 중첩 판별: 탐지 구간과 허용 구간이 겹치면 true
-private fun overlaps(s1: Int, e1: Int, s2: Int, e2: Int) =
-    s1 <= e2 && s2 <= e1
+    .map { it.payload.word }
+    .distinct()
+    .toList()
 
-// 탐지된 비속어 중 화이트리스트에 포함된 항목 제거
-val realBans = detectedBans.filterNot { ban ->
-    detectedAllows.any { allow ->
-        overlaps(ban.start, ban.end, allow.start, allow.end)
-    }
-}`,
-                    language: 'kotlin'
-                }
+if (remains.isNotEmpty()) {
+    throw ProfanityDetectedException(remains)
+}`
             }
-        ],
+        },
         conclusion: {
             outcomes: [
-                '복합 정규식 대비 처리 속도 약 27배 향상 (10만 자 기준 3.15ms)',
-                '금칙어 수와 관계없이 일정한 O(N) 응답 속도 보장',
-                '구간 중첩 기반 로직으로 오탐율(False Positive) 혁신적 감소'
+                '**성능 혁신:** 복합 정규식 대비 처리 속도를 **약 27배 향상** (10만 자 기준 **3.15ms** 달성)',
+                '**확장성 확보:** 금칙어 데이터가 수천 개로 늘어나도 **O(N)**의 일관된 성능을 유지하는 안정적인 아키텍처 구축',
+                '**정확도 개선:** 화이트리스트 기반 예외 처리를 통해 실 서비스 적용 가능한 수준의 오탐 방지 로직 완성'
             ],
-            retrospective: '단순한 라이브러리 사용을 넘어, 알고리즘의 동작 원리를 이해하고 비즈니스 요구사항에 맞춰 최적화하는 과정의 중요성을 배웠습니다.'
+            retrospective: '알고리즘적 이론(Trie, Aho-Corasick)을 실제 비즈니스 문제 해결에 적용하여 오픈소스 라이브러리화함으로써 기술적 깊이와 실행력을 실증했습니다. 특히 라이브러리 배포 과정을 통해 범용적인 API 설계의 중요성을 체득했습니다.'
         }
     },
     {
@@ -314,69 +176,25 @@ val realBans = detectedBans.filterNot { ban ->
         title: 'AI Code Review System',
         overview: {
             description: '사내 인프라 기반 Zero-Budget AI 리뷰 시스템',
-            intro: '개인 스터디 시간을 활용해 사내 인프라 기반의 Zero-Budget AI 코드 리뷰 시스템을 구축하여, 리뷰 병목 해결 및 팀 코드 품질 상향 평준화 달성.',
             techStack: [
                 { name: 'GitLab' }, { name: 'n8n' }, { name: 'LM Studio' }, { name: 'Webhooks' }
             ],
-            visualPlaceholder: '[PLACEHOLDER: AI Code Review Architecture]',
             duration: '2025.08 - 2025.09',
             teamSize: '1인 개발',
             contribution: '100%'
         },
-        deepDives: [
-            {
-                subSectionName: 'Architecture: Zero-Budget Automation',
-                point: {
-                    problemTitle: '리소스 부족과 리뷰 병목 문제 발생',
-                    solutionTitle: 'n8n 기반 자동화 파이프라인 방식으로 해결',
-                    title: '리소스 부족과 리뷰 병목 문제 발생',
-                    problem: '매니징과 실무를 병행하며 팀원들의 모든 코드를 리뷰하는 데 과도한 피로가 발생했으며, 상용 도구 도입 예산도 전무한 상태였습니다.',
-                    symptoms: [
-                        'MR 대기 시간 증가로 인한 배포 속도 저하',
-                        '신입/인턴 간의 코드 품질 편차 심화',
-                        '휴먼 리뷰어의 단순 컨벤션 체크로 인한 집중도 분산'
-                    ],
-                    solution: 'GitLab Webhook과 n8n 워크플로우를 연동하고, 로컬 LM Studio 서버를 활용해 비용 없이 동작하는 자동 리뷰 시스템을 구축했습니다.',
-                    keyLogic: [
-                        'Event-Driven: GitLab MR 생성 시 즉시 트리거',
-                        'Local LLM: LM Studio를 활용한 보안 및 비용 이슈 해결',
-                        'Asynchronous: 리뷰 완료 시 GitLab Comment API 호출'
-                    ],
-                    tags: ['Cost: Zero', 'Workflow: Automated'],
-                    codeSnippet: `// n8n 워크플로우 주요 로직 (JavaScript node)
-const mr_diff = items[0].json.diff;
-const prompt = \`당신은 시니어 개발자입니다. 
-다음 코드의 로직 오류와 컨벤션을 리뷰하세요:
-\${mr_diff}\`;
-
-return {
-  model: "gpt-oss-20b",
-  prompt: prompt,
-  max_tokens: 1024
-};`,
-                    language: 'javascript'
-                }
-            },
-            {
-                subSectionName: 'Optimization: Context Filtering',
-                point: {
-                    problemTitle: 'LLM 컨텍스트 노이즈 문제 발생',
-                    solutionTitle: 'Hunk 단위 노이즈 필터링 방식으로 해결',
-                    title: 'LLM 컨텍스트 노이즈 및 환각 문제 발생',
-                    problem: '거대한 MR Diff 전체를 전달할 경우 토큰 낭비와 환각 현상이 발생하여 리뷰의 정확도가 떨어지는 문제가 있었습니다.',
-                    symptoms: [
-                        '불필요한 Import/주석 변경에 대한 과도한 피드백',
-                        '토큰 제한 초과로 인한 분석 실패',
-                        '도메인 맥락과 무관한 일반적인 가이드 반복'
-                    ],
-                    solution: '변경 사항을 Hunk 단위로 분해하고, 정규식을 통해 로직과 무관한 노이즈(Import, 공백 등)를 제거하여 핵심 코드만 전달하도록 최적화했습니다.',
-                    keyLogic: [
-                        'Hunk Splitting: 변경된 코드 블록 단위 분석',
-                        'Payload Trimming: 프롬프트 페이로드 60% 이상 절감',
-                        'Round-Robin: 다수 요청 시 로컬 리소스 부하 분산'
-                    ],
-                    tags: ['Efficiency: High', 'Context: Optimized'],
-                    codeSnippet: `// 핵심 변경사항 추출 (Noise Filtering)
+        content: {
+            background: '리뷰 리소스 부족으로 MR 정체가 빈번했으나, 유료 도구 도입이 어려운 환경에서 사내 보안을 준수하는 **Zero-Budget** 자동화 파이프라인 구축이 필요했습니다.',
+            solutions: [
+                '**Event-Driven Pipeline:** GitLab Webhook과 n8n을 연동하여 MR 생성 시 즉시 트리거되는 비동기 리뷰 환경을 구축했습니다.',
+                '**Local LLM Integration:** LM Studio를 활용해 외부 클라우드 노출 없이 사내 로컬 서버에서 리뷰를 수행하여 보안 및 비용 문제를 해결했습니다.',
+                '**Payload Trimming:** 정규식을 활용해 import/주석 등 노이즈를 **60% 이상 제거**하여 토큰 소모를 줄이고 LLM의 환각 현상을 방지했습니다.'
+            ],
+            tags: ['Cost: Zero', 'Workflow: Automated', 'Data: Noise Filtering'],
+            code: {
+                title: 'Noise Filtering & Prompt Strategy',
+                language: 'javascript',
+                snippet: `// import, 주석 등 로직과 무관한 노이즈 제거 (Payload Trimming)
 function cleanDiff(diff) {
   return diff.split('\\n')
     .filter(line => 
@@ -384,18 +202,65 @@ function cleanDiff(diff) {
       !line.match(/^(\\+|\\-)\\s*(import|package|\\/\\/|\\/\\*)/)
     )
     .join('\\n');
-}`,
-                    language: 'javascript'
-                }
+}`
             }
-        ],
+        },
         conclusion: {
             outcomes: [
-                '리뷰 소요 시간 대폭 단축 및 팀 내 코드 품질 상향 평준화',
-                '상용 SaaS 대비 연간 수백만 원의 도입 비용 절감',
-                '성과 인정 및 개인 주도적 문제 해결 역량 증명'
+                '리뷰 리드타임 단축 및 팀 내 코드 품질 상향 평준화',
+                '상용 SaaS 대비 **연간 수백만 원 규모**의 인프라 비용 절감',
+                '보안 가이드라인을 준수하는 LLM 활용 파이프라인 표준 제시'
             ],
-            retrospective: '기술적 해결책이 반드시 높은 예산을 필요로 하지 않으며, 오픈소스 도구들의 조합으로도 충분한 비즈니스 가치를 창출할 수 있음을 배웠습니다.'
+            retrospective: '제한된 예산 환경에서도 오픈소스 도구의 조합으로 비즈니스 가치를 창출할 수 있음을 증명함.'
+        }
+    },
+    {
+        id: 'will-done',
+        title: 'Will Done',
+        overview: {
+            description: '업무 시간(Will)을 설계하고 완료 기록(Done)을 Brag Document로 자동 변환하는 AI 기반 데스크톱 타임 트래커',
+            techStack: [
+                { name: 'React 19' }, { name: 'Tauri v2' }, { name: 'Rust' },
+                { name: 'SQLite' }, { name: 'Gemini API' }, { name: 'Vite 7' }
+            ],
+            duration: '2026.02 - 2026.03',
+            teamSize: '1인 개발 (100% AI-Authored)',
+            contribution: '100% (기획, AI 오케스트레이션, 검증 시스템 설계)'
+        },
+        content: {
+            background: '단순 TODO 나열 방식의 기존 앱들은 "시간 설계"가 불가능하고, 긴급 업무 발생 시 전체 일정이 무너지는 한계가 있었습니다. 또한 이직이나 성과 검토 시 과거 업무 내역을 전문적인 문구로 정리하는 데 상당한 리소스가 소모되었습니다. 이를 해결하기 위해 수학적 스케줄링 엔진과 AI 회고 기능을 결합한 도구를 기획했으며, 특히 100% AI 에이전트만으로 풀스택 앱을 구축하는 "바이브 코딩(Vibe Coding)" 실험을 병행했습니다.',
+            solutions: [
+                '**지능형 타임 시프트 엔진(Time-Shift Engine):** 긴급 태스크 발생 시 현재 진행 업무를 자동으로 분할(Split) 및 보류(Pending)하고, 이후 모든 일정을 수학적으로 재계산하여 밀어내는(Shift) 알고리즘을 구현했습니다.',
+                '**다중 모델 폴백(Fallback) 엔진:** Gemini API의 할당량 제한(429)에 대응하여 `로컬 캐시 → flash-lite → flash → pro` 순으로 자동 전환되는 안정적인 AI 파이프라인을 구축했습니다.',
+                '**하네스(Harness) 제어 프로토콜:** AI 에이전트의 배치 처리 및 빌드 무시 경향을 해결하기 위해 `STRUCTURE.md`를 SSOT로 활용하고, 단일 작업 루프와 자가 치유(Self-Healing) 검증 게이트를 설계했습니다.',
+                '**로컬 퍼스트 아키텍처:** Tauri v2와 SQLite를 활용하여 모든 데이터를 사용자 로컬에 저장함으로써 데이터 주권과 보안을 극대화했습니다.'
+            ],
+            tags: ['Time-Shift Engine', 'Multi-Model Fallback', 'Harness Protocol', '100% AI Authored'],
+            code: {
+                title: 'Multi-Model Fallback Strategy (Rust)',
+                language: 'rust',
+                snippet: `// API 에러 또는 할당량 초과 시 하위 모델로 순차적 폴백 수행
+pub async fn generate_with_fallback(prompt: String) -> Result<String, AppError> {
+    let models = vec!["gemini-1.5-flash-lite", "gemini-1.5-flash", "gemini-1.5-pro"];
+    
+    for model in models {
+        match call_gemini_api(&model, &prompt).await {
+            Ok(res) => return Ok(res),
+            Err(e) if e.is_quota_limit() => continue, // 429 에러 시 다음 모델 시도
+            Err(e) => return Err(e),
+        }
+    }
+    Err(AppError::AiServiceUnavailable)
+}`
+            }
+        },
+        conclusion: {
+            outcomes: [
+                '**생산성 혁신:** 직접 코딩 없이 259회의 커밋과 9,400줄 이상의 풀스택 코드베이스 구축',
+                '**안정성 확보:** 하네스 프로토콜 도입으로 AI 에이전트의 빌드 성공률 및 문서 동기화율 **100% 달성**',
+                '**성과 자동화:** 업무 기록 기반의 전문적인 Brag Document 생성 프로세스 구축 및 크로스 플랫폼(macOS/Win) 배포'
+            ],
+            retrospective: 'AI 에이전트가 코드를 작성하는 시대에 개발자의 역할은 "구현자"에서 "시스템 설계자 및 검증자"로 진화해야 함을 실증했습니다. 특히 구조화된 레퍼런스(SSOT)가 AI의 성능을 결정짓는 핵심임을 깨달았습니다.'
         }
     }
 ];
