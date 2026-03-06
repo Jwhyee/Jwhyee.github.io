@@ -50,13 +50,13 @@ export default function AiCodeReviewProjectPage() {
               <h1 className="text-h1 tracking-tighter text-white">
                 {project.title}
               </h1>
-              <a 
-                href="https://github.com/Jwhyee/code-review-server" 
-                target="_blank" 
+              <a
+                href="https://github.com/Jwhyee/code-review-server"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="no-print bg-zinc-800 hover:bg-zinc-700 text-zinc-400 hover:text-white px-2.5 py-1 rounded text-[8pt] font-mono border border-zinc-700 transition-colors flex items-center gap-2 mt-1"
               >
-                <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" /></svg>
                 GITHUB
               </a>
             </div>
@@ -77,10 +77,25 @@ export default function AiCodeReviewProjectPage() {
           </div>
         </header>
 
+        {/* Technical Insights & Blog Links */}
+        <section className="mb-12 px-1 no-print">
+          <h3 className="text-[9pt] font-black text-zinc-500 uppercase tracking-widest mb-4">Technical Insights & Record</h3>
+          <ul className="space-y-2">
+            <li className="flex items-center gap-2 text-[10.5pt] text-emerald-500 font-medium hover:text-emerald-400 transition-colors">
+              <span className="text-zinc-700 text-[8pt]">▶</span>
+              <Markdown content="[GitLab AI 코드 리뷰 봇 구축기 (LM Studio & n8n)](https://jwhy-study.tistory.com/131)" />
+            </li>
+            <li className="flex items-center gap-2 text-[10.5pt] text-emerald-500 font-medium hover:text-emerald-400 transition-colors">
+              <span className="text-zinc-700 text-[8pt]">▶</span>
+              <Markdown content="[GitHub AI 코드 리뷰 봇 구축기 (Kotlin & Google AI)](https://jwhy-study.tistory.com/134)" />
+            </li>
+          </ul>
+        </section>
+
         {/* 1. Context & Motivation (Phase 1) */}
         <section className="mb-16 space-y-8">
           <h2 className="text-[14pt] border-l-4 border-white pl-4 mb-6 uppercase tracking-tighter font-black text-white">
-            1. Zero-Budget Automation (Phase 1)
+            1. Zero-Budget Automation (Phase 1: 2025.08 - 2025.09)
           </h2>
 
           <div className="space-y-6">
@@ -131,7 +146,7 @@ export default function AiCodeReviewProjectPage() {
         {/* 2. Technical Evolution (Phase 2) */}
         <section className="mb-16 space-y-10 print:break-inside-avoid">
           <h2 className="text-[14pt] border-l-4 border-white pl-4 mb-6 uppercase tracking-tighter font-black text-white">
-            2. System Refactoring (Phase 2)
+            2. System Refactoring (Phase 2: 2025.10 - 2025.11)
           </h2>
 
           <div className="text-zinc-300 text-[10.5pt] leading-relaxed px-1">

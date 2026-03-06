@@ -181,7 +181,7 @@ if (remains.isNotEmpty()) {
                 { name: 'GitHub App' }, { name: 'GitLab' }, { name: 'n8n' }, { name: 'LM Studio' },
                 { name: 'Coroutine' }
             ],
-            duration: '2025.08 - 2025.09',
+            duration: '2025.08 - 2025.11',
             teamSize: '1인 개발',
             contribution: '100% (기획, 아키텍처 설계, 구현)'
         },

@@ -77,6 +77,17 @@ export default function ProfanityFilterProjectPage() {
           </div>
         </header>
 
+        {/* Technical Insights & Blog Links */}
+        <section className="mb-12 px-1 no-print">
+          <h3 className="text-[9pt] font-black text-zinc-500 uppercase tracking-widest mb-4">Technical Insights & Record</h3>
+          <ul className="space-y-2">
+            <li className="flex items-center gap-2 text-[10.5pt] text-emerald-500 font-medium hover:text-emerald-400 transition-colors">
+              <span className="text-zinc-700 text-[8pt]">▶</span>
+              <Markdown content="[비속어 필터 라이브러리: Spring 환경 적용 가이드](https://jwhy-study.tistory.com/138)" />
+            </li>
+          </ul>
+        </section>
+
         {/* 1. Why this project? (Motivation) */}
         <section className="mb-16 space-y-6">
           <h2 className="text-[14pt] border-l-4 border-white pl-4 mb-6 uppercase tracking-tighter font-black text-white">
