@@ -7,6 +7,9 @@ import Link from "next/link";
 import Markdown from "@/src/components/Markdown";
 import Image from "next/image";
 import ImageModal from "@/src/components/ImageModal";
+import PrintButton from "@/src/components/PrintButton";
+import CopyMarkdownButton from "@/src/components/CopyMarkdownButton";
+import { generateProjectMarkdown } from "@/src/lib/markdownGenerator";
 
 export default function WillDoneProjectPage() {
   const project = projects.find((p) => p.id === 'will-done');
@@ -18,6 +21,8 @@ export default function WillDoneProjectPage() {
 
   if (!project) return <div>Project not found</div>;
 
+  const markdownContent = generateProjectMarkdown(project);
+
   const openModal = (src: string, alt: string) => {
     setModalState({ isOpen: true, src, alt });
   };
@@ -28,6 +33,9 @@ export default function WillDoneProjectPage() {
 
   return (
     <main className="bg-zinc-950 min-h-screen py-12 px-4 print:py-0 print:px-0">
+      <PrintButton />
+      <CopyMarkdownButton markdown={markdownContent} />
+
       <div className="max-w-[210mm] mx-auto bg-zinc-950 shadow-2xl print:shadow-none min-h-[297mm] print:min-h-0 print:max-w-none print:w-full p-10 md:p-16 print:p-16">
         {/* Back Link */}
         <Link href="/" className="text-zinc-500 hover:text-white mb-12 inline-block transition-colors font-mono text-[8pt] font-bold group no-print">
@@ -37,9 +45,26 @@ export default function WillDoneProjectPage() {
 
         {/* Header */}
         <header className="mb-12 border-b-2 border-white pb-8">
-          <h1 className="text-h1 mb-2 tracking-tighter text-white">
-            {project.title}
-          </h1>
+          <div className="flex justify-between items-start mb-4">
+            <div className="flex items-center gap-4">
+              <h1 className="text-h1 tracking-tighter text-white">
+                {project.title}
+              </h1>
+              <a 
+                href="https://github.com/Jwhyee/will-done" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="no-print bg-zinc-800 hover:bg-zinc-700 text-zinc-400 hover:text-white px-2.5 py-1 rounded text-[8pt] font-mono border border-zinc-700 transition-colors flex items-center gap-2 mt-1"
+              >
+                <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                GITHUB
+              </a>
+            </div>
+            <div className="text-right no-print">
+              <p className="text-[10pt] font-mono text-emerald-500 font-bold">{project.overview.duration}</p>
+              <p className="text-[8pt] text-zinc-500 uppercase tracking-widest">1인 개발 (기여도 100%)</p>
+            </div>
+          </div>
           <p className="text-[12pt] text-zinc-400 font-medium tracking-wide max-w-2xl leading-relaxed">
             <Markdown content={project.overview.description} />
           </p>
@@ -58,10 +83,9 @@ export default function WillDoneProjectPage() {
             1. Why this project? (Motivation)
           </h2>
           <div className="text-zinc-300 space-y-4 leading-relaxed text-[10.5pt]">
-            <p>
-              커리어 성장을 위해서는 꾸준한 기록이 필수적이지만, 바쁜 업무 속에서 &quot;오늘 무엇을 했는지&quot;를 매번 정리하는 것은 큰 심리적 부하를 줍니다.
-              기존의 TODO 앱들은 할 일을 나열하는 데 그칠 뿐, 실제 업무 시간의 유동성을 반영하지 못하고 성과 문서화 단계로 이어지지 못하는 한계가 있었습니다.
-            </p>
+            <div className="text-zinc-300">
+              <Markdown content="커리어 성장을 위해서는 꾸준한 기록이 필수적이지만, 바쁜 업무 속에서 &quot;오늘 무엇을 했는지&quot;를 매번 정리하는 것은 큰 심리적 부하를 줍니다. 기존의 TODO 앱들은 할 일을 나열하는 데 그칠 뿐, 실제 업무 시간의 유동성을 반영하지 못하고 성과 문서화 단계로 이어지지 못하는 한계가 있었습니다." />
+            </div>
             <ul className="list-disc list-inside space-y-2 ml-4 text-zinc-400">
               <li><Markdown content="**일정의 경직성:** 긴급 회의나 업무가 발생하면 계획된 타임라인이 무너지고, 이를 수동으로 조정하는 데 시간이 낭비됩니다." /></li>
               <li><Markdown content="**기억의 휘발성:** 이직이나 연봉 협상 시점에 과거의 구체적인 성과와 트러블슈팅 내역을 복기하기 어렵습니다." /></li>
@@ -129,9 +153,9 @@ export default function WillDoneProjectPage() {
                 Problem 01: Schedule Resilience
               </div>
               <h3 className="text-[12pt] font-bold text-white tracking-tight">동적인 업무 환경에서의 스케줄링 붕괴</h3>
-              <p className="text-[10pt] text-zinc-400 leading-relaxed">
-                일반적인 타임 트래커는 고정된 블록 방식을 사용하여 긴급 업무나 조기 종료 시 전체 타임라인을 수동으로 밀거나 당겨야 하는 번거로움이 있었습니다.
-              </p>
+              <div className="text-[10pt] text-zinc-400 leading-relaxed">
+                <Markdown content="일반적인 타임 트래커는 고정된 블록 방식을 사용하여 긴급 업무나 조기 종료 시 전체 타임라인을 수동으로 밀거나 당겨야 하는 번거로움이 있었습니다." />
+              </div>
               <div className="bg-zinc-900/30 p-5 rounded-lg border border-zinc-800/50 space-y-4">
                 <div className="space-y-2">
                   <p className="text-emerald-500 font-black text-[8pt] uppercase tracking-widest">Solution: Recursive Scheduling Engine</p>
@@ -152,9 +176,9 @@ export default function WillDoneProjectPage() {
                 Problem 02: AI Service Reliability
               </div>
               <h3 className="text-[12pt] font-bold text-white tracking-tight">API 할당량 초과 및 서버 에러 대응</h3>
-              <p className="text-[10pt] text-zinc-400 leading-relaxed">
-                Gemini API의 Free Tier 사용 시 할당량 제한(429)으로 인해 성과 분석 기능이 중단되는 리스크가 있었습니다.
-              </p>
+              <div className="text-[10pt] text-zinc-400 leading-relaxed">
+                <Markdown content="Gemini API의 Free Tier 사용 시 할당량 제한(429)으로 인해 성과 분석 기능이 중단되는 리스크가 있었습니다." />
+              </div>
               <div className="bg-zinc-900/30 p-5 rounded-lg border border-zinc-800/50 space-y-4">
                 <div className="space-y-2">
                   <p className="text-emerald-500 font-black text-[8pt] uppercase tracking-widest">Solution Implementation: Multi-Model Fallback</p>
@@ -183,9 +207,9 @@ export default function WillDoneProjectPage() {
                 Problem 03: The Harness Problem
               </div>
               <h3 className="text-[12pt] font-bold text-white tracking-tight">AI 에이전트의 제어 불능 이슈</h3>
-              <p className="text-[10pt] text-zinc-400 leading-relaxed">
-                AI가 여러 작업을 동시에 처리하려다 맥락을 잃거나, 빌드 검증 없이 다음 작업을 진행하여 코드베이스가 오염되는 문제가 빈번했습니다.
-              </p>
+              <div className="text-[10pt] text-zinc-400 leading-relaxed">
+                <Markdown content="AI가 여러 작업을 동시에 처리하려다 맥락을 잃거나, 빌드 검증 없이 다음 작업을 진행하여 코드베이스가 오염되는 문제가 빈번했습니다." />
+              </div>
               <div className="bg-zinc-900/30 p-5 rounded-lg border border-zinc-800/50 space-y-4">
                 <div className="space-y-2">
                   <p className="text-emerald-500 font-black text-[8pt] uppercase tracking-widest">Solution: Strict Harness Protocol</p>
@@ -213,21 +237,21 @@ export default function WillDoneProjectPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 px-1">
             <div className="bg-zinc-900/20 p-6 rounded-lg border border-zinc-800/50 space-y-3 hover:border-emerald-500/30 transition-colors print:break-inside-avoid">
               <h4 className="text-emerald-500 font-black text-[8pt] uppercase tracking-widest">Logical Date System</h4>
-              <p className="text-zinc-300 text-[9.5pt] leading-relaxed">
+              <div className="text-zinc-300 text-[9.5pt] leading-relaxed">
                 <Markdown content="사용자의 실제 생활 패턴을 반영하여, 설정된 `dayStartTime`을 기준으로 새벽 작업을 전날의 성과로 귀속시키는 **논리적 날짜(Logical Date)** 시스템을 구축했습니다." />
-              </p>
+              </div>
             </div>
             <div className="bg-zinc-900/20 p-6 rounded-lg border border-zinc-800/50 space-y-3 hover:border-emerald-500/30 transition-colors print:break-inside-avoid">
               <h4 className="text-emerald-500 font-black text-[8pt] uppercase tracking-widest">Context-Aware Input</h4>
-              <p className="text-zinc-300 text-[9.5pt] leading-relaxed">
+              <div className="text-zinc-300 text-[9.5pt] leading-relaxed">
                 <Markdown content="업무 입력 시 몰입을 방해하지 않도록, 포커스 시 부드럽게 확장되는 **Task Input Overlay** UX를 구현하여 문맥 중심적 인터페이스를 완성했습니다." />
-              </p>
+              </div>
             </div>
             <div className="bg-zinc-900/20 p-6 rounded-lg border border-zinc-800/50 space-y-3 hover:border-emerald-500/30 transition-colors print:break-inside-avoid">
               <h4 className="text-emerald-500 font-black text-[8pt] uppercase tracking-widest">Modern Desktop Experience</h4>
-              <p className="text-zinc-300 text-[9.5pt] leading-relaxed">
+              <div className="text-zinc-300 text-[9.5pt] leading-relaxed">
                 <Markdown content="Tauri의 **Overlay Title Bar** 기능을 활용하여 OS 경계를 허무는 프레임리스 디자인을 적용, 생산성 도구에 최적화된 심리스한 UX를 제공합니다." />
-              </p>
+              </div>
             </div>
           </div>
 

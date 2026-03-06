@@ -134,14 +134,14 @@ export const projects: Project[] = [
             contribution: '100% (기획, 알고리즘 설계, 구현, 배포)'
         },
         content: {
-            background: '단순 문자열 매칭(`contains`)이나 정규식(`Regex`)을 활용한 기존의 비속어 필터링은 금칙어 사전의 크기가 커질수록 성능이 선형적으로 저하(**O(N*K)**)되는 고질적인 문제를 안고 있었습니다. 특히 10만 자 이상의 대규모 텍스트에서 복합 정규식을 사용할 경우 **약 85ms**의 응답 지연이 발생하여 실시간 서비스 적용에 부적합했습니다. 또한, "시1발"과 같은 변칙 우회 패턴과 "시발점"과 같은 오탐지(False Positive) 사례를 정교하게 제어하기 위한 고성능 전용 엔진의 필요성을 느껴 본 프로젝트를 시작했습니다.',
+            background: '단순 문자열 매칭(`contains`)이나 정규식(`Regex`)을 활용한 기존의 비속어 필터링은 금칙어 사전의 크기가 커질수록 성능이 선형적으로 저하(**O(N*K)**)되는 고질적인 문제를 안고 있었습니다. 특히 **10,000개 이상의 대규모 금칙어 사전**을 기반으로 **100KB(약 10만 자) 이상의 텍스트 페이로드**에서 복합 정규식을 사용할 경우 **약 85.89ms**의 극심한 응답 지연이 발생했습니다. 이는 실시간 서비스의 SLA를 위협하는 수준이었으며, "시1발"과 같은 변칙 우회 패턴을 잡기 위해 정규식이 복잡해질수록 성능은 기하급수적으로 악화되었습니다. 이를 해결하기 위해 JMH(Java Microbenchmark Harness) 기반의 엄격한 성능 측정을 거쳐, 어떠한 환경에서도 일관된 성능을 보장하는 고성능 엔진을 구축했습니다.',
             solutions: [
                 '**Aho-Corasick 알고리즘 엔진 설계:** Trie 구조에 실패 함수(Failure Function)를 결합하여 금칙어 개수와 무관하게 입력 문자열의 길이에만 비례하는 **O(N)** 탐색 속도를 구현했습니다.',
+                '**JMH 기반 벤치마크 검증:** 10,000개의 금칙어와 100KB 텍스트 환경에서 복합 정규식 대비 **약 27배 향상된 3.15ms**의 처리 속도를 달성했습니다.',
                 '**지능형 정규화(Normalization) 파이프라인:** 탐색 전 단계에서 공백 및 숫자 제거 정책을 적용하여 변칙 우회 패턴을 원천 차단했습니다.',
-                '**수학적 구간 중첩(Interval Overlap) 필터링:** 금칙어 탐지 구간과 화이트리스트 구간의 교집합을 판별하는 로직을 구현하여 "시발점" 등 정상 단어를 완벽하게 보존했습니다.',
-                '**Jitpack 기반 배포 자동화:** Gradle 및 Maven 환경에서 즉시 도입 가능한 오픈소스 라이브러리 형태로 구축하여 범용성을 확보했습니다.'
+                '**수학적 구간 중첩(Interval Overlap) 필터링:** 금칙어 탐지 구간과 화이트리스트 구간의 교집합을 판별하는 로직을 구현하여 "시발점" 등 정상 단어를 완벽하게 보존했습니다.'
             ],
-            tags: ['Algorithm: O(N)', 'Performance: 27x Faster', 'False Positive Removal', 'Open Source'],
+            tags: ['Algorithm: O(N)', 'Performance: 27x Faster', 'JMH Benchmarked', 'Open Source'],
             code: {
                 title: 'Core Engine: Overlap Detection Logic',
                 language: 'kotlin',
@@ -177,7 +177,7 @@ if (remains.isNotEmpty()) {
         overview: {
             description: '사내 인프라 기반의 Zero-Budget AI 리뷰 시스템에서 시작하여, Kotlin/Spring Boot 기반의 고성능 GitHub App으로 진화한 AI 코드 리뷰 엔진',
             techStack: [
-                { name: 'Kotlin' }, { name: 'Spring Boot 3' }, { name: 'Google Gemini' }, 
+                { name: 'Kotlin' }, { name: 'Spring Boot 3' }, { name: 'Google Gemini' },
                 { name: 'GitHub App' }, { name: 'GitLab' }, { name: 'n8n' }, { name: 'LM Studio' },
                 { name: 'Coroutine' }
             ],
