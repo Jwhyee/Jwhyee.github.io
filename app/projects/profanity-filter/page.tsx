@@ -87,7 +87,7 @@ export default function ProfanityFilterProjectPage() {
               <Markdown content="대규모 트래픽이 발생하는 실시간 서비스에서 비속어 필터링은 단순한 기능 그 이상의 의미를 가집니다. [우아한형제들 기술 블로그의 비속어 탐지 전략](https://techblog.woowahan.com/15764/)에서 영감을 받아, 기존 `String.contains` 반복 루프나 복합 정규식(`Regex`) 기반 탐지 방식의 치명적인 한계를 분석했습니다." />
             </div>
             <ul className="list-disc list-inside space-y-2 ml-4 text-zinc-400">
-              <li><Markdown content="**성능의 선형 저하:** 금칙어 사전의 크기가 커질수록 모든 패턴을 개별적으로 검사해야 하므로 시간 복잡도가 `O(N*K)`로 증가합니다. 특히 10,000개 이상의 패턴을 가진 복합 정규식은 실서비스 적용이 불가능할 정도의 지연을 초래합니다." /></li>
+              <li><Markdown content="**성능의 선형 저하:** 금칙어 사전의 크기가 커질수록 모든 패턴을 개별적으로 검사해야 하므로 시간 복잡도가 $O(N \times K)$로 증가합니다. 특히 10,000개 이상의 패턴을 가진 복합 정규식은 실서비스 적용이 불가능할 정도의 지연을 초래합니다." /></li>
               <li><Markdown content="**변칙 우회의 취약성:** 숫자나 공백을 섞은 변칙 표현(예: &quot;시1발&quot;)을 정규식으로 처리하려면 패턴이 기하급수적으로 복잡해져 성능이 더욱 악화됩니다." /></li>
             </ul>
             <p>
@@ -159,7 +159,7 @@ export default function ProfanityFilterProjectPage() {
                 <div className="space-y-2">
                   <p className="text-emerald-500 font-black text-[8pt] uppercase tracking-widest">Solution Implementation:</p>
                   <div className="text-zinc-300 text-[9.5pt] leading-relaxed">
-                    <Markdown content="Trie 자료구조와 Failure Function을 결합하여, 금칙어 개수와 무관하게 입력 텍스트를 단 한 번만 순회하는 **O(N) 알고리즘**을 적용했습니다. 그 결과, 동일 환경에서 **3.15ms**의 처리 속도를 달성하며 기존 대비 **약 27배의 성능 향상**을 이루어냈습니다." />
+                    <Markdown content="Trie 자료구조와 Failure Function을 결합하여, 금칙어 개수와 무관하게 입력 텍스트를 단 한 번만 순회하는 $O(N)$ 알고리즘을 적용했습니다. 그 결과, 동일 환경에서 **3.15ms**의 처리 속도를 달성하며 기존 대비 **약 27배의 성능 향상**을 이루어냈습니다." />
                   </div>
                 </div>
                 <CodeBlock 

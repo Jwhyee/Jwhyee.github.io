@@ -10,18 +10,15 @@ interface MarkdownProps {
  * 1. **bold** -> <strong>
  * 2. `code` -> <code>
  * 3. [text](url) -> <a>
- * 4. &quot; or " -> "
+ * 4. $math$ -> <span className="font-serif italic">
+ * 5. &quot; or " -> "
  */
 export const Markdown = ({ content, className }: MarkdownProps) => {
   // Replace escaped quotes if any
   const processedContent = content.replace(/&quot;/g, '"');
 
-  // Split by bold (**), inline code (`), and links ([...](...))
-  // Regex explains:
-  // (\*\*.*?\*\*) matches **text**
-  // (`.*?`) matches `text`
-  // (\[.*?\]\(.*?\)) matches [text](url)
-  const parts = processedContent.split(/(\*\*.*?\*\*|`.*?`|\[.*?\]\(.*?\))/g);
+  // Split by bold (**), inline code (`), links ([...](...)), and math ($...$)
+  const parts = processedContent.split(/(\*\*.*?\*\*|`.*?`|\[.*?\]\(.*?\))|(\$.*?\$)/g).filter(Boolean);
 
   return (
     <span className={className}>
@@ -59,6 +56,15 @@ export const Markdown = ({ content, className }: MarkdownProps) => {
               </a>
             );
           }
+        }
+        // Handle Math Expressions
+        if (part.startsWith('$') && part.endsWith('$')) {
+          const mathContent = part.slice(1, -1).replace(/\\times/g, '×');
+          return (
+            <span key={i} className="font-serif italic text-zinc-200 mx-0.5 tracking-tight bg-zinc-900/50 px-1 rounded border border-zinc-800/30">
+              {mathContent}
+            </span>
+          );
         }
         return part;
       })}
