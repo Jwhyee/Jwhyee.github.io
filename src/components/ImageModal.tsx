@@ -16,15 +16,16 @@ export default function ImageModal({ src, alt, isOpen, onClose }: ImageModalProp
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
 
-  // Reset state when modal opens/closes
+  // Handle body scroll only
   useEffect(() => {
     if (isOpen) {
-      setScale(1);
-      setPosition({ x: 0, y: 0 });
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = '';
     }
+    return () => {
+      document.body.style.overflow = '';
+    };
   }, [isOpen]);
 
   const handleZoomIn = (e: React.MouseEvent) => {

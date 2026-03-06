@@ -21,21 +21,50 @@ body {
 }
 
 /* Typography Scale from GUIDE.md */
-.text-h1 { font-size: 24pt; font-weight: 700; line-height: 1.2; }
-.text-h2 { font-size: 18pt; font-weight: 600; line-height: 1.3; }
-.text-h3 { font-size: 14pt; font-weight: 700; line-height: 1.4; }
-.text-body { font-size: 10.5pt; font-weight: 400; line-height: 1.6; }
-.text-caption { font-size: 9pt; font-weight: 500; }
+.text-h1 {
+  font-size: 24pt;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.text-h2 {
+  font-size: 18pt;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.text-h3 {
+  font-size: 14pt;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.text-body {
+  font-size: 10.5pt;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.text-caption {
+  font-size: 9pt;
+  font-weight: 500;
+}
 
 @media print {
   @page {
     size: A4 portrait;
-    margin: 0 !important; /* Let the HTML container handle padding for better control */
+    margin: 12mm 15mm;
+    /* Consistent margins on EVERY page, including continued pages */
+  }
+
+  html {
+    font-size: 10pt;
   }
 
   body {
+    width: 100%;
     background-color: #0a0a0a !important;
-    color: #ededed !important; 
+    color: #ededed !important;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
     margin: 0 !important;
@@ -52,16 +81,29 @@ body {
     transition: none !important;
   }
 
-  /* Orphan Title Control */
-  h1, h2, h3, h4, .text-h1, .text-h2, .text-h3 {
+  /* Orphan Title Control — keep headings with their content */
+  h1,
+  h2,
+  h3,
+  h4,
+  .text-h1,
+  .text-h2,
+  .text-h3 {
     break-after: avoid !important;
     page-break-after: avoid !important;
+    orphans: 3;
+    widows: 3;
   }
 
   /* Pagination controls */
   .print-break-inside-avoid {
     page-break-inside: avoid !important;
     break-inside: avoid !important;
+  }
+
+  .print-break-before-page {
+    break-before: page !important;
+    page-break-before: always !important;
   }
 
   .print-break-after-page {
@@ -72,18 +114,37 @@ body {
   .no-print {
     display: none !important;
   }
-  
+
   /* Syntax highlighter adjustment for print */
-  pre, code, .syntax-highlighter-container {
+  pre,
+  code,
+  .syntax-highlighter-container {
     white-space: pre-wrap !important;
     word-break: break-all !important;
     overflow-wrap: break-word !important;
-    font-size: 9.5pt !important; /* text-[10pt] approx */
+    font-size: 8.5pt !important;
+  }
+
+  /* Constrain image heights so they don't consume full pages */
+  .print-img-constrain {
+    max-height: 55mm !important;
+    width: auto !important;
+    height: auto !important;
+    aspect-ratio: auto !important;
   }
 
   /* Ensure containers don't clip content */
-  article, section, div {
+  article,
+  section,
+  div {
     overflow: visible !important;
+  }
+
+  /* Section divider for visual separation between projects in print */
+  .print-section-divider {
+    border-top: 1.5pt solid #27272a;
+    padding-top: 6mm;
+    margin-top: 6mm;
   }
 }
 
