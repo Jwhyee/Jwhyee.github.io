@@ -267,7 +267,7 @@ pub async fn generate_with_fallback(prompt: String) -> Result<String, AppError> 
         },
         conclusion: {
             outcomes: [
-                '**AI 오케스트레이션 실증:**Harness Protocol 기반 에이전트 제어로 1주일 만에 기획 → 배포까지 완성 (커밋 259+, 코드 9,400줄+)',
+                '**AI 오케스트레이션 실증:** Harness Protocol 기반 에이전트 제어로 1주일 만에 기획 → 배포까지 완성 (커밋 259+, 코드 9,400줄+)',
                 '**안정성 확보:** SSOT · Atomic Loop · Verification Gate 3단계 제약으로 AI 컨텍스트 오염을 차단, 빌드 성공률 100% 달성',
                 '**성과 자동화:** 완료된 업무를 기반으로 회고 작성, 이직·연봉 협상 시점의 성과 복기 부담을 구조적으로 제거'
             ],
