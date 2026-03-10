@@ -63,7 +63,7 @@ export default function AiCodeReviewSection({ isPrintMode = false }: { isPrintMo
           </div>
         </div>
         <p className="text-[12pt] text-zinc-400 font-medium tracking-wide max-w-3xl leading-relaxed">
-          <Markdown content="개인 스터디 시간을 활용해 사내 인프라 기반의 **Zero-Budget AI 코드 리뷰 시스템**을 구축하여, 리뷰 병목 해결 및 팀 코드 품질 상향 평준화를 달성한 과정을 기술합니다." />
+          <Markdown content="예산 0원, 개인 시간만으로 사내 AI 코드 리뷰 시스템을 설계·구축하여 팀 리뷰 병목을 해소하고 성과 인정을 받아 **연봉 5% 상승**이라는 결과를 달성했습니다. 나아가 퇴사 후에도 시스템의 구조적 한계를 **직접 개선한 과정**까지 기술합니다." />
         </p>
         <div className="flex flex-wrap gap-1.5 mt-8">
           {project.overview.techStack.map((tech) => (
@@ -132,10 +132,22 @@ export default function AiCodeReviewSection({ isPrintMode = false }: { isPrintMo
             </div>
           </div>
 
+          <div className="space-y-6">
+            <h3 className="text-[10pt] font-black text-zinc-500 uppercase tracking-widest">Prompt Engineering Rigor</h3>
+            <div className="bg-zinc-900/40 p-6 rounded border border-zinc-800/50 space-y-4">
+              <p className="text-zinc-300 text-[10.5pt] leading-relaxed">
+                <Markdown content="프롬프트 하나를 완성하기 위해 Google AI Studio에서 **100회 이상 반복 검증**했습니다. 모델이 일관되게 틀리는 패턴을 직접 분류하고, 각 케이스마다 프롬프트를 수정하며 최적안을 도출하는 과정은 코드 작성보다 오래 걸렸습니다." />
+              </p>
+              <p className="text-emerald-500 font-bold text-[9.5pt] italic">
+                &quot;AI는 프롬프트 설계가 구현보다 어렵다&quot;는 확신이 엔지니어링의 집요함으로 이어진 지점입니다.
+              </p>
+            </div>
+          </div>
+
           <ul className="list-disc list-inside space-y-2 text-zinc-400 text-[10.5pt] ml-2">
-            <li><Markdown content="**데이터 정제:** Git Diff 포맷을 분석하여 Hunk 단위로 분해하고 로직과 무관한 노이즈(Import, 주석) 필터링" /></li>
-            <li><Markdown content="**추론 안정화:** `gpt-oss-20b` 모델 적용 및 n8n Merge 노드를 활용한 컨텍스트 데이터 유실 방지" /></li>
-            <li><Markdown content="**프롬프트 고도화:** Google AI Studio를 활용한 약 100회 이상의 반복 검증으로 최적의 System Prompt 도출" /></li>
+            <li><Markdown content="**데이터 정제:** Git Diff 포맷을 분석하여 Hunk 단위로 분해하고 Import 구문 등 추론에 불필요한 메타데이터를 필터링하여 **컨텍스트 품질을 최적화**" /></li>
+            <li><Markdown content="**아키텍처 판단:** n8n의 한계를 인식하고 추후 Kotlin 서버로의 확장을 고려한 데이터 구조 설계" /></li>
+            <li><Markdown content="**보안성 확보:** 사내 가이드라인을 준수하기 위해 모든 추론 로직을 내부 인프라(LM Studio) 내에서 완결" /></li>
           </ul>
         </div>
       </section>
@@ -143,10 +155,13 @@ export default function AiCodeReviewSection({ isPrintMode = false }: { isPrintMo
       {/* 2. Technical Evolution (Phase 2) */}
       <section className="mb-16 space-y-10 print:break-inside-avoid">
         <h2 className="text-[14pt] border-l-4 border-white pl-4 mb-6 uppercase tracking-tighter font-black text-white">
-          2. System Refactoring (Phase 2: 2025.10 - 2025.11)
+          2. Personal Refactoring (Phase 2: 2025.10 - 2025.11)
         </h2>
 
         <div className="text-zinc-300 text-[10.5pt] leading-relaxed px-1">
+          <p className="mb-4">
+            <Markdown content="퇴사 이후에도 Phase 1 시스템의 구조적 한계가 계속 눈에 밟혔습니다. n8n의 낮은 확장성과 데이터 가공의 한계는 &quot;동작은 하지만 옳지 않다&quot;는 확신을 남겼고, 개인 시간을 들여 Kotlin 서버로 전면 리팩터링했습니다." />
+          </p>
           <Markdown content="초기 n8n 기반 파이프라인의 낮은 확장성과 데이터 가공의 한계를 극복하기 위해, **Kotlin & Spring Boot 3 기반의 전용 서버**로 시스템을 전면 리팩터링했습니다. 이를 통해 GitHub App 형태의 유연한 연동과 정교한 인라인 리뷰 기능을 확보했습니다." />
         </div>
 
@@ -192,56 +207,39 @@ export default function AiCodeReviewSection({ isPrintMode = false }: { isPrintMo
         </h2>
 
         <div className="space-y-16 px-1">
-          {/* Feature 1: Distributed Concurrency Control */}
+          {/* Feature 1: Lightweight Async Event Processing */}
           <div className="space-y-4 print:break-inside-avoid">
             <div className="flex items-center gap-3 mb-2">
               <span className="text-zinc-500 font-mono text-[10pt]">01.</span>
               <h3 className="text-[12pt] font-bold text-white tracking-tight">
-                <Markdown content="내결함성 및 분산 동시성 제어 (Self-Healing)" />
+                <Markdown content="경량 비동기 이벤트 처리 (Coroutine Channel Queue)" />
               </h3>
             </div>
 
-            {/* AS-IS */}
             <div className="ml-8 space-y-3">
-              <div className="flex items-center gap-2">
-                <span className="text-[8pt] font-black text-red-400 bg-red-400/10 px-2 py-0.5 rounded border border-red-400/20 uppercase tracking-widest">AS-IS</span>
-                <span className="text-[9pt] text-zinc-500 font-medium">인메모리 Channel의 한계</span>
-              </div>
-              <div className="text-[10pt] text-zinc-400 leading-relaxed border-l-2 border-red-400/30 pl-4">
-                <Markdown content="`Coroutine Channel` 기반의 인메모리 큐만 사용하여, 서버 재시작 시 처리 중이던 작업이 유실되었습니다. 특히 **Scale-out 환경에서 여러 서버가 동일한 `FAILED` 이벤트를 중복 처리**하여 PR에 리뷰 코멘트가 2~3건씩 중복 생성되는 **Race Condition**이 존재했습니다." />
-              </div>
-            </div>
-
-            {/* TO-BE */}
-            <div className="ml-8 space-y-3">
-              <div className="flex items-center gap-2">
-                <span className="text-[8pt] font-black text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded border border-emerald-400/20 uppercase tracking-widest">TO-BE</span>
-                <span className="text-[9pt] text-zinc-500 font-medium">DB Pessimistic Lock (SKIP LOCKED)</span>
-              </div>
               <div className="text-[10pt] text-zinc-400 leading-relaxed border-l-2 border-emerald-400/30 pl-4">
-                <Markdown content="Webhook 수신 즉시 RDBMS에 `PENDING` 상태로 영속화하여 유실을 차단하고, **`SELECT ... FOR UPDATE SKIP LOCKED`** 기반의 비관적 락을 적용하여 다중 인스턴스 환경에서도 작업의 유일성을 보장하는 **분산 작업 큐(Job Queue)**를 구현했습니다." />
+                <Markdown content="별도의 메시지 브로커 없이 `Coroutine Channel` 기반의 인메모리 큐를 설계하여 Webhook 이벤트를 비동기로 처리합니다. 단일 인스턴스 환경에서 경량성과 Kotlin 친화적 구조를 최우선으로 고려한 판단이었습니다." />
               </div>
             </div>
 
             <div className="ml-8 mt-4">
               <CodeBlock
                 language="kotlin"
-                code={`// Repository: 다중 서버 충돌 방지를 위한 SKIP LOCKED
-@Lock(LockModeType.PESSIMISTIC_WRITE)
-@QueryHints(
-    QueryHint(
-        name = "jakarta.persistence.lock.timeout",
-        value = "-2" // SKIP LOCKED
-    )
-)
-@Query("""
-    SELECT w FROM WebhookEvent w 
-    WHERE w.status = :status
-""")
-fun findByStatusWithLock(
-    status: WebhookEventStatus,
-    pageable: Pageable
-): List<WebhookEvent>`}
+                code={`// Webhook 이벤트 비동기 처리를 위한 Channel 기반 큐
+private val channel = Channel<ReviewJob>(capacity = Channel.BUFFERED)
+
+@PostConstruct
+fun startWorkers() {
+    repeat(workerCount) { idx ->
+        scope.launch {
+            for (job in channel) {
+                runCatching { 
+                    codeReviewService.review(job) 
+                }.onFailure { logger.error("Review failed", it) }
+            }
+        }
+    }
+}`}
               />
             </div>
           </div>
@@ -270,34 +268,34 @@ fun findByStatusWithLock(
             <div className="ml-8 space-y-3">
               <div className="flex items-center gap-2">
                 <span className="text-[8pt] font-black text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded border border-emerald-400/20 uppercase tracking-widest">TO-BE</span>
-                <span className="text-[9pt] text-zinc-500 font-medium">전역 Semaphore 기반 Throttling</span>
+                <span className="text-[9pt] text-zinc-500 font-medium">서비스 레벨 Semaphore 제어</span>
               </div>
               <div className="text-[10pt] text-zinc-400 leading-relaxed border-l-2 border-emerald-400/30 pl-4">
-                <Markdown content="시스템 전체의 Gemini API 호출 동시성을 전역 `GeminiRateLimiter`로 통합 관리합니다. Scatter 단계에서 `Semaphore.withPermit`을 주입하여, 아무리 많은 청크가 생성되어도 **API 한도를 물리적으로 초과할 수 없도록** 보장했습니다." />
+                <Markdown content="`CodeReviewService` 내부에 Semaphore를 직접 선언하여 Gemini API 호출 동시성을 서비스 레벨에서 통합 관리합니다. 아무리 많은 청크가 병렬로 생성되어도 **API 한도를 물리적으로 초과할 수 없도록** 보장했습니다." />
               </div>
             </div>
 
             <div className="ml-8 mt-4">
               <CodeBlock
                 language="kotlin"
-                code={`// 전역 동시성 제어 컴포넌트
-@Component
-class GeminiRateLimiter {
+                code={`// CodeReviewService 내 동시성 제어
+class CodeReviewService {
+    companion object {
+        private const val MAX_CONCURRENCY = 3
+    }
     private val semaphore = Semaphore(MAX_CONCURRENCY)
 
-    suspend fun <T> withPermit(
-        block: suspend () -> T
-    ): T = semaphore.withPermit { block() }
-}
-
-// Scatter-Gather 패턴 병렬 요약 처리
-val chunkSummaries = chunks.map { chunk ->
-    async {
-        rateLimiter.withPermit {
-            generateSummaryOnce(chunk, SUMMARY_PROMPT)
-        }
+    suspend fun review() {
+        ..
+        tasks.mapIndexed { index, task ->
+            async {
+                semaphore.withPermit {
+                    processOne(task, model, index + 1, tasks.size)
+                }
+            }
+        }.awaitAll()
     }
-}.awaitAll().filterNotNull()`}
+}`}
               />
             </div>
           </div>
@@ -310,8 +308,8 @@ val chunkSummaries = chunks.map { chunk ->
                 <Markdown content="보안 중심 설계 (Zero-Trust)" />
               </h3>
             </div>
-            <div className="text-[10pt] text-zinc-400 leading-relaxed ml-8">
-              <Markdown content="Webhook 검증 단계에서 **Constant-Time Comparison(상수 시간 비교)**을 구현하여 Timing Attack을 방어하고, RS256 기반 JWT 인증 및 Installation Token 캐싱으로 보안성과 성능을 동시에 확보했습니다." />
+            <div className="text-[10pt] text-zinc-400 leading-relaxed ml-8 mb-4">
+              <Markdown content="의약품 배송이라는 도메인 특성상 내부 코드 유출은 단순한 기술적 문제가 아닌 **규제 리스크**였습니다. 이를 방어하기 위해 Webhook 검증 단계에서 **Constant-Time Comparison(상수 시간 비교)**을 구현하여 Timing Attack을 차단하고, RS256 기반 JWT 인증을 통해 Zero-Trust 보안 모델을 구축했습니다." />
             </div>
             <div className="ml-8 grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="bg-zinc-950 p-4 border border-zinc-800 rounded">
@@ -341,7 +339,7 @@ val chunkSummaries = chunks.map { chunk ->
             {[
               { label: "Infra Cost", value: "₩0", sub: "Zero-Budget", color: "text-emerald-500" },
               { label: "429 Error Rate", value: "0건", sub: "Rate Limit 완전 제어", color: "text-blue-500" },
-              { label: "Scale-out 안정성", value: "100%", sub: "DB Lock 중복 방지", color: "text-emerald-500" }
+              { label: "Prompt Iterations", value: "100+", sub: "AI Studio 반복 검증", color: "text-emerald-500" }
             ].map((stat, i) => (
               <div key={i} className="text-center">
                 <p className="text-[7pt] text-zinc-500 uppercase tracking-widest mb-2">{stat.label}</p>
@@ -364,9 +362,34 @@ val chunkSummaries = chunks.map { chunk ->
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-emerald-500 mt-0.5">▸</span>
-                <Markdown content="팀 생산성 병목을 주도적으로 해결한 성과를 인정받아, **실제 연봉 인상에 긍정적인 성과 평가** 달성" />
+                <Markdown content="Phase 1에서 구축한 Zero-Budget 자동화 시스템이 **당해 연도 성과 평가 최고 등급**의 직접적 근거가 되었으며, 연봉 협상에서 실질적인 성과로 인정받았습니다." />
               </li>
             </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* 5. Lessons Learned */}
+      <section className="mb-16 space-y-6 print:break-inside-avoid">
+        <h2 className="text-[14pt] border-l-4 border-white pl-4 mb-6 uppercase tracking-tighter font-black text-white">
+          5. Lessons Learned
+        </h2>
+        <div className="bg-zinc-900/20 p-8 rounded-lg border border-zinc-800/50 space-y-8">
+          <div className="space-y-3">
+            <h4 className="text-zinc-200 font-bold flex items-center gap-2 text-[10pt]">
+              <span className="text-emerald-500">●</span> 기술적 취향은 생산성에서 시작된다
+            </h4>
+            <p className="text-zinc-400 leading-relaxed text-[9.5pt]">
+              <Markdown content="단순히 트렌디한 기술을 쫓는 것이 아니라, 팀의 병목을 해결하기 위해 n8n에서 Kotlin 서버로 전환하는 과정에서 **&quot;왜 이 기술이 필요한가&quot;**에 대한 명확한 기준을 세울 수 있었습니다." />
+            </p>
+          </div>
+          <div className="space-y-3">
+            <h4 className="text-zinc-200 font-bold flex items-center gap-2 text-[10pt]">
+              <span className="text-emerald-500">●</span> 공식 권한 없이 팀을 움직이는 방법
+            </h4>
+            <p className="text-zinc-400 leading-relaxed text-[9.5pt]">
+              <Markdown content="제안서가 아니라 PR에 달린 실제 리뷰 코멘트가 경영진을 설득했습니다. 공식 권한 없이 팀의 문제를 해결하려면, **&quot;작동하는 결과물&quot;이 가장 강력한 언어**임을 배웠습니다." />
+            </p>
           </div>
         </div>
       </section>

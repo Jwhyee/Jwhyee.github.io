@@ -124,7 +124,7 @@ export const projects: Project[] = [
         id: 'profanity-filter-library',
         title: 'Profanity Filter Library',
         overview: {
-            description: 'Aho-Corasick 알고리즘 기반의 O(N) 고성능 비속어 탐색 엔진 및 라이브러리',
+            description: 'Aho-Corasick 알고리즘 기반의 O(N) 비속어 탐색 엔진 및 라이브러리',
             techStack: [
                 { name: 'Kotlin' }, { name: 'Aho-Corasick' }, { name: 'Trie' },
                 { name: 'Jitpack' }, { name: 'Gradle' }, { name: 'JUnit5' }
@@ -164,9 +164,9 @@ if (remains.isNotEmpty()) {
         },
         conclusion: {
             outcomes: [
-                '**성능 혁신:** 복합 정규식 대비 처리 속도를 **약 27배 향상** (10만 자 기준 **3.15ms** 달성)',
-                '**확장성 확보:** 금칙어 데이터가 수천 개로 늘어나도 **O(N)**의 일관된 성능을 유지하는 안정적인 아키텍처 구축',
-                '**정확도 개선:** 화이트리스트 기반 예외 처리를 통해 실 서비스 적용 가능한 수준의 오탐 방지 로직 완성'
+                '**학습 주도성:** 기존 라이브러리 사용 대신 직접 구현을 선택, JMH 벤치마크로 정규식 대비 27배 성능 향상 실증',
+                '**독립적 완성:** 함께하던 사이드 프로젝트가 무산됐음에도 라이브러리를 끝까지 완성하여 Jitpack에 오픈소스로 배포',
+                '**알고리즘 실증:** O(N×K) → O(N) 전환으로 10만 자 텍스트 기준 85.89ms → 3.15ms 달성'
             ],
             retrospective: '알고리즘적 이론(Trie, Aho-Corasick)을 실제 비즈니스 문제 해결에 적용하여 오픈소스 라이브러리화함으로써 기술적 깊이와 실행력을 실증했습니다. 특히 라이브러리 배포 과정을 통해 범용적인 API 설계의 중요성을 체득했습니다.'
         }
@@ -175,7 +175,7 @@ if (remains.isNotEmpty()) {
         id: 'ai-code-review',
         title: 'AI Code Review System',
         overview: {
-            description: '사내 인프라 기반의 Zero-Budget AI 리뷰 시스템에서 시작하여, Kotlin/Spring Boot 기반의 고성능 GitHub App으로 진화한 AI 코드 리뷰 엔진',
+            description: '사내 인프라 기반의 Zero-Budget AI 리뷰 시스템으로 팀 병목을 해소하고, 퇴사 후에도 구조적 한계를 직접 개선한 AI 코드 리뷰 엔진',
             techStack: [
                 { name: 'Kotlin' }, { name: 'Spring Boot 3' }, { name: 'Google Gemini' },
                 { name: 'GitHub App' }, { name: 'GitLab' }, { name: 'n8n' }, { name: 'LM Studio' },
@@ -219,8 +219,8 @@ fun startWorkers() {
         conclusion: {
             outcomes: [
                 '**리뷰 리드타임 70% 단축:** 1차 AI 리뷰 피드백을 통해 휴먼 리뷰어가 핵심 비즈니스 로직에만 집중할 수 있는 환경 조성',
-                '**품질 상향 평준화:** 신입 팀원의 컨벤션 오류 즉각 교정 및 에러 리포트 감소로 실제 성과 평가에 긍정적 반영',
-                '**인프라 비용 최적화:** 상용 SaaS 대비 연간 수백만 원 규모의 비용을 절감하며 사내 보안 가이드라인 완벽 준수'
+                '**연봉 5% 인상 성과 달성:** 신입 팀원 컨벤션 오류 즉각 교정 및 에러 리포트 감소로 인한 성과 반영',
+                '**인프라 비용 최적화:** 상용 SaaS 대비 연간 수백만 원 규모 절감, 사내 보안 가이드라인 완벽 준수'
             ],
             retrospective: '제한된 자원 환경에서 오픈소스와 AI를 결합하여 실질적인 비즈니스 임팩트를 낸 경험을 통해, 엔지니어의 역할은 "문제를 해결하는 최적의 도구 조합을 설계하는 것"임을 깊이 깨달았습니다.'
         }
@@ -229,35 +229,35 @@ fun startWorkers() {
         id: 'will-done',
         title: 'Will Done',
         overview: {
-            description: '업무 시간(Will)을 설계하고 완료 기록(Done)을 Brag Document로 자동 변환하는 AI 기반 데스크톱 타임 트래커',
+            description: '권고 사직 후 "내가 무엇을 했는가"를 정리하지 못한 경험에서 출발한, AI 에이전트 오케스트레이션만으로 완성한 풀스택 데스크톱 타임 트래커',
             techStack: [
                 { name: 'React 19' }, { name: 'Tauri v2' }, { name: 'Rust' },
                 { name: 'SQLite' }, { name: 'Gemini API' }, { name: 'Vite 7' }
             ],
             duration: '2026.02 - 2026.03',
-            teamSize: '1인 개발 (100% AI-Authored)',
+            teamSize: '1인 개발',
             contribution: '100% (기획, AI 오케스트레이션, 검증 시스템 설계)'
         },
         content: {
-            background: '단순 TODO 나열 방식의 기존 앱들은 "시간 설계"가 불가능하고, 긴급 업무 발생 시 전체 일정이 무너지는 한계가 있었습니다. 또한 이직이나 성과 검토 시 과거 업무 내역을 전문적인 문구로 정리하는 데 상당한 리소스가 소모되었습니다. 이를 해결하기 위해 수학적 스케줄링 엔진과 AI 회고 기능을 결합한 도구를 기획했으며, 특히 100% AI 에이전트만으로 풀스택 앱을 구축하는 "바이브 코딩(Vibe Coding)" 실험을 병행했습니다.',
+            background: '커리어 성장의 가장 큰 적은 기억의 휘발성입니다. 이직이나 연봉 협상 시점에 구체적인 성과를 복기하지 못하는 개발자는 불리한 위치에 놓입니다. 기존의 타임 트래커들은 긴급 업무 발생 시 수동으로 타임라인을 재조정해야 하고, 기록이 성과 문서화로 이어지지 못하는 한계가 있었습니다. 이를 해결하기 위해 수학적 스케줄링 엔진과 AI 브래그 도큐먼트 자동화 기능을 설계했습니다. 또한, 개발자가 코드를 직접 작성하지 않고 AI 에이전트만을 오케스트레이션하여 풀스택 앱을 완성하는 실증적 실험을 병행했습니다.',
             solutions: [
-                '**지능형 타임 시프트 엔진(Time-Shift Engine):** 긴급 태스크 발생 시 현재 진행 업무를 자동으로 분할(Split) 및 보류(Pending)하고, 이후 모든 일정을 수학적으로 재계산하여 밀어내는(Shift) 알고리즘을 구현했습니다.',
-                '**다중 모델 폴백(Fallback) 엔진:** Gemini API의 할당량 제한(429)에 대응하여 `로컬 캐시 → flash-lite → flash → pro` 순으로 자동 전환되는 안정적인 AI 파이프라인을 구축했습니다.',
-                '**하네스(Harness) 제어 프로토콜:** AI 에이전트의 배치 처리 및 빌드 무시 경향을 해결하기 위해 `STRUCTURE.md`를 SSOT로 활용하고, 단일 작업 루프와 자가 치유(Self-Healing) 검증 게이트를 설계했습니다.',
-                '**로컬 퍼스트 아키텍처:** Tauri v2와 SQLite를 활용하여 모든 데이터를 사용자 로컬에 저장함으로써 데이터 주권과 보안을 극대화했습니다.'
+                '**재귀적 스케줄링 엔진(Recursive Scheduling Engine):** 고정된 블록 방식의 한계를 극복하기 위해, 긴급 태스크 발생 시 업무 블록을 원자 단위로 쪼개어(Split) 재배정하는 동적 시프트 알고리즘을 설계했습니다.',
+                '**전략적 다중 모델 폴백(Fallback) 엔진:** 비용과 품질의 트레이드오프를 고려하여 `로컬 캐시 → flash-lite → flash → pro` 순의 호출 전략을 수립하고, API 할당량 초과 시에도 가용성을 유지하도록 구현했습니다.',
+                '**Harness 제어 프로토콜:** AI 에이전트의 자율성을 시스템적으로 통제하기 위해 `STRUCTURE.md`를 SSOT로 운영하고, 단일 작업 루프(Atomic Loop)와 빌드 검증 게이트(Verification Gate)를 설계하여 안정성을 확보했습니다.',
+                '**로컬 퍼스트 보안 아키텍처:** Tauri v2와 SQLite를 활용하여 민감한 업무 데이터를 사용자 로컬에 저장함으로써 데이터 주권과 보안을 극대화했습니다.'
             ],
-            tags: ['Time-Shift Engine', 'Multi-Model Fallback', 'Harness Protocol', '100% AI Authored'],
+            tags: ['Time-Shift Engine', 'AI Orchestration', 'Harness Protocol', 'Rust Safety'],
             code: {
                 title: 'Multi-Model Fallback Strategy (Rust)',
                 language: 'rust',
-                snippet: `// API 에러 또는 할당량 초과 시 하위 모델로 순차적 폴백 수행
+                snippet: `// API 에러 또는 할당량 초과 시 비용/품질 트레이드오프를 고려한 순차적 폴백
 pub async fn generate_with_fallback(prompt: String) -> Result<String, AppError> {
     let models = vec!["gemini-1.5-flash-lite", "gemini-1.5-flash", "gemini-1.5-pro"];
     
     for model in models {
         match call_gemini_api(&model, &prompt).await {
             Ok(res) => return Ok(res),
-            Err(e) if e.is_quota_limit() => continue, // 429 에러 시 다음 모델 시도
+            Err(e) if e.is_quota_limit() => continue, // 429 에러 시 다음 우선순위 모델 시도
             Err(e) => return Err(e),
         }
     }
@@ -267,11 +267,11 @@ pub async fn generate_with_fallback(prompt: String) -> Result<String, AppError> 
         },
         conclusion: {
             outcomes: [
-                '**생산성 혁신:** 직접 코딩 없이 259회의 커밋과 9,400줄 이상의 풀스택 코드베이스 구축',
-                '**안정성 확보:** 하네스 프로토콜 도입으로 AI 에이전트의 빌드 성공률 및 문서 동기화율 **100% 달성**',
-                '**성과 자동화:** 업무 기록 기반의 전문적인 Brag Document 생성 프로세스 구축 및 크로스 플랫폼(macOS/Win) 배포'
+                '**AI 오케스트레이션 실증:**Harness Protocol 기반 에이전트 제어로 1주일 만에 기획 → 배포까지 완성 (커밋 259+, 코드 9,400줄+)',
+                '**안정성 확보:** SSOT · Atomic Loop · Verification Gate 3단계 제약으로 AI 컨텍스트 오염을 차단, 빌드 성공률 100% 달성',
+                '**성과 자동화:** 완료된 업무를 기반으로 회고 작성, 이직·연봉 협상 시점의 성과 복기 부담을 구조적으로 제거'
             ],
-            retrospective: 'AI 에이전트가 코드를 작성하는 시대에 개발자의 역할은 "구현자"에서 "시스템 설계자 및 검증자"로 진화해야 함을 실증했습니다. 특히 구조화된 레퍼런스(SSOT)가 AI의 성능을 결정짓는 핵심임을 깨달았습니다.'
+            retrospective: '미래 개발자의 경쟁력은 "무엇을 만드느냐"가 아니라 "어떤 기준으로 AI에게 무엇을 맡기느냐"에 있습니다. Tauri/Rust를 선택한 이유나 하네스 프로토콜 설계 과정 자체가 제품의 가치를 결정짓는 핵심 역량임을 실증했습니다.'
         }
     }
 ];

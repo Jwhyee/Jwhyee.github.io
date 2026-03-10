@@ -92,14 +92,14 @@ export default function ProfanityFilterSection({ isPrintMode = false }: { isPrin
         </h2>
         <div className="text-zinc-300 space-y-4 leading-relaxed text-[10.5pt]">
           <div className="text-zinc-300">
-            <Markdown content="대규모 트래픽이 발생하는 실시간 서비스에서 비속어 필터링은 단순한 기능 그 이상의 의미를 가집니다. [우아한형제들 기술 블로그의 비속어 탐지 전략](https://techblog.woowahan.com/15764/)에서 영감을 받아, 기존 `String.contains` 반복 루프나 복합 정규식(`Regex`) 기반 탐지 방식의 치명적인 한계를 분석했습니다." />
+            <Markdown content="퇴사 후 동기들과 사이드 프로젝트를 진행하며 리뷰 기능에 비속어 필터링이 필요했습니다. 기존 라이브러리를 가져다 쓰는 대신, &quot;직접 구현하면서 배우자&quot;는 판단으로 리서치를 시작했고, 우아한형제들 기술 블로그를 통해 기존 방식의 한계를 분석했습니다." />
           </div>
           <ul className="list-disc list-inside space-y-2 ml-4 text-zinc-400">
             <li><Markdown content="**성능의 선형 저하:** 금칙어 사전의 크기가 커질수록 모든 패턴을 개별적으로 검사해야 하므로 시간 복잡도가 $O(N \times K)$로 증가합니다. 특히 10,000개 이상의 패턴을 가진 복합 정규식은 실서비스 적용이 불가능할 정도의 지연을 초래합니다." /></li>
             <li><Markdown content="**변칙 우회의 취약성:** 숫자나 공백을 섞은 변칙 표현(예: &quot;시1발&quot;)을 정규식으로 처리하려면 패턴이 기하급수적으로 복잡해져 성능이 더욱 악화됩니다." /></li>
           </ul>
           <p>
-            <Markdown content="이러한 성능 병목을 근본적으로 해결하고, **JMH(Java Microbenchmark Harness)**를 통해 입증된 압도적인 성능의 **아호코라식(Aho-Corasick)** 필터링 엔진을 직접 구축하고자 본 라이브러리를 기획하게 되었습니다." />
+            <Markdown content="단순히 따라 구현하는 것에 그치지 않고, JMH로 기존 방식과 직접 성능을 비교 측정하는 것까지 스스로 범위를 확장했습니다. 결과적으로 그 사이드 프로젝트는 무산되었습니다. 그러나 이 **라이브러리는 완성되었고, Jitpack에 배포**했습니다. &quot;프로젝트가 사라져도 내가 만든 것은 남는다&quot;는 사실이 이 작업을 끝까지 밀어붙인 이유였습니다." />
           </p>
         </div>
       </section>
