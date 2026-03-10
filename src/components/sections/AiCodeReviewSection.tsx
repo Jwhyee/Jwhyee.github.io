@@ -160,9 +160,9 @@ export default function AiCodeReviewSection({ isPrintMode = false }: { isPrintMo
 
         <div className="text-zinc-300 text-[10.5pt] leading-relaxed px-1">
           <p className="mb-4">
-            <Markdown content="퇴사 이후에도 Phase 1 시스템의 구조적 한계가 계속 눈에 밟혔습니다. n8n의 낮은 확장성과 데이터 가공의 한계는 &quot;동작은 하지만 옳지 않다&quot;는 확신을 남겼고, 개인 시간을 들여 Kotlin 서버로 전면 리팩터링했습니다." />
+            <Markdown content="초기 n8n 기반 파이프라인의 낮은 확장성과 데이터 가공의 한계를 극복하기 위해, **Kotlin & Spring Boot 3 기반의 전용 서버**로 시스템을 전면 리팩터링했습니다." />
           </p>
-          <Markdown content="초기 n8n 기반 파이프라인의 낮은 확장성과 데이터 가공의 한계를 극복하기 위해, **Kotlin & Spring Boot 3 기반의 전용 서버**로 시스템을 전면 리팩터링했습니다. 이를 통해 GitHub App 형태의 유연한 연동과 정교한 인라인 리뷰 기능을 확보했습니다." />
+
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 px-1">
@@ -299,33 +299,6 @@ class CodeReviewService {
               />
             </div>
           </div>
-
-          {/* Feature 4: Security */}
-          <div className="space-y-4 print:break-inside-avoid">
-            <div className="flex items-center gap-3 mb-2">
-              <span className="text-zinc-500 font-mono text-[10pt]">03.</span>
-              <h3 className="text-[12pt] font-bold text-white tracking-tight">
-                <Markdown content="보안 중심 설계 (Zero-Trust)" />
-              </h3>
-            </div>
-            <div className="text-[10pt] text-zinc-400 leading-relaxed ml-8 mb-4">
-              <Markdown content="의약품 배송이라는 도메인 특성상 내부 코드 유출은 단순한 기술적 문제가 아닌 **규제 리스크**였습니다. 이를 방어하기 위해 Webhook 검증 단계에서 **Constant-Time Comparison(상수 시간 비교)**을 구현하여 Timing Attack을 차단하고, RS256 기반 JWT 인증을 통해 Zero-Trust 보안 모델을 구축했습니다." />
-            </div>
-            <div className="ml-8 grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="bg-zinc-950 p-4 border border-zinc-800 rounded">
-                <p className="text-emerald-500 font-bold text-[9pt] mb-1">상수 시간 서명 검증</p>
-                <div className="text-zinc-500 text-[8.5pt]">
-                  <Markdown content="HMAC-SHA256 서명 비교 시 조기 반환을 방지하여 응답 시간 차이로 서명을 유추하는 공격 차단" />
-                </div>
-              </div>
-              <div className="bg-zinc-950 p-4 border border-zinc-800 rounded">
-                <p className="text-emerald-500 font-bold text-[9pt] mb-1">GitHub App 인증</p>
-                <div className="text-zinc-500 text-[8.5pt]">
-                  <Markdown content="**JJWT**를 활용한 RS256 서명 및 토큰 캐싱으로 불필요한 API 호출 최소화" />
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -342,11 +315,11 @@ class CodeReviewService {
               { label: "Prompt Iterations", value: "100+", sub: "AI Studio 반복 검증", color: "text-emerald-500" }
             ].map((stat, i) => (
               <div key={i} className="text-center">
-                <p className="text-[7pt] text-zinc-500 uppercase tracking-widest mb-2">{stat.label}</p>
+                <p className="text-[7pt] text-zinc-100 uppercase tracking-widest mb-2">{stat.label}</p>
                 <p className={`text-[14pt] font-black ${stat.color}`}>
                   <Markdown content={stat.value} />
                 </p>
-                <p className="text-[7pt] text-zinc-600 mt-1">{stat.sub}</p>
+                <p className="text-[7pt] text-zinc-300 mt-1">{stat.sub}</p>
               </div>
             ))}
           </div>
@@ -354,15 +327,15 @@ class CodeReviewService {
             <ul className="text-zinc-400 text-[9.5pt] leading-relaxed space-y-2 ml-4">
               <li className="flex items-start gap-2">
                 <span className="text-emerald-500 mt-0.5">▸</span>
-                <Markdown content="**Self-Healing 자동화:** 실패한 이벤트에 대해 지수 백오프 기반의 재시도(Retry) 체계를 구축하여 수동 개입 없이 복구" />
+                <Markdown content="**비차단 워커 기반의 예외 격리:** Coroutine Channel과 SupervisorJob을 활용하여 특정 작업의 실패가 전체 시스템으로 전파되지 않도록 설계하고, 상세한 에러 로깅을 통해 트러블슈팅 효율화" />
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-emerald-500 mt-0.5">▸</span>
-                <Markdown content="**대규모 PR 대응:** 10,000자 이상의 PR 처리 시에도 **성공률 100%** 달성 (429 에러 0건)" />
+                <Markdown content="**호출 제어:** 세마포어(Semaphore)를 이용한 동시성 제한과 호출 간 강제 쿨다운(Mandatory Cooldown) 메커니즘을 통해 Gemini API의 Rate Limit(429) 발생 가능성을 차단" />
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-emerald-500 mt-0.5">▸</span>
-                <Markdown content="Phase 1에서 구축한 Zero-Budget 자동화 시스템이 **당해 연도 성과 평가 최고 등급**의 직접적 근거가 되었으며, 연봉 협상에서 실질적인 성과로 인정받았습니다." />
+                <Markdown content="Phase 1에서 구축한 Zero-Budget 자동화 시스템을 통해 연봉 협상에서 실질적인 성과로 인정받았습니다." />
               </li>
             </ul>
           </div>

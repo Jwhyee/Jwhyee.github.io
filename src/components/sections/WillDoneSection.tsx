@@ -194,7 +194,7 @@ export default function WillDoneSection({ isPrintMode = false }: { isPrintMode?:
               <div className="space-y-2">
                 <p className="text-emerald-500 font-black text-[8pt] uppercase tracking-widest">Solution: Recursive Scheduling Engine</p>
                 <div className="text-zinc-300 text-[9.5pt] leading-relaxed">
-                  <Markdown content="실시간 일정 변화를 **재귀적 스케줄링 엔진(Recursive Scheduling Engine)**을 통해 자동 조정하는 로직을 구현했습니다. **재귀적 블록 분할(Recursive Block Splitting)** 기술을 적용하여 긴급 업무 발생 시 기존 블록을 원자 단위로 쪼개어 사이사이에 재배정하는 동적 시프트를 수행합니다." />
+                  <Markdown content="실시간 일정 변화를 **재귀적 스케줄링 엔진**을 통해 자동 조정하는 로직을 구현했습니다. **재귀적 블록 분할** 기술을 적용하여 긴급 업무 발생 시 기존 블록을 원자 단위로 쪼개어 사이사이에 재배정하는 동적 시프트를 수행합니다." />
                 </div>
               </div>
               <div className="pt-2 border-t border-zinc-800/50">
@@ -236,43 +236,20 @@ export default function WillDoneSection({ isPrintMode = false }: { isPrintMode?:
         <h2 className="text-[14pt] border-l-4 border-white pl-4 mb-6 uppercase tracking-tighter font-black text-white">
           4. Project Highlights & Results
         </h2>
-
-        {/* UX Excellence Highlights */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 px-1">
-          <div className="bg-zinc-900/20 p-6 rounded-lg border border-zinc-800/50 space-y-3 hover:border-emerald-500/30 transition-colors print:break-inside-avoid">
-            <h4 className="text-emerald-500 font-black text-[8pt] uppercase tracking-widest">Logical Date System</h4>
-            <div className="text-zinc-300 text-[9.5pt] leading-relaxed">
-              <Markdown content="사용자의 실제 생활 패턴을 반영하여, 설정된 `dayStartTime`을 기준으로 새벽 작업을 전날의 성과로 귀속시키는 **논리적 날짜(Logical Date)** 시스템을 구축했습니다." />
-            </div>
-          </div>
-          <div className="bg-zinc-900/20 p-6 rounded-lg border border-zinc-800/50 space-y-3 hover:border-emerald-500/30 transition-colors print:break-inside-avoid">
-            <h4 className="text-emerald-500 font-black text-[8pt] uppercase tracking-widest">Context-Aware Input</h4>
-            <div className="text-zinc-300 text-[9.5pt] leading-relaxed">
-              <Markdown content="업무 입력 시 몰입을 방해하지 않도록, 포커스 시 부드럽게 확장되는 **Task Input Overlay** UX를 구현하여 문맥 중심적 인터페이스를 완성했습니다." />
-            </div>
-          </div>
-          <div className="bg-zinc-900/20 p-6 rounded-lg border border-zinc-800/50 space-y-3 hover:border-emerald-500/30 transition-colors print:break-inside-avoid">
-            <h4 className="text-emerald-500 font-black text-[8pt] uppercase tracking-widest">Modern Desktop Experience</h4>
-            <div className="text-zinc-300 text-[9.5pt] leading-relaxed">
-              <Markdown content="Tauri의 **Overlay Title Bar** 기능을 활용하여 OS 경계를 허무는 프레임리스 디자인을 적용, 생산성 도구에 최적화된 심리스한 UX를 제공합니다." />
-            </div>
-          </div>
-        </div>
-
         <div className="bg-zinc-900/30 border border-zinc-800 rounded-lg p-10 text-center mx-1 print:break-inside-avoid">
           <h4 className="text-zinc-500 font-black uppercase tracking-widest mb-8 text-[9pt]">Development Metrics</h4>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 w-full max-w-5xl mx-auto">
             <div className="bg-zinc-950 p-4 rounded border border-zinc-800">
-              <p className="text-[7pt] text-zinc-500 uppercase mb-1">개발 기간</p>
+              <p className="text-[7pt] text-zinc-100 uppercase mb-1">개발 기간</p>
               <p className="text-[11pt] font-black text-emerald-500">1주일</p>
               <p className="text-[11pt] font-black text-emerald-500">(기획 → 설계 → 배포)</p>
             </div>
             <div className="bg-zinc-950 p-4 rounded border border-zinc-800">
-              <p className="text-[7pt] text-zinc-500 uppercase mb-1">빌드 성공률</p>
+              <p className="text-[7pt] text-zinc-100 uppercase mb-1">빌드 성공률</p>
               <p className="text-[11pt] font-black text-emerald-500">100%</p>
             </div>
             <div className="bg-zinc-950 p-4 rounded border border-zinc-800">
-              <p className="text-[7pt] text-zinc-500 uppercase mb-1">Total Commits</p>
+              <p className="text-[7pt] text-zinc-100 uppercase mb-1">Total Commits</p>
               <p className="text-[11pt] font-black text-emerald-500">259+</p>
             </div>
           </div>
