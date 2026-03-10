@@ -59,7 +59,7 @@ export default function AiCodeReviewSection({ isPrintMode = false }: { isPrintMo
           </div>
           <div className="text-right no-print">
             <p className="text-[10pt] font-mono text-emerald-500 font-bold">{project.overview.duration}</p>
-            <p className="text-[8pt] text-zinc-500 uppercase tracking-widest">1인 개발 (기여도 100%)</p>
+            <p className="text-[8pt] text-zinc-100 uppercase tracking-widest">1인 개발 (기여도 100%)</p>
           </div>
         </div>
         <p className="text-[12pt] text-zinc-400 font-medium tracking-wide max-w-3xl leading-relaxed">
