@@ -63,7 +63,7 @@ export default function AiCodeReviewSection({ isPrintMode = false }: { isPrintMo
           </div>
         </div>
         <p className="text-[12pt] text-zinc-400 font-medium tracking-wide max-w-3xl leading-relaxed">
-          <Markdown content="예산 0원, 개인 시간만으로 사내 AI 코드 리뷰 시스템을 설계·구축하여 팀 리뷰 병목을 해소하고 성과 인정을 받아 **연봉 5% 상승**이라는 결과를 달성했습니다. 나아가 퇴사 후에도 시스템의 구조적 한계를 **직접 개선한 과정**까지 기술합니다." />
+          <Markdown content="예산 0원, 개인 시간만으로 사내 AI 코드 리뷰 시스템을 설계 및 구축하여 팀 리뷰 병목을 해소하고 **사내 공식 성과로 인정**받았습니다. 퇴사 후에도 시스템의 구조적 한계를 직접 개선한 과정까지 기술합니다." />
         </p>
         <div className="flex flex-wrap gap-1.5 mt-8">
           {project.overview.techStack.map((tech) => (
@@ -96,19 +96,13 @@ export default function AiCodeReviewSection({ isPrintMode = false }: { isPrintMo
         </h2>
 
         <div className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-            <div className="space-y-2">
-              <h3 className="text-[10pt] font-black text-zinc-500 uppercase tracking-widest">The Challenge (Situation)</h3>
-              <div className="text-zinc-300 text-[10.5pt] leading-relaxed">
-                <Markdown content="차세대 의약품 배송 서비스 개발의 임시 팀장으로서 실무와 매니징을 병행하며 **리뷰 리소스 부족과 병목 현상**을 겪었습니다. 신입 팀원과의 코드 품질 편차를 줄이기 위한 교육적 리뷰가 절실했으나, 유료 도구 도입은 경영진의 회의적인 스탠스로 인해 **예산 지원이 불가능**한 상황이었습니다." />
-              </div>
-            </div>
-            <div className="space-y-2">
-              <h3 className="text-[10pt] font-black text-zinc-500 uppercase tracking-widest">The Strategy (Action)</h3>
-              <div className="text-zinc-300 text-[10.5pt] leading-relaxed">
-                <Markdown content="업무 외 개인 시간을 활용하여 사내 오픈소스 인프라를 조합한 파이프라인을 설계했습니다. **GitLab Webhook + n8n + LM Studio(로컬 LLM)**를 연동하여 외부망 노출 없이 동작하는 경제적 자동화 환경을 구축했습니다." />
-              </div>
-            </div>
+          <h3 className="text-[10pt] font-black text-zinc-500 uppercase tracking-widest">The Challenge (Situation)</h3>
+          <div className="text-zinc-300 text-[10.5pt] leading-relaxed">
+            <Markdown content="차세대 의약품 배송 서비스 개발에서 **임시 팀장**을 맡으며, 4인 팀의 유일한 머지 마스터가 되었습니다. 나머지 팀원 모두 저보다 직급이 낮아 모든 MR의 리뷰를 제가 직접 리뷰해야 했고, 실무와 매니징을 병행하는 상황에서 코드 리뷰에 쏟을 **리소스가 턱없이 부족**했습니다. 신입 팀원과의 코드 품질 편차를 줄이려면 교육적 리뷰가 필요했지만, 유료 도구 도입은 **예산 지원이 없어 불가능한 상황**이었습니다." />
+          </div>
+          <h3 className="text-[10pt] font-black text-zinc-500 uppercase tracking-widest">The Strategy (Action)</h3>
+          <div className="text-zinc-300 text-[10.5pt] leading-relaxed">
+            <Markdown content="업무 외 개인 시간을 써서 사내 인프라만으로 파이프라인을 직접 설계했습니다. **GitLab Webhook + n8n + LM Studio**를 연동해 외부망 노출 없이 동작하는 구조로 만들었습니다." />
           </div>
 
           {/* Architecture Image - Block Layout (Clickable) */}
@@ -136,18 +130,15 @@ export default function AiCodeReviewSection({ isPrintMode = false }: { isPrintMo
             <h3 className="text-[10pt] font-black text-zinc-500 uppercase tracking-widest">Prompt Engineering Rigor</h3>
             <div className="bg-zinc-900/40 p-6 rounded border border-zinc-800/50 space-y-4">
               <p className="text-zinc-300 text-[10.5pt] leading-relaxed">
-                <Markdown content="프롬프트 하나를 완성하기 위해 Google AI Studio에서 **100회 이상 반복 검증**했습니다. 모델이 일관되게 틀리는 패턴을 직접 분류하고, 각 케이스마다 프롬프트를 수정하며 최적안을 도출하는 과정은 코드 작성보다 오래 걸렸습니다." />
-              </p>
-              <p className="text-emerald-500 font-bold text-[9.5pt] italic">
-                &quot;AI는 프롬프트 설계가 구현보다 어렵다&quot;는 확신이 엔지니어링의 집요함으로 이어진 지점입니다.
+                <Markdown content="프롬프트 최적화에는 **당시 최신 모델인 Gemini 2.5 Pro를 활용**했습니다. System Prompt를 작성한 뒤 LM Studio에서 실제 코드와 함께 실행해 결과를 직접 확인하고, 문제가 있는 응답과 그 원인을 Google AI Studio에 다시 제공해 다음 버전의 프롬프트를 만드는 사이클을 **100회 이상 반복**했습니다. 파이프라인을 구현하는 것보다 이 과정이 더 오래 걸렸습니다." />
               </p>
             </div>
           </div>
 
           <ul className="list-disc list-inside space-y-2 text-zinc-400 text-[10.5pt] ml-2">
-            <li><Markdown content="**데이터 정제:** Git Diff 포맷을 분석하여 Hunk 단위로 분해하고 Import 구문 등 추론에 불필요한 메타데이터를 필터링하여 **컨텍스트 품질을 최적화**" /></li>
-            <li><Markdown content="**아키텍처 판단:** n8n의 한계를 인식하고 추후 Kotlin 서버로의 확장을 고려한 데이터 구조 설계" /></li>
-            <li><Markdown content="**보안성 확보:** 사내 가이드라인을 준수하기 위해 모든 추론 로직을 내부 인프라(LM Studio) 내에서 완결" /></li>
+            <li><Markdown content="Git Diff를 **Hunk 단위**로 분해하고 Import 구문 등 추론에 불필요한 노이즈를 제거해 프롬프트 토큰 사용량 **20% 절감**" /></li>
+            <li><Markdown content="n8n의 한계를 인식하고 추후 **Kotlin 서버로 확장 가능한** 데이터 구조로 설계" /></li>
+            <li><Markdown content="AI 모든 질의는 사내 인프라(LM Studio)에서 완결해 **외부망 노출 없이** 보안 가이드라인 준수" /></li>
           </ul>
         </div>
       </section>
@@ -160,15 +151,14 @@ export default function AiCodeReviewSection({ isPrintMode = false }: { isPrintMo
 
         <div className="text-zinc-300 text-[10.5pt] leading-relaxed px-1">
           <p className="mb-4">
-            <Markdown content="초기 n8n 기반 파이프라인의 낮은 확장성과 데이터 가공의 한계를 극복하기 위해, **Kotlin & Spring Boot 3 기반의 전용 서버**로 시스템을 전면 리팩터링했습니다." />
+            <Markdown content="초기 n8n 기반 파이프라인은 **데이터 가공이 불편하고 확장에 한계**가 있었습니다. 퇴사 후 개인 시간을 써서 **Kotlin + Spring Boot 3 기반 전용 서버**로 직접 다시 만들었습니다." />
           </p>
-
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 px-1">
           {[
-            { title: "Facade Pattern", desc: "PR 요약 및 코드 리뷰에 대한 **이벤트 유형**에 따른 명확한 라우팅 및 단일 진입점 관리" },
-            { title: "Producer-Consumer", desc: "**Coroutine Channel** 기반 큐로 GitHub/Gemini API 속도 제한(Rate Limit) 안정적 관리" }
+            { title: "Facade Pattern", desc: "PR 요약과 코드 리뷰 두 가지 이벤트 유형이 생기면서 단일 진입점에서 **명확하게 라우팅**할 필요가 생겼고, Facade로 이를 정리했습니다." },
+            { title: "Producer-Consumer", desc: "GitHub/Gemini API의 **Rate Limit**을 안정적으로 관리하기 위해 **Coroutine Channel 기반 큐**로 요청 흐름을 제어했습니다." }
           ].map((item, i) => (
             <div key={i} className="bg-zinc-900/20 border border-zinc-800 p-5 rounded-lg">
               <h4 className="text-emerald-500 font-black text-[8pt] uppercase tracking-widest mb-2">{item.title}</h4>
@@ -218,7 +208,7 @@ export default function AiCodeReviewSection({ isPrintMode = false }: { isPrintMo
 
             <div className="ml-8 space-y-3">
               <div className="text-[10pt] text-zinc-400 leading-relaxed border-l-2 border-emerald-400/30 pl-4">
-                <Markdown content="별도의 메시지 브로커 없이 `Coroutine Channel` 기반의 인메모리 큐를 설계하여 Webhook 이벤트를 비동기로 처리합니다. 단일 인스턴스 환경에서 경량성과 Kotlin 친화적 구조를 최우선으로 고려한 판단이었습니다." />
+                <Markdown content="별도의 메시지 브로커 없이 **Coroutine Channel 기반 인메모리 큐**로 Webhook 이벤트를 비동기 처리합니다. 단일 인스턴스 환경에서 Kafka나 RabbitMQ 같은 외부 브로커는 오버스펙이라 판단했고, Kotlin 코루틴과 자연스럽게 맞아 이 구조를 택했습니다." />
               </div>
             </div>
 
@@ -260,7 +250,7 @@ fun startWorkers() {
                 <span className="text-[9pt] text-zinc-500 font-medium">병렬 호출 동시성 미제어</span>
               </div>
               <div className="text-[10pt] text-zinc-400 leading-relaxed border-l-2 border-red-400/30 pl-4">
-                <Markdown content="대규모 PR을 청크로 나누어 `async` 블록으로 병렬 호출 시, **동시 호출 수 제어가 누락**되어 10개 이상의 코루틴이 Gemini API를 동시에 호출하면서 **429 Too Many Requests** 에러가 빈번하게 발생했습니다. 또한 서비스(Summary, Review)별로 개별 제어기를 사용하여 **통합 속도 제한이 불가능**했습니다." />
+                <Markdown content="PR을 청크로 나눠 `async`로 병렬 호출할 때 동시성 제어가 없었습니다. 10개 이상의 코루틴이 Gemini API를 동시에 호출하면서 **429 Too Many Requests 에러**가 반복됐습니다. 또한 PR 요약과 코드 리뷰가 각각 별도로 API를 호출하는 구조라, 두 서비스가 동시에 실행될 경우 호출량이 합산되어 Rate Limit을 초과하는 상황을 막을 방법이 없었습니다." />
               </div>
             </div>
 
@@ -271,7 +261,7 @@ fun startWorkers() {
                 <span className="text-[9pt] text-zinc-500 font-medium">서비스 레벨 Semaphore 제어</span>
               </div>
               <div className="text-[10pt] text-zinc-400 leading-relaxed border-l-2 border-emerald-400/30 pl-4">
-                <Markdown content="`CodeReviewService` 내부에 Semaphore를 직접 선언하여 Gemini API 호출 동시성을 서비스 레벨에서 통합 관리합니다. 아무리 많은 청크가 병렬로 생성되어도 **API 한도를 물리적으로 초과할 수 없도록** 보장했습니다." />
+                <Markdown content="`CodeReviewService` 안에 `Semaphore`를 직접 선언해 Gemini API 호출을 서비스 레벨에서 통합 관리합니다. 청크가 아무리 많이 생성돼도 동시 호출 수를 `MAX_CONCURRENCY`로 고정해 Rate Limit을 넘지 않도록 했습니다." />
               </div>
             </div>
 
@@ -311,8 +301,8 @@ class CodeReviewService {
           <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
             {[
               { label: "Infra Cost", value: "₩0", sub: "Zero-Budget", color: "text-emerald-500" },
-              { label: "429 Error Rate", value: "0건", sub: "Rate Limit 완전 제어", color: "text-blue-500" },
-              { label: "Prompt Iterations", value: "100+", sub: "AI Studio 반복 검증", color: "text-emerald-500" }
+              { label: "429 Error Rate", value: "0건", sub: "Rate Limit 완전 제어", color: "text-emerald-500" },
+              { label: "Prompt Iterations", value: "100+", sub: "Google AI Studio 반복 검증", color: "text-emerald-500" }
             ].map((stat, i) => (
               <div key={i} className="text-center">
                 <p className="text-[7pt] text-zinc-100 uppercase tracking-widest mb-2">{stat.label}</p>
@@ -327,15 +317,15 @@ class CodeReviewService {
             <ul className="text-zinc-400 text-[9.5pt] leading-relaxed space-y-2 ml-4">
               <li className="flex items-start gap-2">
                 <span className="text-emerald-500 mt-0.5">▸</span>
-                <Markdown content="**비차단 워커 기반의 예외 격리:** Coroutine Channel과 SupervisorJob을 활용하여 특정 작업의 실패가 전체 시스템으로 전파되지 않도록 설계하고, 상세한 에러 로깅을 통해 트러블슈팅 효율화" />
+                <Markdown content="`Coroutine Channel`과 `SupervisorJob`을 활용해 특정 작업이 실패해도 전체 시스템으로 전파되지 않도록 격리하고, 상세 에러 로깅으로 트러블슈팅이 가능한 구조로 설계" />
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-emerald-500 mt-0.5">▸</span>
-                <Markdown content="**호출 제어:** 세마포어(Semaphore)를 이용한 동시성 제한과 호출 간 강제 쿨다운(Mandatory Cooldown) 메커니즘을 통해 Gemini API의 Rate Limit(429) 발생 가능성을 차단" />
+                <Markdown content="Semaphore로 동시 호출 수를 제한하고 호출 간 강제 쿨다운을 추가해 **Gemini API 429 에러를 0건**으로 유지" />
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-emerald-500 mt-0.5">▸</span>
-                <Markdown content="Phase 1에서 구축한 Zero-Budget 자동화 시스템을 통해 연봉 협상에서 실질적인 성과로 인정받았습니다." />
+                <Markdown content="Phase 1에서 구축한 Zero-Budget 자동화 시스템이 사내 공식 성과로 인정받았습니다" />
               </li>
             </ul>
           </div>
@@ -347,23 +337,13 @@ class CodeReviewService {
         <h2 className="text-[14pt] border-l-4 border-white pl-4 mb-6 uppercase tracking-tighter font-black text-white">
           5. Lessons Learned
         </h2>
-        <div className="bg-zinc-900/20 p-8 rounded-lg border border-zinc-800/50 space-y-8">
-          <div className="space-y-3">
-            <h4 className="text-zinc-200 font-bold flex items-center gap-2 text-[10pt]">
-              <span className="text-emerald-500">●</span> 기술적 취향은 생산성에서 시작된다
-            </h4>
-            <p className="text-zinc-400 leading-relaxed text-[9.5pt]">
-              <Markdown content="단순히 트렌디한 기술을 쫓는 것이 아니라, 팀의 병목을 해결하기 위해 n8n에서 Kotlin 서버로 전환하는 과정에서 **&quot;왜 이 기술이 필요한가&quot;**에 대한 명확한 기준을 세울 수 있었습니다." />
-            </p>
-          </div>
-          <div className="space-y-3">
-            <h4 className="text-zinc-200 font-bold flex items-center gap-2 text-[10pt]">
-              <span className="text-emerald-500">●</span> 공식 권한 없이 팀을 움직이는 방법
-            </h4>
-            <p className="text-zinc-400 leading-relaxed text-[9.5pt]">
-              <Markdown content="제안서가 아니라 PR에 달린 실제 리뷰 코멘트가 경영진을 설득했습니다. 공식 권한 없이 팀의 문제를 해결하려면, **&quot;작동하는 결과물&quot;이 가장 강력한 언어**임을 배웠습니다." />
-            </p>
-          </div>
+        <div className="bg-zinc-900/20 p-8 rounded-lg border border-zinc-800/50 space-y-6">
+          <p className="text-zinc-400 leading-relaxed text-[9.5pt]">
+            <Markdown content="n8n을 처음 사용했음에도 **빠르게 워크플로우를 만들어 코드 리뷰 시스템을 구축**할 수 있었습니다. 하지만 오래 운영하고 개선해야 하는 경우, 처음부터 유지보수 가능한 환경으로 설계하는 게 결국 더 빠르다는 걸 직접 겪으면서 알았습니다." />
+          </p>
+          <p className="text-zinc-400 leading-relaxed text-[9.5pt]">
+            <Markdown content="코드 리뷰 과정에서 병목을 느껴서 상용 툴 도입을 먼저 물어봤습니다. 저희 팀만 쓰는 도구에 예산을 쓰기 어렵다는 답이 돌아왔고, 다른 팀까지 설득하기도 쉽지 않아 결국 직접 만들었습니다. 출근해서 커피 마시다 대표님께 만들고 있다고 말씀드렸더니, 프롬프트 설계에 대해 기술적인 조언을 받을 수 있었습니다. **공식 경로가 막혔을 때 직접 만들면 된다는 생각을 처음으로 행동으로 옮긴 프로젝트**였습니다. 이후로 불편한 게 생기면 **직접 만드는 방식**으로 이어가고 있습니다." />
+          </p>
         </div>
       </section>
 

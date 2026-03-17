@@ -96,14 +96,15 @@ export default function WillDoneSection({ isPrintMode = false }: { isPrintMode?:
         </h2>
         <div className="text-zinc-300 space-y-4 leading-relaxed text-[10.5pt]">
           <div className="text-zinc-300">
-            <Markdown content="커리어 성장의 가장 큰 적은 기억의 휘발성입니다. 이직, 퇴사 혹은 연봉 협상 시점에 **&quot;나는 무엇을 했는가&quot;**를 복기하지 못하는 개발자가 많습니다. 저 또한, 전 직장이 경영 악화로 권고 사직을 경험하면서,**&quot;내가 이 회사에서 이룬 것은 무엇일까?&quot;**에 대해서 제대로 정리하지 못한 채 퇴사를 맞이하게 되었습니다." />
+            <Markdown content="갑작스러운 권고 사직을 경험하면서 **'내가 이 회사에서 뭘 했지?'**를 제대로 정리하지 못한 채 퇴사했습니다. 이직이나 연봉 협상 시점에 자신의 성과를 복기하지 못하는 건 저만의 문제가 아닐 거라고 생각했습니다. 시중의 투두를 써봤지만 두 가지가 불편했습니다." />
           </div>
+          <ul className="list-disc list-inside space-y-2 text-zinc-400 text-[10.5pt] ml-2">
+            <li><Markdown content="긴급 업무가 생기면 타임라인을 손으로 다시 맞춰야 함" /></li>
+            <li><Markdown content="기록은 쌓여도 무엇을 했는지 요약된 성과 문서로 연결되지 않음" /></li>
+          </ul>
           <div className="text-zinc-300">
-            <Markdown content="시중의 타임 트래커들은 두 가지 결정적 한계를 가집니다. 첫째, 긴급 업무 발생 시 타임라인을 **수동으로 재조정**해야 합니다. 둘째, 기록이 축적되어도 **성과 문서화로 자동 연결되지 않습니다.** 이 두 문제를 동시에 해결하는 도구가 존재하지 않았기 때문에 직접 설계했습니다." />
+            <Markdown content="둘 다 해결하는 도구가 없어서 직접 만들었습니다. 동시에 하나의 실험이기도 했습니다. **코드를 한 줄도 작성하지 않고 AI 에이전트만으로 풀스택 데스크톱 앱을 완성**할 수 있는가, 그 가설을 직접 검증해보고 싶었습니다." />
           </div>
-          <p>
-            <Markdown content="이 프로젝트는 동시에 하나의 실험이었습니다. **&quot;개발자가 코드를 한 줄도 작성하지 않고, AI 에이전트만을 오케스트레이션하여 풀스택 데스크톱 앱을 완성할 수 있는가&quot;**, 그 가설을 실증하는 것이 두 번째 목표였습니다." />
-          </p>
         </div>
       </section>
 
@@ -113,42 +114,18 @@ export default function WillDoneSection({ isPrintMode = false }: { isPrintMode?:
           2. Architecture & Vibe Coding Strategy
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 px-1 mb-8">
-          <div className="space-y-3">
-            <h3 className="text-[9pt] font-black text-emerald-500 uppercase tracking-widest">Core Engine Architecture</h3>
-            <p className="text-zinc-400 text-[10pt] leading-relaxed">
-              <Markdown content="Tauri v2 + Rust를 선택한 기준은 하나였습니다. **&quot;AI 에이전트가 생성하는 코드가 런타임에서 예측 불가능하게 동작하는 것을 막을 수 있는가.&quot;** Rust의 강타입 시스템은 에이전트가 잘못된 코드를 작성했을 때 컴파일 단계에서 즉시 차단합니다. 이는 AI 오케스트레이션 환경에서 **검증 비용을 극적으로 낮추는 아키텍처 선택**이었습니다." />
-            </p>
+        <div className="text-zinc-300 space-y-4 leading-relaxed text-[10.5pt]">
+          <div className="text-zinc-300">
+            <Markdown content="Tauri v2 + Rust를 선택한 기준은 하나였습니다. **AI 에이전트가 잘못된 코드를 작성했을 때 런타임이 아닌 컴파일 단계에서 차단할 수 있는가.** Rust의 강타입 시스템이 그 역할을 해줬고, 덕분에 에이전트가 생성한 코드를 일일이 검증하는 부담이 줄었습니다." />
           </div>
-          <div className="space-y-3">
-            <h3 className="text-[9pt] font-black text-emerald-500 uppercase tracking-widest">AI Orchestration Strategy</h3>
-            <p className="text-zinc-400 text-[10pt] leading-relaxed">
-              <Markdown content="이 프로젝트에서 제가 직접 작성한 코드는 없습니다. 대신 **구조화된 레퍼런스(SSOT)**를 통해 AI의 환각을 방지하고, **작업 범위의 물리적 제한(Atomic Loop)**으로 실패율을 낮췄으며, 빌드/테스트 실패 시 다음 단계로 진행하지 않는 **검증 게이트(Verification Gate)**를 설계하여 시스템적 안정성을 확보했습니다." />
-            </p>
+          <div className="text-zinc-300">
+            <Markdown content="이 프로젝트에서 제가 직접 작성한 코드는 없습니다. 대신 세 가지 제약으로 AI가 안정적으로 작동하는 환경을 만들었습니다." />
           </div>
-        </div>
-
-        <div className="space-y-6 px-1">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="bg-zinc-900/40 p-4 rounded border border-zinc-800/50">
-              <h4 className="text-[8pt] font-black text-zinc-500 uppercase mb-2">① SSOT 설계</h4>
-              <p className="text-[9pt] text-zinc-400 leading-snug">
-                <Markdown content="`STRUCTURE.md`를 단일 진실 공급원으로 운영하여 에이전트가 프로젝트 상태를 동일하게 인식하도록 강제" />
-              </p>
-            </div>
-            <div className="bg-zinc-900/40 p-4 rounded border border-zinc-800/50">
-              <h4 className="text-[8pt] font-black text-zinc-500 uppercase mb-2">② 원자 단위 제약</h4>
-              <p className="text-[9pt] text-zinc-400 leading-snug">
-                <Markdown content="`PLANNING.md` 기반으로 한 번에 하나의 작업만 수행하도록 제약하여 복잡도에 의한 실패 차단" />
-              </p>
-            </div>
-            <div className="bg-zinc-900/40 p-4 rounded border border-zinc-800/50">
-              <h4 className="text-[8pt] font-black text-zinc-500 uppercase mb-2">③ 검증 게이트</h4>
-              <p className="text-[9pt] text-zinc-400 leading-snug">
-                <Markdown content="빌드/테스트 실패 상태에서는 다음 작업 진행을 절대 불허하는 규칙으로 컨텍스트 오염 방지" />
-              </p>
-            </div>
-          </div>
+          <ul className="list-disc list-inside space-y-2 text-zinc-400 text-[10.5pt] ml-2">
+            <li><Markdown content="**SSOT(Single Soruce of Truth):** `STRUCTURE.md`를 단일 진실 공급원으로 운영, 에이전트가 항상 동일한 프로젝트 상태를 인식하도록 강제" /></li>
+            <li><Markdown content="**Atomic Loop:** `PLANNING.md` 기반으로 한 번에 하나의 작업만 수행하도록 제약해 복잡도로 인한 실패를 차단" /></li>
+            <li><Markdown content="**Verification Gate:** 빌드 혹은 테스트가 실패한 상태에서는 다음 작업으로 절대 넘어가지 않도록 함" /></li>
+          </ul>
         </div>
 
         {/* App Preview Image */}
@@ -188,19 +165,14 @@ export default function WillDoneSection({ isPrintMode = false }: { isPrintMode?:
             </div>
             <h3 className="text-[12pt] font-bold text-white tracking-tight">동적인 업무 환경에서의 스케줄링 붕괴</h3>
             <div className="text-[10pt] text-zinc-400 leading-relaxed mb-4">
-              <Markdown content="**설계 판단:** 처음에는 단순히 블록을 밀고 당기는 방식으로 구현을 지시했습니다. 그러나 실제로 사용해보니 긴급 업무가 삽입될 때마다 이후의 모든 일정을 수동 조정해야 하는 도미노 현상이 발생했습니다. 이 경험이 **단순 계산기가 아니라 블록을 물리적으로 쪼개는 엔진**이 필요하다는 판단으로 이어졌습니다." />
+              <Markdown content="처음에는 긴급 업무가 추가되면 진행 중이던 태스크를 종료하고, 긴급 업무를 현재 시간에 배치한 뒤, 남은 시간만큼 새 태스크를 다시 자동으로 생성해주는 방식으로 구현했습니다. 하지만 직접 사용해보면서 기존에 진행하던 업무가 종료된 것과 진행할 업무로 분리되어 표시되다 보니, 자동으로 추가된 태스크가 잘못 추가한 건지 헷갈리기 시작했습니다." />
             </div>
             <div className="bg-zinc-900/30 p-5 rounded-lg border border-zinc-800/50 space-y-4">
               <div className="space-y-2">
                 <p className="text-emerald-500 font-black text-[8pt] uppercase tracking-widest">Solution: Recursive Scheduling Engine</p>
                 <div className="text-zinc-300 text-[9.5pt] leading-relaxed">
-                  <Markdown content="실시간 일정 변화를 **재귀적 스케줄링 엔진**을 통해 자동 조정하는 로직을 구현했습니다. **재귀적 블록 분할** 기술을 적용하여 긴급 업무 발생 시 기존 블록을 원자 단위로 쪼개어 사이사이에 재배정하는 동적 시프트를 수행합니다." />
+                  <Markdown content="단순히 기존 태스크를 종료하고 추가하는게 아니라 태스크를 쪼개는 방식이 필요하다고 판단했습니다. 긴급 업무가 삽입되면 진행 중이던 태스크는 분리되고, 두 태스크는 `time_block` 테이블에서 `task` 테이블의 키를 참조하는 방식으로 연결 관계를 유지했습니다. 분리된 태스크는 모두 `PENDING` 상태로 표시해 긴급 태스크로 인해 멈춘 상태임을 명확하게 보여줬습니다." />
                 </div>
-              </div>
-              <div className="pt-2 border-t border-zinc-800/50">
-                <p className="text-[9pt] text-zinc-400 leading-relaxed">
-                  <Markdown content="**결과:** 타임라인 재조정 작업이 필요 없어짐" />
-                </p>
               </div>
             </div>
           </div>
@@ -212,20 +184,15 @@ export default function WillDoneSection({ isPrintMode = false }: { isPrintMode?:
             </div>
             <h3 className="text-[12pt] font-bold text-white tracking-tight">AI 에이전트의 자율성에 따른 코드 오염</h3>
             <div className="text-[10pt] text-zinc-400 leading-relaxed mb-4">
-              <Markdown content="**이 문제가 가장 많이 실패한 지점입니다.** 초기에는 AI에게 넓은 자율성을 허용했으나, 무관한 파일을 수정하여 빌드를 깨뜨리거나 중복 구현을 하는 사례가 발생했습니다. 이 실패를 통해 **검증 가능한 구조 안에서만 자율성을 허용**하는 Harness Protocol을 수립했습니다." />
+              <Markdown content="초기에 가장 많이 실패한 지점이었습니다. AI에게 연관된 수정 사항을 3개 정도 한 번에 전달하면, 그 중 하나를 빼먹거나 원하지 않는 결과를 만들거나, 완료했다고는 했지만 빌드가 깨지는 일이 반복됐습니다. `GEMINI.md`에 단계별 규칙을 작성했지만, 이마저도 여러 작업을 한꺼번에 처리하면서 중간에 길을 잃거나 제대로 동작하지 않는 기능을 커밋하는 문제가 또 생겼습니다." />
             </div>
             <div className="bg-zinc-900/30 p-5 rounded-lg border border-zinc-800/50 space-y-4">
               <div className="space-y-2">
                 <p className="text-emerald-500 font-black text-[8pt] uppercase tracking-widest">Solution: Strict Harness Protocol</p>
                 <div className="text-zinc-300 text-[9.5pt] leading-relaxed">
-                  <Markdown content="잘 설계된 제약이 오히려 AI의 생산성을 높인다는 역설을 **빌드 실패율 0%** 수치로 확인했습니다. 핵심은 AI를 믿지 않는 것이 아니라, **Harness Protocol이라는 시스템적 신뢰 구조** 위에서 작업하는 것입니다." />
+                  <Markdown content="`oh-my-opencode`를 쓰다 Rate Limit이 자주 걸리면서 협업 기능을 Gemini CLI에 직접 붙일 수 없을까 생각했습니다. 당시 공식 지원이 없어서 `oh-my-opencode`의 결과물을 기반으로 `/init`, `/plan`, `/work`, `/git` 커스텀 커맨드를 직접 만들어 Gemini CLI에 붙였습니다. 이를 통해 한 번에 한 가지 작업만 처리하고, 계획 문서를 기반으로 AI가 먼저 검증한 뒤 진행하며, 세션이 끊겨도 이어서 작업할 수 있는 구조가 만들어졌습니다. 이 과정이 Harness Protocol의 기반이 됐습니다." />
                 </div>
               </div>
-              <ul className="list-disc list-inside space-y-1.5 text-zinc-400 text-[9pt] ml-1">
-                <li><Markdown content="**SSOT (Single Source of Truth):** `STRUCTURE.md`를 통한 실시간 상태 동기화" /></li>
-                <li><Markdown content="**Atomic Loop:** 한 번에 하나의 원자 단위 작업만 수행하도록 제약" /></li>
-                <li><Markdown content="**Verification Gate:** 빌드/테스트 성공 전에는 스테이징 절대 불가" /></li>
-              </ul>
             </div>
           </div>
         </div>
@@ -263,19 +230,8 @@ export default function WillDoneSection({ isPrintMode = false }: { isPrintMode?:
         </h2>
         <div className="bg-zinc-900/20 p-8 rounded-lg border border-zinc-800/50 space-y-8">
           <div className="space-y-3">
-            <h4 className="text-zinc-200 font-bold flex items-center gap-2 text-[10pt]">
-              <span className="text-emerald-500">●</span> 개발자의 가치는 코드 작성량이 아니다
-            </h4>
             <p className="text-zinc-400 leading-relaxed text-[9.5pt]">
-              <Markdown content="Rust를 선택한 이유, 폴백 순서를 정의한 기준, Harness Protocol을 수립한 시점, 이 모든 결정이 제품의 완성도를 결정했습니다. AI는 도구일 뿐, **미래 개발자의 경쟁력은 &quot;어떤 기준으로 AI에게 무엇을 맡기느냐&quot;의 설계 역량**에 있음을 확신했습니다." />
-            </p>
-          </div>
-          <div className="space-y-3">
-            <h4 className="text-zinc-200 font-bold flex items-center gap-2 text-[10pt]">
-              <span className="text-emerald-500">●</span> 제약은 생산성의 적이 아니다
-            </h4>
-            <p className="text-zinc-400 leading-relaxed text-[9.5pt]">
-              <Markdown content="SSOT, Atomic Loop, Verification Gate라는 세 가지 제약을 도입한 이후 롤백 없는 연속적인 작업 성공을 경험했습니다. **잘 설계된 규칙이 자유보다 더 빠른 결과를 만든다는 것**이 이 프로젝트의 가장 큰 수확입니다." />
+              <Markdown content="단순히 필요에 의해 만든 앱을 넘어, **처음 써보는 언어를 통해 AI 에이전트만으로 풀스택 데스크톱 앱을 완성할 수 있다는 가설을 증명**할 수 있었습니다. 이 과정에서 가장 크게 느낀 것은, AI를 쓸수록 **기획과 설계에 더 많은 시간을 써야 한다**는 것입니다. 코드는 AI가 쓰더라도 무엇을 만들지, 어떤 구조로 만들지는 사람이 먼저 구체적으로 정해야합니다. 지시가 모호하면 결과도 모호했고, 계획이 구체적일수록 실패가 줄었습니다. 결국 **'무엇을 AI에게 맡기고 무엇을 직접 판단할 것인가'를 설계하는 능력**이 앞으로 더 중요해질 것 같다고 생각했습니다." />
             </p>
           </div>
         </div>
