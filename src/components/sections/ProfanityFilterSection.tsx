@@ -211,30 +211,10 @@ export default function ProfanityFilterSection({ isPrintMode = false }: { isPrin
         </h2>
 
         <div className="space-y-12 px-1">
-          {/* Problem 1 - Keep Code */}
+          {/* Problem 1 - Toggle Code */}
           <div className="space-y-4 print:break-inside-avoid">
             <div className="inline-block bg-red-900/10 text-red-500 px-2 py-0.5 rounded text-[7pt] font-black uppercase tracking-widest mb-3 border border-red-500/20">
-              Problem 01: Performance Bottleneck
-            </div>
-            <h3 className="text-[12pt] font-bold text-white tracking-tight">10,000개 금칙어 및 100KB 페이로드 환경에서의 지연 해결</h3>
-            <div className="text-[10pt] text-zinc-400 leading-relaxed">
-              <Markdown content="기존 복합 정규식 엔진은 금칙어 개수에 비례하여 성능이 저하되는 구조적 한계가 있었습니다. 이를 금칙어 개수와 무관하게 **O(N)** 성능을 보장하는 알고리즘으로 대체했습니다." />
-            </div>
-            <div className="bg-zinc-900/30 p-5 rounded-lg border border-zinc-800/50 space-y-4">
-              <CodeBlock
-                language="kotlin"
-                code={`// Aho-Corasick PayloadTrie를 활용한 O(N) 탐색
-val detectedBans = trie.parseText(normalizedSentence)
-  .map { it.payload.word }
-  .distinct()`}
-              />
-            </div>
-          </div>
-
-          {/* Problem 2 - Toggle Code */}
-          <div className="space-y-4 print:break-inside-avoid">
-            <div className="inline-block bg-red-900/10 text-red-500 px-2 py-0.5 rounded text-[7pt] font-black uppercase tracking-widest mb-3 border border-red-500/20">
-              Problem 02: Index Restoration
+              Problem 01: Index Restoration
             </div>
             <h3 className="text-[12pt] font-bold text-white tracking-tight">변칙 우회 방어 및 원본 인덱스 복원 알고리즘</h3>
             <div className="text-[10pt] text-zinc-400 leading-relaxed">
@@ -260,10 +240,10 @@ val detectedBans = trie.parseText(normalizedSentence)
             </div>
           </div>
 
-          {/* Problem 3 - Toggle Code */}
+          {/* Problem 2 - Toggle Code */}
           <div className="space-y-4 print:break-inside-avoid">
             <div className="inline-block bg-red-900/10 text-red-500 px-2 py-0.5 rounded text-[7pt] font-black uppercase tracking-widest mb-3 border border-red-500/20">
-              Problem 03: False Positives
+              Problem 02: False Positives
             </div>
             <h3 className="text-[12pt] font-bold text-white tracking-tight">정상 단어 보호를 위한 Interval Overlap 로직</h3>
             <div className="text-[10pt] text-zinc-400 leading-relaxed">

@@ -1,32 +1,37 @@
-## AI 코드 리뷰 시스템 도입
+---
+id: "ai-code-review"
+title: "AI Code Review System"
+role: "전체 서비스 기획 및 개발"
+duration: "2025.08 - 2025.09"
+techStack: ["Kotlin", "Spring Boot 3", "Google Gemini", "GitHub App", "GitLab", "n8n", "LM Studio", "Coroutine"]
+summary: "사내 인프라 기반의 Zero-Budget AI 리뷰 시스템으로 팀 병목을 해소하고, 퇴사 후에도 구조적 한계를 직접 개선한 AI 코드 리뷰 엔진"
+contribution: "100%"
+teamSize: "1인 개발"
+tags: ["Cost: Zero-Budget", "Performance: Rate Limit Control", "Architecture: Coroutine Channel", "Security: HMAC/JWT"]
+codeTitle: "Coroutine Channel based Async Job Queue"
+codeLanguage: "kotlin"
+---
 
-### 프로젝트 정보
+## STAR
 
-- **역할** : 전체 서비스 개발
-- **기간** : 2025.08 - 2025.09
-- **기술** : GitLab, LM Studio, n8n
-- **한 줄 요약** : 개인 스터디 시간을 활용해 사내 인프라 기반의 Zero-Budget AI 코드 리뷰 시스템을 구축하여, 리뷰 병목 해결 및 팀 코드 품질 상향 평준화 달성.
-
-### STAR
-
-#### 1. Situation (기존 시스템의 한계 및 배경)
+### 1. Situation (기존 시스템의 한계 및 배경)
 
 - **리소스 부족과 리뷰 병목:** 차세대 국내 의약품 배송 서비스 개발의 임시 팀장으로서 실무와 매니징을 병행. 팀원들이 개발한 도메인 맥락을 파악하고 코드를 리뷰하는 데 과도한 시간과 인지적 피로 발생.
 - **코드 품질 편차 우려:** 신입/인턴과 기존 팀원 간의 코드 품질 편차가 커 코드 리뷰 문화를 포기할 수 없는 상황.
 - **도입 예산 제약:** 상용 AI 리뷰 SaaS(CodeRabbit 등) 도입을 고려했으나, 코드 리뷰 문화에 회의적인 경영진의 스탠스로 인해 예산 지원 불가.
 
-#### 2. Task (직면한 과제 및 목표)
+### 2. Task (직면한 과제 및 목표)
 
 - **Zero-Budget 자동화 파이프라인 구축:** 비용 발생 없이 사내 오픈소스 인프라(GitLab, n8n, LM Studio)만으로 동작하는 AI 코드 리뷰 시스템 직접 기획 및 구현.
 - **리뷰어 피로도 감소 및 품질 상향 평준화:** AI가 기본적인 로직 오류와 컨벤션을 1차 필터링하여, 휴먼 리뷰어가 핵심 비즈니스 로직과 아키텍처에만 집중할 수 있는 환경 조성.
 
-#### 3. Action (기술적 의사결정 및 행동)
+### 3. Action (기술적 의사결정 및 행동)
 
 - **개인 시간을 활용한 파이프라인 구축:** 업무 외 개인 스터디 시간을 적극 할애하여, GitLab MR(Merge Request) 이벤트를 Webhook으로 수신하고 n8n 기반의 워크플로우가 즉시 트리거되도록 리뷰 프로세스 자동화 파이프라인을 직접 개발.
 - **LLM 컨텍스트 최적화 (Noise Filtering):** 거대한 MR Diff 전체 전달 시 발생하는 토큰 낭비 및 환각(Hallucination) 방지. 변경 사항을 Hunk 단위로 분해하고, Import 문이나 주석 등 로직과 무관한 노이즈를 필터링하여 프롬프트 페이로드 정제.
 - **추론 환경 안정화 및 부하 분산:** 로컬 추론 환경에 코드 분석 특화 모델(`gpt-oss-20b`) 적용. 다수 MR 동시 발생 시 병목 해결을 위해 라운드 로빈(Round-Robin) 방식으로 AI 요청을 분산 처리하여 응답 안정성과 전체 처리량 개선.
 
-#### 4. Result (정량적/정성적 성과)
+### 4. Result (정량적/정성적 성과)
 
 - **개발 생산성 및 코드 품질 향상:** 1차 AI 리뷰의 즉각적인 피드백으로 신입 팀원의 코드 품질 상향 평준화 달성. 리뷰 소요 시간 단축 및 피로도 감소로 전체 기능 배포 속도 향상.
 - **경영진 설득 및 성과 인정:** 개인 시간을 투자해 주도적으로 팀의 생산성 병목을 해결하고 코드 품질을 개선한 지표(에러 리포트)를 증명하여, 실제 성과 평가 및 연봉 인상에 긍정적으로 반영됨.
